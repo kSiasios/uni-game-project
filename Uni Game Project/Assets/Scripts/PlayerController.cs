@@ -80,5 +80,10 @@ public class PlayerController : MonoBehaviour
         }
 
         return direction;
-    } 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        // Function that manages health
+    }
 }

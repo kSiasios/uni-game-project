@@ -5,7 +5,10 @@ using UnityEngine;
 public class BulletParticle : MonoBehaviour
 {
     new ParticleSystem particleSystem;
+    [Tooltip("The damage that the particle inflicts on impact")]
     [SerializeField] int bulletDamage = 10;
+    [Tooltip("The speed of the particle")]
+    [Range(5f, 50f)] public float bulletSpeed = 20f;
     private void Awake()
     {
         particleSystem = transform.GetComponent<ParticleSystem>();

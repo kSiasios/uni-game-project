@@ -24,6 +24,8 @@ public class InventoryManager : MonoBehaviour
             item.SetAmount(1);
             item.SetName(collision.name);
             Add(item);
+            // Destroy object after collected
+            Destroy(collision.gameObject);
         }
     }
 

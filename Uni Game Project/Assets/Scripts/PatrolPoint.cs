@@ -16,14 +16,14 @@ public class PatrolPoint : MonoBehaviour
     // so that the Walker type of enemy do not go off their platform.
     public void SetPatrolPoint(float distance)
     {
-        transform.localPosition = new Vector3(distance, 0, 0);
+        transform.localPosition = new Vector3(transform.position.x + distance, transform.position.y, 0);
         Debug.Log(transform.localPosition);
     }
 
     // Function that sends a Ray to ensure that the point is not "inside" any other object
     // and above the ground layer. For Flyer type enemies.
-    public void SetPatrolPointFlyer()
+    public void SetPatrolPointFlyer(Vector2 point)
     {
-
+        transform.localPosition = new Vector3(transform.position.x + point.x, transform.position.y + point.y, 0);
     }
 }

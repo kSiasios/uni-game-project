@@ -11,12 +11,16 @@ public class WeaponBehaviour : MonoBehaviour
     [Tooltip("The reload speed of the weapon in seconds")]
     [SerializeField] float reloadSpeed = 0.3f;
     [Tooltip("The amount of damage the weapon can deal")]
-    [Range(0, 100)][SerializeField] float damage = 50;
-    [Range(1, 5)][SerializeField] int bulletsFired = 1;
+    [Range(0, 100)] [SerializeField] float damage = 50;
+    [Tooltip("The amount of bullets fired at once")]
+    [Range(1, 5)] [SerializeField] int bulletsFired = 1;
 
     [Header("Required References")]
+    [Tooltip("The controller of this weapon")]
     [SerializeField] PlayerController playerController;
+    [Tooltip("Where the bullets are fired from")]
     [SerializeField] Transform shootingPoint;
+    [Tooltip("The patricle system that spawns bullets")]
     [SerializeField] ParticleSystem bulletParticleSystem;
 
     private void Awake()
@@ -36,7 +40,7 @@ public class WeaponBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
