@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Tooltip("The script that controls the player")]
     [SerializeField] PlayerController controller;
 
-    private float horizontalAxis = 0;
-    private float verticalAxis = 0;
+    private float horizontalAxis = 0;       // -1 if the player is moving to the left, 1 if player is moving to the right
+    private float verticalAxis = 0;         // -1 if the player is moving downwards, 1 if player is moving upwards
     private bool jumping = false;
 
     private void Awake()
@@ -30,14 +31,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // FixedUpdate is called a fixed amount of times per second
     void FixedUpdate() {
-        //rb.velocity = new Vector2(horizontalAxis * speed, rb.velocity.y);
-        //if (jumping) {
-        //    Debug.Log("Jumping");
-        //    rb.velocity = new Vector2(rb.velocity.x, speed);
-        //    jumping = false;
-        //}
-
+        // Move the player using the controller script
         controller.MovePlayer(new Vector2(horizontalAxis, verticalAxis), jumping);
         jumping = false;
     }

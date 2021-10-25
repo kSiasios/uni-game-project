@@ -99,17 +99,6 @@ public class EnemyBehaviour : MonoBehaviour
                 }
                 if (!movingTowardsPoint)
                 {
-                    // Change the players rotation to face the correct way
-                    if (facingRight)
-                    {
-                        transform.Rotate(0, 180, 0);
-                        facingRight = false;
-                    }
-                    else
-                    {
-                        transform.Rotate(0, -180, 0);
-                        facingRight = true;
-                    }
                     GameObject point = patrolPoints.Dequeue();
                     movingTowardsPoint = true;
                     //MoveTowardsPoint(targetPos.transform.position);
@@ -127,6 +116,25 @@ public class EnemyBehaviour : MonoBehaviour
         // suitable for multiplication
         Vector2 normalizedVector = point - new Vector2(transform.position.x, transform.position.y);
         normalizedVector.Normalize();
+
+        // Flip the entity
+        if (normalizedVector.x < 0)
+        {
+            // Change the players rotation to face the correct way
+            if (facingRight)
+            {
+                transform.Rotate(0, 180, 0);
+                facingRight = false;
+            }
+        }
+        else if (normalizedVector.x > 0)
+        {
+            if (!facingRight)
+            {
+                transform.Rotate(0, -180, 0);
+                facingRight = true;
+            }
+        }
 
         if (enemyType == EnemyType.Walker)
         {
@@ -261,14 +269,15 @@ public class EnemyBehaviour : MonoBehaviour
         {
             // If the enemy is a Flyer, move above the player and shoot projectiles
             Vector2 positionToGo = new Vector2(playerPos.x, playerPos.y + patrolRadius / 2);
-            transform.position = Vector2.MoveTowards(transform.position, positionToGo, speed * Time.deltaTime);
-
+            //transform.position = Vector2.MoveTowards(transform.position, positionToGo, speed * Time.deltaTime);
+            MoveTowardsPoint(positionToGo);
             //ShootPlayer();
 
         }
         else if (enemyType == EnemyType.Walker)
         {
-            transform.position = Vector2.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
+            //transform.position = Vector2.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
+            MoveTowardsPoint(playerPos);
         }
     }
 

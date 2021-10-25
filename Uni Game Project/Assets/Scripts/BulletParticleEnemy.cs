@@ -14,6 +14,8 @@ public class BulletParticleEnemy : MonoBehaviour
         particleSystem = transform.GetComponent<ParticleSystem>();
     }
 
+    // Function that handles the collision of the particle,
+    // damage the player when collided with
     private void OnParticleCollision(GameObject other)
     {
         if (other.name == "Player")

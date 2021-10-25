@@ -5,6 +5,7 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField] List<InventoryItem> inventory = new List<InventoryItem>();
+    [Tooltip("The collider responsible for detecting objects")]
     [SerializeField] CircleCollider2D col;
 
     private void Awake()
@@ -32,7 +33,6 @@ public class InventoryManager : MonoBehaviour
     void Add(InventoryItem newItem)
     {
         // Function that handles adding items to the inventory
-        //Debug.Log("Item added to inventory");
         bool alreadyExists = false;
         // Iterate through the inventory to see if there already is an item of the same type
         for (int i = 0; i < inventory.Count; i++)
@@ -55,11 +55,13 @@ public class InventoryManager : MonoBehaviour
         PrintList(inventory);
     }
 
+    // Remove the whole stack of this item
     void Remove(InventoryItem item)
     {
         inventory.Remove(item);
     }
 
+    // Remove an amount from the stack of this item
     void Remove(InventoryItem item, int amount)
     {
         int index = inventory.BinarySearch(item);
@@ -86,6 +88,7 @@ public class InventoryManager : MonoBehaviour
     }
 }
 
+// Custom class that represents the items that are stored in the inventory
 public class InventoryItem
 {
     public InventoryItem(int amount, string name)

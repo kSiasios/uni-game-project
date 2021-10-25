@@ -55,9 +55,17 @@ public class WeaponBehaviour : MonoBehaviour
     void Shoot()
     {
         Debug.Log("Fire");
-        //bulletParticleSystem.
-        //bulletParticleSystem.transform.SetPositionAndRotation(shootingPoint.position, bulletParticleSystem.transform.rotation);
-        bulletParticleSystem.Emit(bulletsFired);
+
+        // Create an objects that holds the parameters of the emitter
+        var emitParams = new ParticleSystem.EmitParams();
+
+        // Populate the parameters object according to the type of the controller
+        //if (controller.enemyType == EnemyBehaviour.EnemyType.Flyer)
+        //{
+        //    emitParams.velocity = new Vector3(0, -bulletParticleSystem.transform.GetComponent<BulletParticleEnemy>().bulletSpeed, 0);
+        //}
+
+        bulletParticleSystem.Emit(emitParams, bulletsFired);
         bulletParticleSystem.Play();
     }
 }
