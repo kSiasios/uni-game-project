@@ -48,14 +48,22 @@ public class WeaponBehaviourEnemy : MonoBehaviour
 
     void Shoot()
     {
-        Debug.Log("Fire");
+        //Debug.Log("Fire");
         // Create an objects that holds the parameters of the emitter
         var emitParams = new ParticleSystem.EmitParams();
 
         // Populate the parameters object according to the type of the controller
         if (controller.enemyType == EnemyBehaviour.EnemyType.Flyer)
         {
-            emitParams.velocity = new Vector3(0 ,-bulletParticleSystem.transform.GetComponent<BulletParticleEnemy>().bulletSpeed, 0);
+            if (bulletParticleSystem.name == "Bomb")
+            {
+                // The grenade will free fall from the position of the entity
+                emitParams.velocity = new Vector3(0, 0, 0);
+            } else
+            {
+                // The bullet will go straight below the entity with a speed of bulletSpeed
+                emitParams.velocity = new Vector3(0 ,-bulletParticleSystem.transform.GetComponent<BulletParticleEnemy>().bulletSpeed, 0);
+            }
         }
 
         // Spawn particles
