@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -8,11 +9,19 @@ public class InventoryManager : MonoBehaviour
     [Tooltip("The collider responsible for detecting objects")]
     [SerializeField] CircleCollider2D col;
 
+    [SerializeField] TextMeshProUGUI uiItemCounter;
+
     private void Awake()
     {
         if (col == null)
         {
             col = transform.GetComponent<CircleCollider2D>();
+        }
+
+        if (uiItemCounter == null)
+        {
+            uiItemCounter = GameObject.Find("CollectableCounter").GetComponentInChildren<TextMeshProUGUI>();
+            uiItemCounter.text = "0";
         }
     }
 
@@ -23,6 +32,10 @@ public class InventoryManager : MonoBehaviour
             // Add object to inventory
             InventoryItem item = new InventoryItem();
             item.SetAmount(1);
+            
+            // Update the UI
+            uiItemCounter.text = "1";
+
             item.SetName(collision.name);
             Add(item);
             // Destroy object after collected
@@ -43,6 +56,10 @@ public class InventoryManager : MonoBehaviour
                 alreadyExists = true;
                 Debug.Log("Item exists: " + (inventory[i].AmountOfItems + newItem.AmountOfItems));
                 inventory[i].SetAmount(inventory[i].AmountOfItems + newItem.AmountOfItems);
+
+                // Update the UI
+                uiItemCounter.text = inventory[i].AmountOfItems.ToString();
+
                 break;
             }
         }
@@ -70,10 +87,16 @@ public class InventoryManager : MonoBehaviour
             if (inventory[index].AmountOfItems >= amount)
             {
                 inventory[index].SetAmount(inventory[index].AmountOfItems - amount);
+
+                // Update the UI
+                uiItemCounter.text = inventory[index].AmountOfItems.ToString();
             }
             else
             {
                 inventory[index].SetAmount(0);
+
+                // Update the UI
+                uiItemCounter.text = "0";
             }
 
         }

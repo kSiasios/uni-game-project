@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,6 +20,17 @@ public class PlayerController : MonoBehaviour
     [Tooltip("How fast is the player moving")]
     [Range(0f, 10f)] [SerializeField] float speed = 10f;
 
+    [Header("Other Core Variables")]
+    [Tooltip("The amount of health the player has")]
+    [Range(0f, 100f)] [SerializeField] float health = 100;
+
+    [Tooltip("The amount of health the player can have (MAX)")]
+    [Range(0f, 100f)] [SerializeField] float maxHealth = 100;
+
+    [Header("UI Variables")]
+    [Tooltip("The healthbar of the player")]
+    [SerializeField] Slider healthbar;
+
     private void Awake()
     {
         // If the rigidbody is not initialized, try to find it in the current GameObject
@@ -32,6 +44,27 @@ public class PlayerController : MonoBehaviour
         {
             groundCheck = transform.Find("GroundCheck").GetComponent<BoxCollider2D>();
         }
+
+        // Check for mistakes in initialization
+        // Player's health can't be more than the maximum possible health
+        // If this happens, exchange the values
+        if (health > maxHealth)
+        {
+            float temp = health;
+            health = maxHealth;
+            maxHealth = temp;
+        }
+
+        if (healthbar == null)
+        {
+            healthbar = GameObject.Find("HealthBar").GetComponent<Slider>();
+        }
+    }
+
+    private void Update()
+    {
+        // Update the UI
+        healthbar.value = health / maxHealth;
     }
 
     // Move player with the default speed
