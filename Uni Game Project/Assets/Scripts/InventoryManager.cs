@@ -11,6 +11,8 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI uiItemCounter;
 
+    [SerializeField] NotificationManager notificationManager;
+
     private void Awake()
     {
         if (col == null)
@@ -22,6 +24,11 @@ public class InventoryManager : MonoBehaviour
         {
             uiItemCounter = GameObject.Find("CollectableCounter").GetComponentInChildren<TextMeshProUGUI>();
             uiItemCounter.text = "0";
+        }
+
+        if (notificationManager == null)
+        {
+            notificationManager = GameObject.Find("NotificationPanel").GetComponentInChildren<NotificationManager>();
         }
     }
 
@@ -36,11 +43,26 @@ public class InventoryManager : MonoBehaviour
             // Update the UI
             uiItemCounter.text = "1";
 
+            // Send Notification
+            Collectable collectable = collision.gameObject.GetComponent<Collectable>();
+            if (collectable != null)
+            {
+                SendNotification(collectable.ToString());
+            } else
+            {
+                SendNotification("1" + " x " + collision.gameObject.name);
+            }
+
             item.SetName(collision.name);
             Add(item);
             // Destroy object after collected
             Destroy(collision.gameObject);
         }
+    }
+
+    void SendNotification(string notificationText)
+    {
+        notificationManager.NewNotification(notificationText);
     }
 
     void Add(InventoryItem newItem)
@@ -145,4 +167,3 @@ public class InventoryItem
         return $"{ItemName}: {AmountOfItems}";
     }
 }
-

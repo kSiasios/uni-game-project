@@ -42,6 +42,8 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector] public bool facingRight = true;
     public bool movingTowardsPoint = false;
 
+    [HideInInspector] public Transform playerTransform;
+
     GameObject targetPos;
 
     public Queue<GameObject> patrolPoints = new Queue<GameObject>();
@@ -67,6 +69,11 @@ public class EnemyBehaviour : MonoBehaviour
         if (actingAreaCollider == null)
         {
             actingAreaCollider = transform.GetComponent<CircleCollider2D>();
+        }
+
+        if (playerTransform == null)
+        {
+            playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         }
 
         gravityScale = rigidbody.gravityScale;
@@ -108,6 +115,12 @@ public class EnemyBehaviour : MonoBehaviour
                 MoveTowardsPoint(targetPos.transform.position);
             }
         }
+        else if (chasingPlayer)
+        {
+            Vector2 normalizedVector = new Vector2(playerTransform.position.x, playerTransform.position.y) - new Vector2(transform.position.x, transform.position.y);
+            normalizedVector.Normalize();
+            Flip(normalizedVector);
+        }
     }
 
     void MoveTowardsPoint(Vector2 point)
@@ -118,23 +131,7 @@ public class EnemyBehaviour : MonoBehaviour
         normalizedVector.Normalize();
 
         // Flip the entity
-        if (normalizedVector.x < 0)
-        {
-            // Change the players rotation to face the correct way
-            if (facingRight)
-            {
-                transform.Rotate(0, 180, 0);
-                facingRight = false;
-            }
-        }
-        else if (normalizedVector.x > 0)
-        {
-            if (!facingRight)
-            {
-                transform.Rotate(0, -180, 0);
-                facingRight = true;
-            }
-        }
+        Flip(normalizedVector);
 
         if (enemyType == EnemyType.Walker)
         {
@@ -183,6 +180,9 @@ public class EnemyBehaviour : MonoBehaviour
             // Player is in range, chase them
             chasingPlayer = true;
             patroling = false;
+
+            playerTransform = collision.transform;
+
             ChasePlayer(collision.transform.position);
         }
     }
@@ -277,7 +277,7 @@ public class EnemyBehaviour : MonoBehaviour
         else if (enemyType == EnemyType.Walker)
         {
             //transform.position = Vector2.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
-            MoveTowardsPoint(playerPos);
+            //MoveTowardsPoint(playerPos);
         }
     }
 
@@ -301,5 +301,26 @@ public class EnemyBehaviour : MonoBehaviour
     {
         Debug.Log("Enemy Dead");
         Destroy(this.gameObject);
+    }
+
+    void Flip(Vector2 normalizedVector)
+    {
+        if (normalizedVector.x < 0)
+        {
+            // Change the players rotation to face the correct way
+            if (facingRight)
+            {
+                transform.Rotate(0, 180, 0);
+                facingRight = false;
+            }
+        }
+        else if (normalizedVector.x > 0)
+        {
+            if (!facingRight)
+            {
+                transform.Rotate(0, -180, 0);
+                facingRight = true;
+            }
+        }
     }
 }

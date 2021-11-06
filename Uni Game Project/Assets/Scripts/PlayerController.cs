@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
         if (rigidbody == null)
         {
             rigidbody = transform.GetComponent<Rigidbody2D>();
-            //rigidbody = FindObjectOfType<Rigidbody2D>();
         }
 
         if (groundCheck == null)
@@ -70,8 +69,6 @@ public class PlayerController : MonoBehaviour
     // Move player with the default speed
     public void MovePlayer(Vector2 direction, bool jumping)
     {
-        //Debug.Log("Moving 1");
-        //Debug.Log(direction);
         MovePlayer(direction, speed, jumping);
     }
 

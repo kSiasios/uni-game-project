@@ -23,6 +23,8 @@ public class WeaponBehaviourEnemy : MonoBehaviour
     [Tooltip("The patricle system that spawns bullets")]
     [SerializeField] ParticleSystem bulletParticleSystem;
 
+    public float bulletSpeed;
+
     private void Awake()
     {
         // If controller is not initialized in the inspector, get it using code
@@ -34,6 +36,14 @@ public class WeaponBehaviourEnemy : MonoBehaviour
         if (shootingPoint == null)
         {
             shootingPoint = transform.Find("ShootingPoint").transform;
+        }
+
+        if (bulletParticleSystem != null)
+        {
+            bulletSpeed = bulletParticleSystem.transform.GetComponentInChildren<BulletParticleEnemy>().bulletSpeed;
+        } else
+        {
+            bulletSpeed = 10f;
         }
     }
 
@@ -59,11 +69,18 @@ public class WeaponBehaviourEnemy : MonoBehaviour
             {
                 // The grenade will free fall from the position of the entity
                 emitParams.velocity = new Vector3(0, 0, 0);
-            } else
+            }
+            else
             {
                 // The bullet will go straight below the entity with a speed of bulletSpeed
-                emitParams.velocity = new Vector3(0 ,-bulletParticleSystem.transform.GetComponent<BulletParticleEnemy>().bulletSpeed, 0);
+                emitParams.velocity = new Vector3(0, -bulletSpeed, 0);
             }
+        }
+        else if (controller.enemyType == EnemyBehaviour.EnemyType.Walker)
+        {
+            // The bullet will go straight to the last position of the player with a speed of bulletSpeed
+            Vector2 vectorToPlayer = (controller.playerTransform.position - controller.transform.position).normalized;
+            emitParams.velocity = vectorToPlayer * bulletSpeed;
         }
 
         // Spawn particles
