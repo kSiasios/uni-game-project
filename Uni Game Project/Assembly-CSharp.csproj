@@ -57,6 +57,9 @@
     <Compile Include="Assets\Scripts\PatrolPoint.cs" />
     <Compile Include="Assets\Scripts\BulletParticleEnemy.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\NotificationManager.cs" />
+    <Compile Include="Assets\Collectable.cs" />
+    <Compile Include="Assets\NotificationItem.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviour.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviourEnemy.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
@@ -64,9 +67,6 @@
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\SceneTransitionManager.cs" />
-    <Compile Include="Assets\NotificationManager.cs" />
-    <Compile Include="Assets\NotificationItem.cs" />
-    <Compile Include="Assets\Collectable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
