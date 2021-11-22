@@ -56,25 +56,30 @@ public class WeaponBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        // If player's input is translated to in-game input
+        if (GameManager.canGetGameplayInput)
         {
-            if (bulletsInΜagazine >= bulletsFired)
+            // If the fire button is pressed
+            if (Input.GetButtonDown("Fire1"))
             {
-                Shoot();
+                // If the bullets available are enough to shoot, do it. Else, reload the weapon.
+                if (bulletsInΜagazine >= bulletsFired)
+                {
+                    Shoot();
+                }
+                else
+                {
+                    ReloadWeapon();
+                }
+                // Update the UI
+                bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
             }
-            else
+
+            // If the reload key is pressed, reload the weapon
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 ReloadWeapon();
             }
-            // Update the UI
-            bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ReloadWeapon();
-            // Update the UI
-            bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
         }
     }
 
@@ -94,14 +99,46 @@ public class WeaponBehaviour : MonoBehaviour
 
     void ReloadWeapon()
     {
+        IEnumerator coroutine;
         if (bulletsInΜagazine < magazineSize)
         {
-            totalAmmo -= (magazineSize - bulletsInΜagazine);
-            bulletsInΜagazine = magazineSize;
+            //totalAmmo -= (magazineSize - bulletsInΜagazine);
+            //bulletsInΜagazine = magazineSize;
+            coroutine = Reload();
+            StartCoroutine(coroutine);
         }
         else
         {
             Debug.Log("Magazine Full!");
         }
+    }
+
+    private IEnumerator Reload()
+    {
+        while (bulletsInΜagazine < magazineSize)
+        {
+            yield return new WaitForSeconds(reloadSpeed);
+            totalAmmo -= 1;
+            bulletsInΜagazine++;
+            // Update the UI
+            bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
+            Debug.Log("Reloading " + bulletsInΜagazine);
+        }
+    }
+
+    public int GetAmmo()
+    {
+        return totalAmmo;
+    }
+
+    public void SetAmmo(int value)
+    {
+        totalAmmo = value;
+        RefreshUI();
+    }
+
+    void RefreshUI()
+    {
+        bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
     }
 }

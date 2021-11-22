@@ -98,4 +98,80 @@ public class PlayerController : MonoBehaviour
     {
         // Function that manages health
     }
+
+    //public GenericSaveData Save()
+    //{
+    //    // Save Position
+    //    // Save Health
+    //    // Save Ammo
+    //    GenericSaveData saveData = new GenericSaveData(
+    //        health,
+    //        transform.GetComponentInChildren<WeaponBehaviour>().GetAmmo(),
+    //        transform.position);
+
+    //    return saveData;
+    //}
+
+    public void Load(SerializablePlayer data)
+    {
+        health = data.health;
+        maxHealth = data.maxHealth;
+        speed = data.speed;
+        transform.GetComponentInChildren<WeaponBehaviour>().SetAmmo(data.ammo);
+        transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+    }
+
+    // Getters
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public int GetAmmo()
+    {
+        return transform.GetComponentInChildren<WeaponBehaviour>().GetAmmo();
+    }
+}
+
+[System.Serializable]
+public class SerializablePlayer
+{
+    public float speed;
+    public float health;
+    public float maxHealth;
+    public float[] position;
+    public int ammo;
+
+    public SerializablePlayer(PlayerController player)
+    {
+        speed = player.GetSpeed();
+
+        health = player.GetHealth();
+
+        maxHealth = player.GetMaxHealth();
+
+        position = new float[3];
+        Vector3 v3Pos = player.GetPosition();
+        position[0] = v3Pos.x;
+        position[1] = v3Pos.y;
+        position[2] = v3Pos.z;
+
+        ammo = player.GetAmmo();
+
+    }
 }

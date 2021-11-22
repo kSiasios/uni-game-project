@@ -10,6 +10,12 @@ public class EnemyBehaviour : MonoBehaviour
         Flyer
     }
 
+    public enum EnemyState
+    {
+        Alive,
+        Dead
+    }
+
     [Header("Core Elements")]
     [Tooltip("The rigidbody of the enemy")]
     [SerializeField] new Rigidbody2D rigidbody;
@@ -43,6 +49,9 @@ public class EnemyBehaviour : MonoBehaviour
     public bool movingTowardsPoint = false;
 
     [HideInInspector] public Transform playerTransform;
+
+    //[HideInInspector] 
+    public EnemyState state = EnemyState.Alive;
 
     GameObject targetPos;
 
@@ -91,6 +100,16 @@ public class EnemyBehaviour : MonoBehaviour
         else
         {
             timePassed = false;
+        }
+
+        if (state != EnemyState.Alive && gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (state == EnemyState.Alive && !gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(true);
         }
     }
 
@@ -222,12 +241,14 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (enemyType == EnemyType.Walker)
         {
-            Debug.Log("Setting Patrol Points for Walker");
+            //Debug.Log("Setting Patrol Points for Walker");
+
             // Create 2 GameObjects to store the patrol points
             GameObject patrolPoint1;
             GameObject patrolPoint2;
             // Instantiate new patrol points and assign them to the GameObjects
-            Debug.Log(transform.position);
+
+            //Debug.Log(transform.position);
 
             patrolPoint1 = Instantiate(patrolPointPrefab, transform.position, transform.rotation);
             patrolPoint1.name = "PatrolPoint1";
@@ -244,7 +265,8 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (enemyType == EnemyType.Flyer)
         {
-            Debug.Log("Setting Patrol Points for Flyer");
+            //Debug.Log("Setting Patrol Points for Flyer");
+
             // For each patrol point of the flyer,
             //      create a gameobject,
             //      put it in the queue of patrolpoints
@@ -300,7 +322,8 @@ public class EnemyBehaviour : MonoBehaviour
     void Death()
     {
         Debug.Log("Enemy Dead");
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        state = EnemyState.Dead;
     }
 
     void Flip(Vector2 normalizedVector)
@@ -322,5 +345,58 @@ public class EnemyBehaviour : MonoBehaviour
                 facingRight = true;
             }
         }
+    }
+
+    //public GenericSaveData Save()
+    //{
+    //    // Save position
+    //    // Save health (optional)
+    //    // Save state
+
+    //    GenericSaveData saveData = new GenericSaveData(health, (int)state, transform.position);
+
+    //    return saveData;
+    //}
+
+    public void Load(SerializableEnemy data)
+    {
+        health = Mathf.RoundToInt(data.health);
+        state = (EnemyState)data.state;
+        enemyType = (EnemyType)data.type;
+        transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+    }
+
+    // Getters
+    public float GetHealth()
+    {
+        return health;
+    }
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+}
+
+[System.Serializable]
+public class SerializableEnemy
+{
+    public float health;
+    public float[] position;
+    public int type;
+    public int state;
+
+    public SerializableEnemy(EnemyBehaviour enemy)
+    {
+        health = enemy.GetHealth();
+
+        position = new float[3];
+        Vector3 v3Pos = enemy.GetPosition();
+        position[0] = v3Pos.x;
+        position[1] = v3Pos.y;
+        position[2] = v3Pos.z;
+
+        type = (int)enemy.enemyType;
+
+        state = (int)enemy.state;
     }
 }

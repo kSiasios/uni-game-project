@@ -58,7 +58,6 @@ public class WeaponBehaviourEnemy : MonoBehaviour
 
     void Shoot()
     {
-        //Debug.Log("Fire");
         // Create an objects that holds the parameters of the emitter
         var emitParams = new ParticleSystem.EmitParams();
 
@@ -75,6 +74,8 @@ public class WeaponBehaviourEnemy : MonoBehaviour
                 // The bullet will go straight below the entity with a speed of bulletSpeed
                 emitParams.velocity = new Vector3(0, -bulletSpeed, 0);
             }
+
+            //emitParams.velocity = new Vector3(0, 0, 0);
         }
         else if (controller.enemyType == EnemyBehaviour.EnemyType.Walker)
         {

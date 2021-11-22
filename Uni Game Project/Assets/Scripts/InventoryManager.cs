@@ -5,13 +5,16 @@ using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField] List<InventoryItem> inventory = new List<InventoryItem>();
+    public List<InventoryItem> inventory = new List<InventoryItem>();
     [Tooltip("The collider responsible for detecting objects")]
     [SerializeField] CircleCollider2D col;
 
     [SerializeField] TextMeshProUGUI uiItemCounter;
 
     [SerializeField] NotificationManager notificationManager;
+
+    [SerializeField] GameObject inventoryGrid;
+    [SerializeField] GameObject inventoryItemPrefab;
 
     private void Awake()
     {
@@ -30,6 +33,13 @@ public class InventoryManager : MonoBehaviour
         {
             notificationManager = GameObject.Find("NotificationPanel").GetComponentInChildren<NotificationManager>();
         }
+
+        if (inventoryGrid == null)
+        {
+            inventoryGrid = GameObject.Find("InventoryPanel")
+                .transform.Find("Backdrop")
+                .transform.Find("Grid").transform.gameObject;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,34 +48,46 @@ public class InventoryManager : MonoBehaviour
         {
             // Add object to inventory
             InventoryItem item = new InventoryItem();
-            item.SetAmount(1);
-            
+            item.AmountOfItems = 1;
+
             // Update the UI
-            uiItemCounter.text = "1";
 
             // Send Notification
             Collectable collectable = collision.gameObject.GetComponent<Collectable>();
             if (collectable != null)
             {
                 SendNotification(collectable.ToString());
-            } else
+                if (collectable.GetSerial() != null && collectable.isKey)
+                {
+                    // It is a key collectable, initialize the serial with the correct value
+                    item.Serial = collectable.GetSerial();
+                }
+                else
+                {
+                    uiItemCounter.text = "1";
+                    item.Serial = null;
+                }
+                // Change the state of the collectable to collected
+                collectable.SetState(Collectable.CollectableState.collected);
+            }
+            else
             {
                 SendNotification("1" + " x " + collision.gameObject.name);
             }
 
-            item.SetName(collision.name);
-            Add(item);
-            // Destroy object after collected
-            Destroy(collision.gameObject);
+            item.ItemName = collectable.GetName();
+            AddItem(item);
+            PrintList(inventory);
         }
     }
 
     void SendNotification(string notificationText)
     {
+        // Push new notification in the notification panel
         notificationManager.NewNotification(notificationText);
     }
 
-    void Add(InventoryItem newItem)
+    void AddItem(InventoryItem newItem)
     {
         // Function that handles adding items to the inventory
         bool alreadyExists = false;
@@ -77,7 +99,7 @@ public class InventoryManager : MonoBehaviour
                 // If there is an item of the same type in the inventory, just icrease its amount
                 alreadyExists = true;
                 Debug.Log("Item exists: " + (inventory[i].AmountOfItems + newItem.AmountOfItems));
-                inventory[i].SetAmount(inventory[i].AmountOfItems + newItem.AmountOfItems);
+                inventory[i].AmountOfItems += newItem.AmountOfItems;
 
                 // Update the UI
                 uiItemCounter.text = inventory[i].AmountOfItems.ToString();
@@ -91,7 +113,7 @@ public class InventoryManager : MonoBehaviour
             inventory.Add(newItem);
         }
 
-        PrintList(inventory);
+        InitializeInventoryPanel();
     }
 
     // Remove the whole stack of this item
@@ -108,14 +130,14 @@ public class InventoryManager : MonoBehaviour
         {
             if (inventory[index].AmountOfItems >= amount)
             {
-                inventory[index].SetAmount(inventory[index].AmountOfItems - amount);
+                inventory[index].AmountOfItems -= amount;
 
                 // Update the UI
                 uiItemCounter.text = inventory[index].AmountOfItems.ToString();
             }
             else
             {
-                inventory[index].SetAmount(0);
+                inventory[index].AmountOfItems = 0;
 
                 // Update the UI
                 uiItemCounter.text = "0";
@@ -126,44 +148,78 @@ public class InventoryManager : MonoBehaviour
 
     void PrintList(List<InventoryItem> list)
     {
-        for(int i = 0; i < list.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             print(list[i].ToString());
         }
     }
-}
 
-// Custom class that represents the items that are stored in the inventory
-public class InventoryItem
-{
-    public InventoryItem(int amount, string name)
+    void InitializeInventoryPanel()
     {
-        AmountOfItems = amount;
-        ItemName = name;
+        foreach (Transform child in inventoryGrid.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (var item in inventory)
+        {
+            GameObject obj = Instantiate(inventoryItemPrefab, inventoryGrid.transform);
+            InventoryItem objInfo = obj.GetComponent<InventoryItem>();
+            objInfo.AmountOfItems = item.AmountOfItems;
+            objInfo.ItemName = item.ItemName;
+        }
     }
 
-    public InventoryItem()
+    void RefreshUI()
     {
-        AmountOfItems = 0;
-        ItemName = "New Item";
+        foreach (var item in inventory)
+        {
+            if (!item.isKey)
+            {
+                uiItemCounter.text = item.AmountOfItems.ToString();
+            }
+        }
     }
 
-    public int AmountOfItems { get; set; }
-    public string ItemName { get; set; }
+    //public List<InventoryData> Save()
+    //{
+    //    // Save each item along with their amount
+    //    List<InventoryData> saveData = new List<InventoryData>();
 
-    public void SetAmount(int amount)
+    //    foreach (var item in inventory)
+    //    {
+    //        InventoryData saveItem = new InventoryData(item.ItemName, item.Serial, item.AmountOfItems);
+    //        saveData.Add(saveItem);
+    //    }
+
+    //    return saveData;
+    //}
+    public InventoryData[] Save()
     {
-        Debug.Log("Setting Amount to: " + amount);
-        AmountOfItems = amount;
+        // Save each item along with their amount
+        //List<InventoryData> saveData = new List<InventoryData>();
+
+        InventoryData[] saveData = new InventoryData[inventory.Count];
+        int i = 0;
+        foreach (var item in inventory)
+        {
+            InventoryData saveItem = new InventoryData(item.ItemName, item.Serial, item.AmountOfItems, item.isKey);
+            saveData[i] = saveItem;
+            //saveData.Add(saveItem);
+        }
+
+        return saveData;
     }
 
-    public void SetName(string name)
+    public void Load(InventoryData[] data)
     {
-        ItemName = name;
-    }
+        inventory.Clear();
 
-    public override string ToString()
-    {
-        return $"{ItemName}: {AmountOfItems}";
+        foreach (var item in data)
+        {
+            InventoryItem newItem = new InventoryItem(item.amount,item.name, item.serial, item.isKey);
+            AddItem(newItem);
+        }
+        InitializeInventoryPanel();
+        RefreshUI();
     }
 }

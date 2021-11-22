@@ -29,6 +29,16 @@ public class PlayerMovement : MonoBehaviour
         {
             jumping = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            FindObjectOfType<GameManager>().SaveGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            FindObjectOfType<GameManager>().LoadGame();
+        }
     }
 
     // FixedUpdate is called a fixed amount of times per second
