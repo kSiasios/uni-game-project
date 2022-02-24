@@ -1,0 +1,673 @@
+fileFormatVersion: 2
+guid: 6d5629237e0655e4f969d047bd49b04c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Body
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 1474
+      width: 740
+      height: 111
+    spriteID: 369c1e54144f2894889f59992c0ba103
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -556, y: 518}
+  - name: Launcher body
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 752
+      y: 1474
+      width: 75
+      height: 104
+    spriteID: a21cd1a94a8a14749bc663905fef5fc3
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -128, y: 608}
+  - name: Launcher hole
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 724
+      y: 1593
+      width: 63
+      height: 15
+    spriteID: 9cb88211a25dacb448643f78c70eeb66
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -163, y: 734}
+  - name: Lens Flare R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 774
+      y: 1616
+      width: 41
+      height: 7
+    spriteID: d09c88b53198a5245a4af75bcb3d0790
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -460, y: 764}
+  - name: Lens R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 795
+      y: 1593
+      width: 42
+      height: 7
+    spriteID: ded404ff25a34574bac8694caafdfdf1
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -438, y: 741}
+  - name: Propeler hat R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 823
+      y: 1616
+      width: 15
+      height: 7
+    spriteID: ad7343ddc216ae04e8f68a5363c43889
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -423, y: 502}
+  - name: Fan 2 R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 1593
+      width: 352
+      height: 53
+    spriteID: d12964868f3ea2e4ab219415e5899387
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -1073, y: 505}
+  - name: Fan 1 R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 364
+      y: 1593
+      width: 352
+      height: 53
+    spriteID: 58e460e82dec85e41b371d6e9be6ea9d
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -713, y: 506}
+  - name: Propeler Pole R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 850
+      y: 1164
+      width: 83
+      height: 262
+    spriteID: 8bb627930a60c3543b7491a6b7320d8e
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -361, y: 309}
+  - name: Inner Light Cone R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 850
+      y: 4
+      width: 378
+      height: 572
+    spriteID: aae53057f525ad9488619e548e8b6bfb
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -214, y: -304}
+  - name: Outer Light Cone R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 838
+      height: 727
+    spriteID: cbd274b0a062e724caeb97b68531d8de
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -831, y: -159}
+  - name: Lens Flare L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 724
+      y: 1631
+      width: 41
+      height: 7
+    spriteID: fa26995361291954282e8916f3dab22d
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 136, y: 779}
+  - name: Lens L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 724
+      y: 1616
+      width: 42
+      height: 7
+    spriteID: 8c1430b8f05d9bd41931baad671668d2
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 136, y: 764}
+  - name: Propeler hat L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 773
+      y: 1631
+      width: 15
+      height: 7
+    spriteID: 6f6e1dad22117e943812abb2aa09b5fc
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 171, y: 517}
+  - name: Fan 2 L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 1654
+      width: 352
+      height: 53
+    spriteID: 0f6e5c577f42836418eab84de0fb9a56
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -430, y: 566}
+  - name: Fan 1 L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 364
+      y: 1654
+      width: 352
+      height: 53
+    spriteID: 7cb1d42211aead14c81a378137066946
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -70, y: 567}
+  - name: Propeler Pole L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 850
+      y: 1434
+      width: 83
+      height: 262
+    spriteID: 931334a640364534196d5f1871e56204
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 281, y: 579}
+  - name: Inner Light Cone L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 850
+      y: 584
+      width: 378
+      height: 572
+    spriteID: 82baf8290b264c441b14ec30dd4f07a1
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 429, y: 276}
+  - name: Outer Light Cone L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 739
+      width: 838
+      height: 727
+    spriteID: 9dd9f7c8e7155104091e41356e0bf62e
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -186, y: 576}
+  platformSettings: []
+  mosaicLayers: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  importedTextureWidth: 2048
+  importedTextureHeight: 2048
+  documentSize: {x: 1863, y: 1920}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
+  textureActualWidth: 2048
+  textureActualHeight: 2048
+  spritePackingTag: 
+  resliceFromLayer: 0
+  characterMode: 1
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: Body
+    spriteName: Body
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 369c1e54144f2894889f59992c0ba103
+    layerID: 890
+    mosaicPosition: {x: 4, y: 1474}
+  - name: Launcher body
+    spriteName: Launcher body
+    isGroup: 0
+    parentIndex: -1
+    spriteID: a21cd1a94a8a14749bc663905fef5fc3
+    layerID: 802
+    mosaicPosition: {x: 752, y: 1474}
+  - name: Launcher hole
+    spriteName: Launcher hole
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9cb88211a25dacb448643f78c70eeb66
+    layerID: 811
+    mosaicPosition: {x: 724, y: 1593}
+  - name: Lens Flare R
+    spriteName: Lens Flare R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: d09c88b53198a5245a4af75bcb3d0790
+    layerID: 914
+    mosaicPosition: {x: 774, y: 1616}
+  - name: Lens R
+    spriteName: Lens R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: ded404ff25a34574bac8694caafdfdf1
+    layerID: 913
+    mosaicPosition: {x: 795, y: 1593}
+  - name: Propeler hat R
+    spriteName: Propeler hat R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: ad7343ddc216ae04e8f68a5363c43889
+    layerID: 912
+    mosaicPosition: {x: 823, y: 1616}
+  - name: Fan 2 R
+    spriteName: Fan 2 R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: d12964868f3ea2e4ab219415e5899387
+    layerID: 911
+    mosaicPosition: {x: 4, y: 1593}
+  - name: Fan 1 R
+    spriteName: Fan 1 R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 58e460e82dec85e41b371d6e9be6ea9d
+    layerID: 910
+    mosaicPosition: {x: 364, y: 1593}
+  - name: Propeler Pole R
+    spriteName: Propeler Pole R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8bb627930a60c3543b7491a6b7320d8e
+    layerID: 909
+    mosaicPosition: {x: 850, y: 1164}
+  - name: Inner Light Cone R
+    spriteName: Inner Light Cone R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: aae53057f525ad9488619e548e8b6bfb
+    layerID: 908
+    mosaicPosition: {x: 850, y: 4}
+  - name: Outer Light Cone R
+    spriteName: Outer Light Cone R
+    isGroup: 0
+    parentIndex: -1
+    spriteID: cbd274b0a062e724caeb97b68531d8de
+    layerID: 907
+    mosaicPosition: {x: 4, y: 4}
+  - name: Lens Flare L
+    spriteName: Lens Flare L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: fa26995361291954282e8916f3dab22d
+    layerID: 904
+    mosaicPosition: {x: 724, y: 1631}
+  - name: Lens L
+    spriteName: Lens L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8c1430b8f05d9bd41931baad671668d2
+    layerID: 903
+    mosaicPosition: {x: 724, y: 1616}
+  - name: Propeler hat L
+    spriteName: Propeler hat L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6f6e1dad22117e943812abb2aa09b5fc
+    layerID: 894
+    mosaicPosition: {x: 773, y: 1631}
+  - name: Fan 2 L
+    spriteName: Fan 2 L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 0f6e5c577f42836418eab84de0fb9a56
+    layerID: 787
+    mosaicPosition: {x: 4, y: 1654}
+  - name: Fan 1 L
+    spriteName: Fan 1 L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 7cb1d42211aead14c81a378137066946
+    layerID: 781
+    mosaicPosition: {x: 364, y: 1654}
+  - name: Propeler Pole L
+    spriteName: Propeler Pole L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 931334a640364534196d5f1871e56204
+    layerID: 816
+    mosaicPosition: {x: 850, y: 1434}
+  - name: Inner Light Cone L
+    spriteName: Inner Light Cone L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 82baf8290b264c441b14ec30dd4f07a1
+    layerID: 726
+    mosaicPosition: {x: 850, y: 584}
+  - name: Outer Light Cone L
+    spriteName: Outer Light Cone L
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9dd9f7c8e7155104091e41356e0bf62e
+    layerID: 723
+    mosaicPosition: {x: 4, y: 739}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+  generateGOHierarchy: 0
+  textureAssetName: Enemy_flyer - raster Texture
+  prefabAssetName: Enemy_flyer - raster Prefab
+  spriteLibAssetName: Enemy_flyer - raster Sprite Lib
+  secondarySpriteTextures: []

@@ -5,27 +5,27 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637718016646385320
-    m_Hash: 2515785555
+      ticks: 637811358306786138
+    m_Hash: 730615076
   m_LockFileStatus:
     m_FilePath: E:/Unity Projects/Uni Project/Uni Game Project/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637718016646385320
-    m_Hash: 1238707978
+      ticks: 637811358307269631
+    m_Hash: 956527721
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
   m_Packages:
     m_ResolvedPackages:
-    - packageId: com.unity.2d.animation@5.0.7
+    - packageId: com.unity.2d.animation@5.0.10
       testable: 0
       isDirectDependency: 1
-      version: 5.0.7
+      version: 5.0.10
       source: 1
-      resolvedPath: E:\Unity Projects\Uni Project\Uni Game Project\Library\PackageCache\com.unity.2d.animation@5.0.7
+      resolvedPath: E:\Unity Projects\Uni Project\Uni Game Project\Library\PackageCache\com.unity.2d.animation@5.0.10
       assetPath: Packages/com.unity.2d.animation
       name: com.unity.2d.animation
       displayName: 2D Animation
@@ -80,6 +80,9 @@ m_PackageAssets:
         - 3.2.10
         - 3.2.11
         - 3.2.13
+        - 3.2.14
+        - 3.2.15
+        - 3.2.16
         - 4.0.0
         - 4.0.1
         - 4.1.0
@@ -101,6 +104,9 @@ m_PackageAssets:
         - 5.0.7
         - 5.0.8
         - 5.0.9
+        - 5.0.10
+        - 5.1.0
+        - 5.1.1
         - 6.0.0-pre.1
         - 6.0.0-pre.2
         - 6.0.1
@@ -112,16 +118,21 @@ m_PackageAssets:
         - 7.0.0-pre.3
         - 7.0.0
         - 7.0.1
+        - 7.0.2
+        - 7.0.3
         - 8.0.0-pre.3
+        - 8.0.0-pre.4
+        - 8.0.0
         compatible:
         - 5.0.6
         - 5.0.7
         - 5.0.8
         - 5.0.9
-        verified: 5.0.9
+        - 5.0.10
+        verified: 5.0.10
       dependencies:
       - name: com.unity.2d.common
-        version: 4.0.3
+        version: 4.0.4
       - name: com.unity.mathematics
         version: 1.1.0
       - name: com.unity.2d.sprite
@@ -132,7 +143,7 @@ m_PackageAssets:
         version: 1.0.0
       resolvedDependencies:
       - name: com.unity.2d.common
-        version: 4.0.3
+        version: 4.0.4
       - name: com.unity.2d.sprite
         version: 1.0.0
       - name: com.unity.modules.uielements
@@ -164,13 +175,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637637510960000000
+      datePublishedTicks: 637750142350000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/2d.git
-        revision: 6f9c488e4d487ead34ee4d516f0a2f4a911a8b25
+        revision: 341b7316671d7e6703a7627f67c5fab262c4f1ac
         path: 
     - packageId: com.unity.2d.pixel-perfect@4.0.1
       testable: 0
@@ -247,12 +258,12 @@ m_PackageAssets:
         url: https://github.cds.internal.unity3d.com/unity/2d.git
         revision: 7d7470f4ca0ea8353d4c9640b3b6ae9d1ebd9c1d
         path: 
-    - packageId: com.unity.2d.psdimporter@4.1.0
+    - packageId: com.unity.2d.psdimporter@4.1.3
       testable: 0
       isDirectDependency: 1
-      version: 4.1.0
+      version: 4.1.3
       source: 1
-      resolvedPath: E:\Unity Projects\Uni Project\Uni Game Project\Library\PackageCache\com.unity.2d.psdimporter@4.1.0
+      resolvedPath: E:\Unity Projects\Uni Project\Uni Game Project\Library\PackageCache\com.unity.2d.psdimporter@4.1.3
       assetPath: Packages/com.unity.2d.psdimporter
       name: com.unity.2d.psdimporter
       displayName: 2D PSD Importer
@@ -291,6 +302,7 @@ m_PackageAssets:
         - 2.1.6
         - 2.1.8
         - 2.1.9
+        - 2.1.10
         - 3.0.0
         - 3.1.1
         - 3.1.3
@@ -304,6 +316,8 @@ m_PackageAssets:
         - 4.1.0
         - 4.1.1
         - 4.1.2
+        - 4.1.3
+        - 4.2.0
         - 5.0.0-pre.1
         - 5.0.0-pre.2
         - 5.0.1
@@ -315,22 +329,26 @@ m_PackageAssets:
         - 6.0.0-pre.4
         - 6.0.0
         - 6.0.1
+        - 6.0.2
         - 7.0.0-pre.3
+        - 7.0.0-pre.4
+        - 7.0.0
         compatible:
         - 4.1.0
         - 4.1.1
         - 4.1.2
-        verified: 4.1.2
+        - 4.1.3
+        verified: 4.1.3
       dependencies:
       - name: com.unity.2d.common
-        version: 4.0.3
+        version: 4.0.4
       - name: com.unity.2d.animation
-        version: 5.0.6
+        version: 5.0.10
       - name: com.unity.2d.sprite
         version: 1.0.0
       resolvedDependencies:
       - name: com.unity.2d.common
-        version: 4.0.3
+        version: 4.0.4
       - name: com.unity.2d.sprite
         version: 1.0.0
       - name: com.unity.modules.uielements
@@ -344,7 +362,7 @@ m_PackageAssets:
       - name: com.unity.modules.uielementsnative
         version: 1.0.0
       - name: com.unity.2d.animation
-        version: 5.0.7
+        version: 5.0.10
       - name: com.unity.mathematics
         version: 1.1.0
       - name: com.unity.modules.animation
@@ -365,13 +383,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637594727750000000
+      datePublishedTicks: 637750142410000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/2d.git
-        revision: 9e7fd5cbe078d004f1e87ecdf3b57436664a690a
+        revision: 341b7316671d7e6703a7627f67c5fab262c4f1ac
         path: 
     - packageId: com.unity.2d.sprite@1.0.0
       testable: 0
@@ -478,6 +496,7 @@ m_PackageAssets:
         - 3.0.15
         - 3.0.16
         - 3.0.17
+        - 3.0.18
         - 4.0.0
         - 4.0.1
         - 4.0.2
@@ -497,6 +516,9 @@ m_PackageAssets:
         - 5.1.3
         - 5.1.4
         - 5.1.5
+        - 5.1.6
+        - 5.1.7
+        - 5.2.0
         - 6.0.0-pre.1
         - 6.0.0-pre.2
         - 6.0.0
@@ -506,11 +528,16 @@ m_PackageAssets:
         - 7.0.0-pre.3
         - 7.0.0
         - 7.0.2
+        - 7.0.3
         - 8.0.0-pre.4
+        - 8.0.0-pre.5
+        - 8.0.0
         compatible:
         - 5.1.4
         - 5.1.5
-        verified: 5.1.5
+        - 5.1.6
+        - 5.1.7
+        verified: 5.1.7
       dependencies:
       - name: com.unity.mathematics
         version: 1.1.0
@@ -524,7 +551,7 @@ m_PackageAssets:
       - name: com.unity.mathematics
         version: 1.1.0
       - name: com.unity.2d.common
-        version: 4.0.3
+        version: 4.0.4
       - name: com.unity.2d.sprite
         version: 1.0.0
       - name: com.unity.modules.uielements
@@ -692,7 +719,10 @@ m_PackageAssets:
         - 2.8.0
         - 2.8.1
         - 2.8.2
+        - 2.8.3
+        - 2.8.4
         - 2.9.0-pre.1
+        - 2.9.0-pre.6
         compatible:
         - 2.5.0
         - 2.6.0-preview.2
@@ -724,7 +754,10 @@ m_PackageAssets:
         - 2.8.0
         - 2.8.1
         - 2.8.2
+        - 2.8.3
+        - 2.8.4
         - 2.9.0-pre.1
+        - 2.9.0-pre.6
         verified: 2.6.11
       dependencies: []
       resolvedDependencies: []
@@ -822,7 +855,17 @@ m_PackageAssets:
         - 1.12.5
         - 1.13.5
         - 1.14.1
+        - 1.14.4
+        - 1.14.7
+        - 1.14.9
+        - 1.14.12
+        - 1.14.13
         - 1.15.1
+        - 1.15.4
+        - 1.15.7
+        - 1.15.9
+        - 1.15.12
+        - 1.15.13
         - 2.0.0-preview.6
         - 2.0.0-preview.8
         - 2.0.0-preview.15
@@ -838,7 +881,17 @@ m_PackageAssets:
         - 1.12.5
         - 1.13.5
         - 1.14.1
+        - 1.14.4
+        - 1.14.7
+        - 1.14.9
+        - 1.14.12
+        - 1.14.13
         - 1.15.1
+        - 1.15.4
+        - 1.15.7
+        - 1.15.9
+        - 1.15.12
+        - 1.15.13
         - 2.0.0-preview.6
         - 2.0.0-preview.8
         - 2.0.0-preview.15
@@ -933,6 +986,9 @@ m_PackageAssets:
         - 3.0.5
         - 3.0.6
         - 3.0.7
+        - 3.0.9
+        - 3.0.10
+        - 3.0.12
         compatible:
         - 1.0.2
         - 1.0.6
@@ -959,6 +1015,9 @@ m_PackageAssets:
         - 3.0.5
         - 3.0.6
         - 3.0.7
+        - 3.0.9
+        - 3.0.10
+        - 3.0.12
         verified: 2.0.7
       dependencies:
       - name: com.unity.test-framework
@@ -1030,6 +1089,8 @@ m_PackageAssets:
         - 2.0.8
         - 2.0.9
         - 2.0.11
+        - 2.0.12
+        - 2.0.14
         compatible:
         - 1.0.2
         - 1.0.3
@@ -1046,7 +1107,9 @@ m_PackageAssets:
         - 2.0.8
         - 2.0.9
         - 2.0.11
-        verified: 2.0.11
+        - 2.0.12
+        - 2.0.14
+        verified: 2.0.14
       dependencies:
       - name: com.unity.test-framework
         version: 1.1.9
@@ -1114,6 +1177,7 @@ m_PackageAssets:
         - 1.2.2
         - 1.2.3
         - 1.2.4
+        - 1.2.5
         compatible:
         - 1.0.2
         - 1.0.3
@@ -1127,7 +1191,8 @@ m_PackageAssets:
         - 1.2.2
         - 1.2.3
         - 1.2.4
-        verified: 1.2.4
+        - 1.2.5
+        verified: 1.2.5
       dependencies: []
       resolvedDependencies: []
       keywords: []
@@ -1203,10 +1268,16 @@ m_PackageAssets:
         - 1.1.27
         - 1.1.29
         - 1.1.30
+        - 1.1.31
+        - 2.0.1-pre.12
+        - 2.0.1-pre.18
         compatible:
         - 1.1.29
         - 1.1.30
-        verified: 1.1.30
+        - 1.1.31
+        - 2.0.1-pre.12
+        - 2.0.1-pre.18
+        verified: 1.1.31
       dependencies:
       - name: com.unity.ext.nunit
         version: 1.0.6
@@ -1345,6 +1416,7 @@ m_PackageAssets:
         - 2.1.5
         - 2.1.6
         - 2.2.0-preview.1
+        - 2.2.0-preview.2
         - 3.0.0-preview.1
         - 3.0.0-preview.3
         - 3.0.0-preview.4
@@ -1494,7 +1566,9 @@ m_PackageAssets:
         - 1.6.1
         - 1.6.2
         - 1.6.3
+        - 1.6.4
         - 1.7.0-pre.1
+        - 1.7.0-pre.2
         compatible:
         - 1.4.8
         - 1.5.0-pre.2
@@ -1518,7 +1592,9 @@ m_PackageAssets:
         - 1.6.1
         - 1.6.2
         - 1.6.3
+        - 1.6.4
         - 1.7.0-pre.1
+        - 1.7.0-pre.2
         verified: 1.4.8
       dependencies:
       - name: com.unity.modules.director
@@ -3396,6 +3472,7 @@ m_PackageAssets:
         - 1.0.0
         - 1.0.5
         - 1.0.6
+        - 2.0.2
         compatible:
         - 0.1.5-preview
         - 0.1.6-preview
@@ -3403,6 +3480,7 @@ m_PackageAssets:
         - 1.0.0
         - 1.0.5
         - 1.0.6
+        - 2.0.2
         verified: 1.0.6
       dependencies: []
       resolvedDependencies: []
@@ -3466,6 +3544,7 @@ m_PackageAssets:
         - 1.1.0
         - 1.2.1
         - 1.2.4
+        - 1.2.5
         compatible:
         - 0.0.12-preview.2
         - 0.0.12-preview.5
@@ -3482,7 +3561,8 @@ m_PackageAssets:
         - 1.1.0
         - 1.2.1
         - 1.2.4
-        verified: 1.2.4
+        - 1.2.5
+        verified: 1.2.5
       dependencies: []
       resolvedDependencies: []
       keywords:
@@ -3506,93 +3586,6 @@ m_PackageAssets:
         type: git
         url: git@github.com:Unity-Technologies/Unity.Mathematics.git
         revision: 0a3dfafaf606098ea681de4c4be60f3aac63b773
-        path: 
-    - packageId: com.unity.2d.common@4.0.3
-      testable: 0
-      isDirectDependency: 0
-      version: 4.0.3
-      source: 1
-      resolvedPath: E:\Unity Projects\Uni Project\Uni Game Project\Library\PackageCache\com.unity.2d.common@4.0.3
-      assetPath: Packages/com.unity.2d.common
-      name: com.unity.2d.common
-      displayName: 2D Common
-      author:
-        name: 
-        email: 
-        url: 
-      category: 2D
-      type: 
-      description: 2D Common is a package that contains shared functionalities that
-        are used by most of the other 2D packages.
-      status: 4
-      errors: []
-      versions:
-        all:
-        - 1.0.9-preview.1
-        - 1.0.9-preview.2
-        - 1.0.10-preview
-        - 1.0.11-preview.1
-        - 1.1.0-preview.1
-        - 1.1.0-preview.2
-        - 1.2.0-preview.1
-        - 2.0.1
-        - 2.0.2
-        - 2.1.0
-        - 3.0.0
-        - 3.0.1
-        - 4.0.0
-        - 4.0.1
-        - 4.0.2
-        - 4.0.3
-        - 5.0.0-pre.1
-        - 5.0.0-pre.2
-        - 5.0.0
-        - 6.0.0-pre.2
-        - 6.0.0-pre.3
-        - 6.0.0-pre.4
-        - 6.0.0
-        compatible:
-        - 4.0.3
-        verified: 4.0.3
-      dependencies:
-      - name: com.unity.2d.sprite
-        version: 1.0.0
-      - name: com.unity.modules.uielements
-        version: 1.0.0
-      resolvedDependencies:
-      - name: com.unity.2d.sprite
-        version: 1.0.0
-      - name: com.unity.modules.uielements
-        version: 1.0.0
-      - name: com.unity.modules.ui
-        version: 1.0.0
-      - name: com.unity.modules.imgui
-        version: 1.0.0
-      - name: com.unity.modules.jsonserialize
-        version: 1.0.0
-      - name: com.unity.modules.uielementsnative
-        version: 1.0.0
-      keywords:
-      - 2d
-      registry:
-        id: main
-        name: 
-        url: https://packages.unity.com
-        scopes: []
-        isDefault: 1
-        capabilities: 7
-      hasRegistry: 1
-      hideInEditor: 1
-      entitlements:
-        isAllowed: 1
-      isAssetStorePackage: 0
-      datePublishedTicks: 637408843940000000
-      documentationUrl: 
-      hasRepository: 1
-      repository:
-        type: git
-        url: https://github.cds.internal.unity3d.com/unity/2d.git
-        revision: c97def465b1932276762fc13f4cfee58da99d5e9
         path: 
     - packageId: com.unity.2d.path@4.0.2
       testable: 0
@@ -3662,6 +3655,102 @@ m_PackageAssets:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/2d.git
         revision: 6f9c488e4d487ead34ee4d516f0a2f4a911a8b25
+        path: 
+    - packageId: com.unity.2d.common@4.0.4
+      testable: 0
+      isDirectDependency: 0
+      version: 4.0.4
+      source: 1
+      resolvedPath: E:\Unity Projects\Uni Project\Uni Game Project\Library\PackageCache\com.unity.2d.common@4.0.4
+      assetPath: Packages/com.unity.2d.common
+      name: com.unity.2d.common
+      displayName: 2D Common
+      author:
+        name: 
+        email: 
+        url: 
+      category: 2D
+      type: 
+      description: 2D Common is a package that contains shared functionalities that
+        are used by most of the other 2D packages.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 1.0.9-preview.1
+        - 1.0.9-preview.2
+        - 1.0.10-preview
+        - 1.0.11-preview.1
+        - 1.1.0-preview.1
+        - 1.1.0-preview.2
+        - 1.2.0-preview.1
+        - 2.0.1
+        - 2.0.2
+        - 2.1.0
+        - 2.1.1
+        - 3.0.0
+        - 3.0.1
+        - 4.0.0
+        - 4.0.1
+        - 4.0.2
+        - 4.0.3
+        - 4.0.4
+        - 4.1.0
+        - 5.0.0-pre.1
+        - 5.0.0-pre.2
+        - 5.0.0
+        - 6.0.0-pre.2
+        - 6.0.0-pre.3
+        - 6.0.0-pre.4
+        - 6.0.0
+        - 6.0.1
+        - 6.0.2
+        - 7.0.0-pre.3
+        - 7.0.0-pre.4
+        - 7.0.0
+        compatible:
+        - 4.0.3
+        - 4.0.4
+        verified: 4.0.4
+      dependencies:
+      - name: com.unity.2d.sprite
+        version: 1.0.0
+      - name: com.unity.modules.uielements
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.2d.sprite
+        version: 1.0.0
+      - name: com.unity.modules.uielements
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.modules.jsonserialize
+        version: 1.0.0
+      - name: com.unity.modules.uielementsnative
+        version: 1.0.0
+      keywords:
+      - 2d
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637750142160000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/2d.git
+        revision: 341b7316671d7e6703a7627f67c5fab262c4f1ac
         path: 
   m_LocalPackages:
     m_LocalFileStatus: []
