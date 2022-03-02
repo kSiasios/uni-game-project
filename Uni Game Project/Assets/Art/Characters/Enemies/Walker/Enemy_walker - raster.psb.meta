@@ -112,7 +112,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 136, y: 63}
+    uvTransform: {x: 136, y: 243}
   - name: Gun Doors
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -134,7 +134,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 144, y: -37}
+    uvTransform: {x: 144, y: 143}
   - name: Wheel R
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -156,7 +156,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 291, y: 208}
+    uvTransform: {x: 291, y: 388}
   - name: Wheel L
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -178,7 +178,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 979, y: 208}
+    uvTransform: {x: 979, y: 388}
   - name: Lens Flare
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -200,7 +200,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 605, y: -154}
+    uvTransform: {x: 605, y: 26}
   - name: Lens
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -222,7 +222,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 590, y: -153}
+    uvTransform: {x: 590, y: 27}
   - name: Scanner
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -244,7 +244,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 667, y: -264}
+    uvTransform: {x: 667, y: -84}
   - name: Inner light cone
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -266,7 +266,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 726, y: -752}
+    uvTransform: {x: 726, y: -572}
   - name: Outer light cone
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -288,7 +288,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -24, y: 295}
+    uvTransform: {x: -24, y: 475}
   - name: Head
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -310,7 +310,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 798, y: -795}
+    uvTransform: {x: 798, y: -615}
   - name: Antenna
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -332,7 +332,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 410, y: -406}
+    uvTransform: {x: 410, y: -226}
   - name: Body
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -354,7 +354,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -484, y: -282}
+    uvTransform: {x: -484, y: -102}
   - name: Gun Shadow
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -376,7 +376,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 152, y: -182}
+    uvTransform: {x: 152, y: -2}
   platformSettings:
   - name: DefaultTexturePlatform
     overridden: 0

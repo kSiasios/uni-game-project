@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement Specific Variables")]
     [Tooltip("How fast is the player moving")]
-    [Range(0f, 10f)] [SerializeField] float speed = 10f;
+    [Range(0f, 100f)] [SerializeField] float speed = 10f;
+    [Range(0f, 10f)] [SerializeField] float gravityScale = 1f;
 
     [Header("Other Core Variables")]
     [Tooltip("The amount of health the player has")]
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             rigidbody = transform.GetComponent<Rigidbody2D>();
         }
+        rigidbody.gravityScale = gravityScale;
 
         if (groundCheck == null)
         {
@@ -64,6 +66,9 @@ public class PlayerController : MonoBehaviour
     {
         // Update the UI
         healthbar.value = health / maxHealth;
+
+        rigidbody.gravityScale = gravityScale;
+
     }
 
     // Move player with the default speed
