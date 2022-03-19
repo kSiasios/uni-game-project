@@ -39,6 +39,17 @@ public class PlayerMovement : MonoBehaviour
         {
             FindObjectOfType<GameManager>().LoadGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            controller.Reset();
+        }
+
+        //if(Mathf.Abs(horizontalAxis) < 0.1 && Mathf.Abs(verticalAxis) < 0.1)
+        //{
+        //    controller.stopPlayer();
+        //    Debug.Log("STOPPING PLAYER");
+        //}
     }
 
     // FixedUpdate is called a fixed amount of times per second

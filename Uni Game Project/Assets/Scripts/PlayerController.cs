@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Specific Variables")]
     [Tooltip("How fast is the player moving")]
     [Range(0f, 100f)] [SerializeField] float speed = 10f;
-    [Range(0f, 10f)] [SerializeField] float gravityScale = 1f;
+    [Range(0f, 100f)] [SerializeField] float jumpForce   = 10f;
+    [Range(0f, 100f)] [SerializeField] float gravityScale = 1f;
 
     [Header("Other Core Variables")]
     [Tooltip("The amount of health the player has")]
@@ -32,8 +33,26 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The healthbar of the player")]
     [SerializeField] Slider healthbar;
 
+    [Header("Debugging Variables")]
+    [SerializeField] private  bool canReset = true;
+    [SerializeField] private Vector3 customResetPosition;
+    [SerializeField] private Vector3 resetPosition;
+
     private void Awake()
     {
+        // Initialize reset position if the player can reset
+        if (canReset)
+        {
+            if (resetPosition == customResetPosition)
+            {
+                // This means that the two positions are uninitialized or the user put 0,0,0 as the reset position
+                resetPosition = transform.position;
+            }else
+            {
+                resetPosition = customResetPosition;
+            }
+        }
+
         // If the rigidbody is not initialized, try to find it in the current GameObject
         if (rigidbody == null)
         {
@@ -84,19 +103,19 @@ public class PlayerController : MonoBehaviour
         if (direction.x < 0 && facingRight)
         {
             facingRight = false;
-            transform.Rotate(0, -180, 0);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
         // If player is moving to the right, flip them to face to the right
         else if (direction.x > 0 && !facingRight)
         {
             facingRight = true;
-            transform.Rotate(0, 180, 0);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
         //Debug.Log("Moving 2");
         rigidbody.velocity = new Vector2(direction.x * speed, rigidbody.velocity.y);
         // If the player is touching the ground, they can jump
-        if (jumping && groundCheck.IsTouchingLayers(groudLayerMask)) rigidbody.velocity = new Vector2(rigidbody.velocity.x, speed);
+        if (jumping && groundCheck.IsTouchingLayers(groudLayerMask)) rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
     }
 
     public void TakeDamage(int amount)
@@ -150,6 +169,22 @@ public class PlayerController : MonoBehaviour
     public int GetAmmo()
     {
         return transform.GetComponentInChildren<WeaponBehaviour>().GetAmmo();
+    }
+
+    //public void stopPlayer()
+    //{
+    //    if(groundCheck.IsTouchingLayers(groudLayerMask) && rigidbody.velocity != Vector2.zero)
+    //    {
+    //        // IF PLAYER IS GROUNDED, THEN PREVENT THEM FROM SLIDING
+    //        rigidbody.constraints = UnityEngine.RigidbodyConstraints2D.FreezePositionX;
+    //    }
+    //}.
+
+    public void Reset()
+    {
+        // A function that resets the player's position (for debugging or potential checkpoints)
+        transform.position = resetPosition;
+        rigidbody.velocity = Vector2.zero;
     }
 }
 
