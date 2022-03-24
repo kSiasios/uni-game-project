@@ -1294,8 +1294,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 38.4, y: 4.02}
-    newSize: {x: 38.4, y: 4.02}
+    oldSize: {x: 38.4, y: 4.32}
+    newSize: {x: 38.4, y: 4.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1304,18 +1304,18 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -19.199999, y: -2.02}
       - {x: -6.6, y: -2.02}
-      - {x: -6.6, y: 2.02}
-      - {x: -9.617548, y: 2.055861}
-      - {x: -11.969142, y: -0.26963043}
-      - {x: -19.176256, y: -0.29330873}
-    - - {x: 9.212681, y: 2.0118833}
-      - {x: 8.24765, y: 1.0330706}
-      - {x: 5.1130066, y: 1.0193381}
-      - {x: 4.133339, y: 2.02}
-      - {x: -1.1999999, y: 2.02}
+      - {x: -6.5564284, y: 1.7876205}
+      - {x: -9.472311, y: 1.794435}
+      - {x: -11.852954, y: -0.5310564}
+      - {x: -19.205303, y: -0.5256877}
+    - - {x: 9.372444, y: 1.7649808}
+      - {x: 8.378365, y: 0.72807264}
+      - {x: 5.069435, y: 0.7579112}
+      - {x: 4.2640495, y: 1.7585735}
+      - {x: -1.1999999, y: 1.8311915}
       - {x: -1.1999999, y: -2.02}
       - {x: 19.199999, y: -2.02}
-      - {x: 19.199999, y: 2.02}
+      - {x: 19.185476, y: 1.7295265}
 --- !u!1001 &1506277165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1399,6 +1399,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6445649534308978418, guid: 89ea660270810ee4ebbb8ff6871d6f93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6753388447950406213, guid: 89ea660270810ee4ebbb8ff6871d6f93, type: 3}
       propertyPath: m_SortingOrder
       value: 100
@@ -1431,22 +1435,22 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 38.4, y: 4.02}
-    newSize: {x: 38.4, y: 4.02}
+    oldSize: {x: 38.4, y: 4.24}
+    newSize: {x: 38.4, y: 4.24}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -10.899644, y: 2.0035734}
-      - {x: -12.398171, y: 0.50531125}
-      - {x: -19.213337, y: 0.5053017}
+    - - {x: -10.967626, y: 1.8323741}
+      - {x: -12.355688, y: 0.37671494}
+      - {x: -19.213337, y: 0.33863187}
       - {x: -19.199999, y: -2.01}
       - {x: 19.283272, y: -2.1432369}
-      - {x: 19.299927, y: -0.2766189}
-      - {x: 6.370907, y: -0.2908268}
-      - {x: 4.1476817, y: 1.996691}
+      - {x: 19.288002, y: -0.4674062}
+      - {x: 6.3112855, y: -0.38622093}
+      - {x: 4.211999, y: 1.8397224}
 --- !u!1 &1583670395
 GameObject:
   m_ObjectHideFlags: 0

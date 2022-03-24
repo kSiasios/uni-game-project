@@ -91,50 +91,6 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: ForeGround
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 2172
-      width: 3840
-      height: 2148
-    spriteID: dc5e3b6901302644dbda757dfdee1090
-    internalID: 0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 4, y: 2172}
-  - name: PlayerGround
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 3852
-      y: 4117
-      width: 3840
-      height: 402
-    spriteID: c5869ce406a19f94dadebc050dd26fc7
-    internalID: 0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 3852, y: 4117}
   - name: Back 1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -267,13 +223,79 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
-  platformSettings: []
+  - name: ForeGround
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2172
+      width: 3840
+      height: 2148
+    spriteID: bc512fb6bedf36c4fa053823b2d7a890
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 2172}
+  - name: PlayerGround
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3852
+      y: 4117
+      width: 3840
+      height: 424
+    spriteID: 198fbecdedbd92b4d82a3c578dfbdb8f
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 3852, y: 4117}
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   documentPivot: {x: 0, y: 0}
   documentAlignment: 7
   importHiddenLayers: 0
-  importedTextureWidth: 2048
-  importedTextureHeight: 2048
+  importedTextureWidth: 4096
+  importedTextureHeight: 4096
   documentSize: {x: 3840, y: 2160}
   paperDollMode: 0
   keepDupilcateSpriteName: 0
@@ -290,15 +312,15 @@ ScriptedImporter:
     spriteName: ForeGround
     isGroup: 0
     parentIndex: -1
-    spriteID: dc5e3b6901302644dbda757dfdee1090
-    layerID: 35
+    spriteID: bc512fb6bedf36c4fa053823b2d7a890
+    layerID: 80
     mosaicPosition: {x: 4, y: 2172}
   - name: PlayerGround
     spriteName: PlayerGround
     isGroup: 0
     parentIndex: -1
-    spriteID: c5869ce406a19f94dadebc050dd26fc7
-    layerID: 33
+    spriteID: 198fbecdedbd92b4d82a3c578dfbdb8f
+    layerID: 79
     mosaicPosition: {x: 3852, y: 4117}
   - name: Back 1
     spriteName: Back 1
