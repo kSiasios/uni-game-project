@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\NotificationItem.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviour.cs" />
     <Compile Include="Assets\SaveData.cs" />
+    <Compile Include="Assets\Elevator.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviourEnemy.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\GameManager.cs" />
-    <Compile Include="Assets\Elevator.cs" />
+    <Compile Include="Assets\CameraController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
