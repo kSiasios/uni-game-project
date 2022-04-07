@@ -18,8 +18,8 @@ public class Elevator : MonoBehaviour
     [SerializeField] private ElevatorDirection elevatorDirection = ElevatorDirection.vertical;
     [Tooltip("How fast should the elevator go?")]
     [SerializeField] [Range(1f, 50f)] private float elevatorSpeed = 1;
-    private float stopDistance;
-    private Vector3 travelPosition;
+    [SerializeField] private float stopDistance;
+    [SerializeField] private Vector3 travelPosition;
 
     [Tooltip("Is the elevator moving?")]
     [SerializeField] private bool moving = false;
@@ -27,58 +27,83 @@ public class Elevator : MonoBehaviour
     [SerializeField] private bool aboutToMove = false;
     [Tooltip("Is the elevator colliding with the player?")]
     [SerializeField] private bool collidingWithPlayer = false;
+    
+    [SerializeField] private float distanceFromEnd;
+    [SerializeField] private float distanceFromStart;
 
     private void Awake()
     {
-        defaultElevatorPosition = transform.position;
+        //defaultElevatorPosition = transform.position;
+        defaultElevatorPosition = transform.localPosition;
         stopDistance = elevatorSpeed / 100;
 
         // Fix the axis that is not used to the corresponding value of the elevator
         if (elevatorDirection == ElevatorDirection.vertical) {
-            travelPoint.x = transform.position.x;
+            //travelPoint.x = transform.position.x;
+            travelPoint.x = transform.localPosition.x;
         } else {
-            travelPoint.y = transform.position.y;
+            //travelPoint.y = transform.position.y;
+            travelPoint.y = transform.localPosition.y;
         }
+        Physics.IgnoreLayerCollision(0,2);
+        Physics.IgnoreLayerCollision(4,9);
     }
 
     private void Update()
     {
-
-        if (Vector3.Distance(transform.position, defaultElevatorPosition) < stopDistance || Vector3.Distance(transform.position, travelPoint) < stopDistance)
+        if (elevatorDirection == ElevatorDirection.vertical)
         {
-            if (!aboutToMove)
-            {
-                // Prevent elevator from shutting down before reaching its destination
-                moving = false;
-            }
+            //distanceFromEnd = Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, travelPoint.y));
+            distanceFromEnd = Vector2.Distance(new Vector2(0, transform.localPosition.y), new Vector2(0, travelPoint.y));
+            //distanceFromStart = Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, defaultElevatorPosition.y));
+            distanceFromStart = Vector2.Distance(new Vector2(0, transform.localPosition.y), new Vector2(0, defaultElevatorPosition.y));
+            //distanceFromStart = Vector2.Distance(transform.position, defaultElevatorPosition);
+        }
+        else
+        {
+            //distanceFromEnd = Vector2.Distance(new Vector2(transform.position.x, 0), new Vector2(travelPoint.x, 0));
+            distanceFromEnd = Vector2.Distance(new Vector2(transform.localPosition.x, 0), new Vector2(travelPoint.x, 0));
+            //distanceFromStart = Vector2.Distance(new Vector2(transform.position.x, 0), new Vector2(defaultElevatorPosition.x, 0));
+            distanceFromStart = Vector2.Distance(new Vector2(transform.localPosition.x, 0), new Vector2(defaultElevatorPosition.x, 0));
+            //distanceFromEnd = Vector2.Distance(transform.position, travelPoint);
+            //distanceFromStart = Vector2.Distance(transform.position, defaultElevatorPosition);
+        }
+
+        if (distanceFromStart < stopDistance || distanceFromEnd < stopDistance)
+        {
+            //if (!aboutToMove)
+            //{
+            //    // Prevent elevator from shutting down before reaching its destination
+            //    moving = false;
+            //}
 
             if (Input.GetKeyDown(KeyCode.E) && collidingWithPlayer)
             {
                 // Activate elevator
-                if (Vector3.Distance(transform.position, travelPoint) < stopDistance)
+                if (distanceFromEnd < stopDistance)
                 {
                     // We are in the destination point
                     if (elevatorDirection == ElevatorDirection.vertical)
                     {
-                        travelPosition = new Vector3(transform.position.x, defaultElevatorPosition.y);
+                        travelPosition = new Vector3(transform.localPosition.x, defaultElevatorPosition.y, transform.localPosition.z);
                     }
                     else
                     {
-                        travelPosition = new Vector3(defaultElevatorPosition.x, transform.position.y);
+                        travelPosition = new Vector3(defaultElevatorPosition.x, transform.localPosition.y, transform.localPosition.z);
                     }
                     moving = true;
                     aboutToMove = true;
                 }
-                else if (Vector3.Distance(transform.position, defaultElevatorPosition) < stopDistance)
+                else if (distanceFromStart < stopDistance)
                 {
                     // We are in the deafult point
                     if (elevatorDirection == ElevatorDirection.vertical)
                     {
-                        travelPosition = new Vector3(transform.position.x, travelPoint.y);
+                        travelPosition = new Vector3(transform.localPosition.x, travelPoint.y, transform.localPosition.z);
                     }
                     else
                     {
-                        travelPosition = new Vector3(travelPoint.x, transform.position.y);
+                        travelPosition = new Vector3(travelPoint.x, transform.localPosition.y, transform.localPosition.z);
                     }
                     moving = true;
                     aboutToMove = true;
@@ -91,7 +116,11 @@ public class Elevator : MonoBehaviour
     {
         if (moving)
         {
-            transform.position = transform.position + (transform.position - travelPosition).normalized * Time.deltaTime * -1 * elevatorSpeed;
+            //transform.position = transform.position + (transform.position - travelPosition).normalized * Time.deltaTime * -1 * elevatorSpeed;
+            //transform.position = transform.position + (transform.position - travelPosition) * Time.deltaTime * -1 * elevatorSpeed;
+            //transform.position += (travelPosition - transform.position).normalized * Time.deltaTime  * elevatorSpeed;
+            //transform.position = Vector2.MoveTowards(transform.position, travelPosition, elevatorSpeed * Time.deltaTime);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, travelPosition, elevatorSpeed * Time.deltaTime);
             aboutToMove = false;
         }
     }

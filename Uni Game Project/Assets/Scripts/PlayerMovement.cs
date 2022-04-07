@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalAxis = 0;       // -1 if the player is moving to the left, 1 if player is moving to the right
     private float verticalAxis = 0;         // -1 if the player is moving downwards, 1 if player is moving upwards
     private bool jumping = false;
+    private float defaultPlayerSpeed;
+    private float slowSpeed = 2;
 
     private void Awake()
     {
@@ -18,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
         {
             controller = FindObjectOfType<PlayerController>();
         }
+
+        defaultPlayerSpeed = controller.GetSpeed();
     }
 
     // Update is called once per frame
@@ -45,6 +49,21 @@ public class PlayerMovement : MonoBehaviour
             controller.Reset();
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            controller.SetSpeed(slowSpeed);
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftAlt))
+        {
+            controller.SetSpeed(defaultPlayerSpeed);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            controller.SetAnimatorBool("isShooting", true);
+        }
+
         //if(Mathf.Abs(horizontalAxis) < 0.1 && Mathf.Abs(verticalAxis) < 0.1)
         //{
         //    controller.stopPlayer();
@@ -53,7 +72,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // FixedUpdate is called a fixed amount of times per second
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         // Move the player using the controller script
         controller.MovePlayer(new Vector2(horizontalAxis, verticalAxis), jumping);
         jumping = false;

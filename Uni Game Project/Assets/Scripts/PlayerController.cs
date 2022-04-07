@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 customResetPosition;
     [SerializeField] private Vector3 resetPosition;
 
+    [Header("Animation Variables")]
+    [Tooltip("The animator responsible for the player")]
+    [SerializeField] Animator playerAnimator;
+
     private void Awake()
     {
         // Initialize reset position if the player can reset
@@ -79,6 +83,11 @@ public class PlayerController : MonoBehaviour
         {
             healthbar = GameObject.Find("HealthBar").GetComponent<Slider>();
         }
+
+        if (playerAnimator == null)
+        {
+            playerAnimator = gameObject.GetComponent<Animator>();
+        }
     }
 
     private void Update()
@@ -116,6 +125,22 @@ public class PlayerController : MonoBehaviour
         rigidbody.velocity = new Vector2(direction.x * speed, rigidbody.velocity.y);
         // If the player is touching the ground, they can jump
         if (jumping && groundCheck.IsTouchingLayers(groudLayerMask)) rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
+
+        if(Mathf.Abs(rigidbody.velocity.x) > 4)
+        {
+            // Is running
+            SetAnimatorBool("isRunning", true);
+            SetAnimatorBool("isMoving", false);
+        } else if (Mathf.Abs(rigidbody.velocity.x) > 0.1)
+        {
+            SetAnimatorBool("isRunning", false);
+            SetAnimatorBool("isMoving", true);
+            //playerAnimator.SetBool("isRunning", false);
+        } else
+        {
+            SetAnimatorBool("isRunning", false);
+            SetAnimatorBool("isMoving", false);
+        }
     }
 
     public void TakeDamage(int amount)
@@ -185,6 +210,15 @@ public class PlayerController : MonoBehaviour
         // A function that resets the player's position (for debugging or potential checkpoints)
         transform.position = resetPosition;
         rigidbody.velocity = Vector2.zero;
+    }
+    // Setters
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+    public void SetAnimatorBool(string varName, bool value)
+    {
+        playerAnimator.SetBool(varName, value);
     }
 }
 

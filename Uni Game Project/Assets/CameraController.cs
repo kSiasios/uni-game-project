@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     private CinemachineConfiner cameraConfiner;
     [SerializeField] private BoxCollider2D triggerCollider;
+    private bool inBoundary = false;
 
     private void Awake()
     {
@@ -21,23 +22,11 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Camera Boundary"))
         {
-            Debug.Log("Triggered!");
+            //Debug.Log("Triggered!");
             cameraConfiner.m_BoundingShape2D = collision;
         }
     }
