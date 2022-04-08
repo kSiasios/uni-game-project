@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Specific Variables")]
     [Tooltip("How fast is the player moving")]
     [Range(0f, 100f)] [SerializeField] float speed = 10f;
-    [Range(0f, 100f)] [SerializeField] float jumpForce   = 10f;
+    [Range(0f, 100f)] [SerializeField] float jumpForce = 10f;
     [Range(0f, 100f)] [SerializeField] float gravityScale = 1f;
 
     [Header("Other Core Variables")]
@@ -34,13 +34,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Slider healthbar;
 
     [Header("Debugging Variables")]
-    [SerializeField] private  bool canReset = true;
+    [SerializeField] private bool canReset = true;
     [SerializeField] private Vector3 customResetPosition;
     [SerializeField] private Vector3 resetPosition;
 
     [Header("Animation Variables")]
     [Tooltip("The animator responsible for the player")]
     [SerializeField] Animator playerAnimator;
+
+
+    private bool isJumping = false;
 
     private void Awake()
     {
@@ -51,7 +54,8 @@ public class PlayerController : MonoBehaviour
             {
                 // This means that the two positions are uninitialized or the user put 0,0,0 as the reset position
                 resetPosition = transform.position;
-            }else
+            }
+            else
             {
                 resetPosition = customResetPosition;
             }
@@ -102,6 +106,8 @@ public class PlayerController : MonoBehaviour
     // Move player with the default speed
     public void MovePlayer(Vector2 direction, bool jumping)
     {
+        isJumping = jumping;
+        SetAnimatorBool("isJumping", jumping);
         MovePlayer(direction, speed, jumping);
     }
 
@@ -126,17 +132,39 @@ public class PlayerController : MonoBehaviour
         // If the player is touching the ground, they can jump
         if (jumping && groundCheck.IsTouchingLayers(groudLayerMask)) rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
 
-        if(Mathf.Abs(rigidbody.velocity.x) > 4)
+        // If the player is landing, play landing animation
+        if (groundCheck.IsTouchingLayers(groudLayerMask))
+        {
+            if (rigidbody.velocity.y < 0)
+            {
+                SetAnimatorBool("isLanding", true);
+            }
+            else
+            {
+                // Play falling animation
+                SetAnimatorBool("isLanding", false);
+                //SetAnimatorBool("isJumping", true);
+            }
+        }
+        else
+        {
+            SetAnimatorBool("isLanding", false);
+            SetAnimatorBool("isJumping", false);
+        }
+
+        if (Mathf.Abs(rigidbody.velocity.x) > 4)
         {
             // Is running
             SetAnimatorBool("isRunning", true);
             SetAnimatorBool("isMoving", false);
-        } else if (Mathf.Abs(rigidbody.velocity.x) > 0.1)
+        }
+        else if (Mathf.Abs(rigidbody.velocity.x) > 0.1)
         {
             SetAnimatorBool("isRunning", false);
             SetAnimatorBool("isMoving", true);
             //playerAnimator.SetBool("isRunning", false);
-        } else
+        }
+        else
         {
             SetAnimatorBool("isRunning", false);
             SetAnimatorBool("isMoving", false);
@@ -194,6 +222,11 @@ public class PlayerController : MonoBehaviour
     public int GetAmmo()
     {
         return transform.GetComponentInChildren<WeaponBehaviour>().GetAmmo();
+    }
+
+    public bool GetIfJumping()
+    {
+        return isJumping;
     }
 
     //public void stopPlayer()

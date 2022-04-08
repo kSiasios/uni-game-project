@@ -127,7 +127,7 @@ public class Elevator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collision with " + collision.gameObject.name);
+        //Debug.Log("Collision with " + collision.gameObject.name);
         collision.gameObject.transform.parent = this.gameObject.transform;
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {

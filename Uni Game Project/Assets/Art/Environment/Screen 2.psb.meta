@@ -267,6 +267,28 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 3852, y: 3888}
+  - name: Foreground Back
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3852
+      y: 4328
+      width: 633
+      height: 375
+    spriteID: 7098a054031ed68499b651a031746bbd
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 2637, y: 4328}
   platformSettings:
   - name: DefaultTexturePlatform
     overridden: 0
@@ -322,6 +344,13 @@ ScriptedImporter:
     spriteID: 7335f50e46c4196489742d984090e7b5
     layerID: 83
     mosaicPosition: {x: 3852, y: 3888}
+  - name: Foreground Back
+    spriteName: Foreground Back
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 7098a054031ed68499b651a031746bbd
+    layerID: 85
+    mosaicPosition: {x: 3852, y: 4328}
   - name: Back 1
     spriteName: Back 1
     isGroup: 0

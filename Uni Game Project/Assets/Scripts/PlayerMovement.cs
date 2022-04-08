@@ -59,9 +59,15 @@ public class PlayerMovement : MonoBehaviour
             controller.SetSpeed(defaultPlayerSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        //if (Input.GetKeyDown(KeyCode.F))
+        //if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKey(KeyCode.Mouse0))
         {
             controller.SetAnimatorBool("isShooting", true);
+        }
+        else
+        {
+            controller.SetAnimatorBool("isShooting", false);
         }
 
         //if(Mathf.Abs(horizontalAxis) < 0.1 && Mathf.Abs(verticalAxis) < 0.1)
