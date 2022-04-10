@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     private CinemachineConfiner cameraConfiner;
     [SerializeField] private BoxCollider2D triggerCollider;
-    private bool inBoundary = false;
+    //private bool inBoundary = false;
 
     private void Awake()
     {

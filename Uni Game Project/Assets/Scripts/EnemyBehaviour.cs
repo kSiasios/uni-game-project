@@ -23,8 +23,12 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] CapsuleCollider2D enemyCollider;
     [Tooltip("The collider of the enemy responsible for detecting the player when in range")]
     [SerializeField] CircleCollider2D actingAreaCollider;
+    [Tooltip("The animator that controls the enemy")]
+    [SerializeField] Animator enemyAnimator;
 
     [SerializeField] GameObject patrolPointPrefab;
+
+    [SerializeField] private Transform[] givenPatrolPoints;
 
     [Header("Enemy Attributes")]
     [Tooltip("How much health does the enemy have")]
@@ -43,9 +47,12 @@ public class EnemyBehaviour : MonoBehaviour
     private bool timePassed = false;
     private float gravityScale = 0f;
 
-    [HideInInspector] public bool chasingPlayer = false;
-    [HideInInspector] public bool patroling = true;
-    [HideInInspector] public bool facingRight = true;
+    //[HideInInspector] 
+    public bool chasingPlayer = false;
+    //[HideInInspector] 
+    public bool patroling = true;
+    //[HideInInspector] 
+    public bool facingRight = true;
     public bool movingTowardsPoint = false;
 
     [HideInInspector] public Transform playerTransform;
@@ -56,6 +63,14 @@ public class EnemyBehaviour : MonoBehaviour
     GameObject targetPos;
 
     public Queue<GameObject> patrolPoints = new Queue<GameObject>();
+
+    [Header("Enemy Visuals")]
+    [Tooltip("The color of the indicators when enemy is patroling.")]
+    [SerializeField] private Color patrolingColor;
+    [Tooltip("The color of the indicators when enemy is chasing the player.")]
+    [SerializeField] private Color chasingColor;
+    [Tooltip("Objects that indicate the state of the enemy by their color. (Usually light cones or lights in general)")]
+    [SerializeField] private SpriteRenderer[] detectionIndicators;
 
     private void Awake()
     {
@@ -82,7 +97,12 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (playerTransform == null)
         {
-            playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+            playerTransform = FindObjectOfType<PlayerController>().gameObject.transform;
+        }
+
+        if (enemyAnimator == null)
+        {
+            enemyAnimator = GetComponent<Animator>();
         }
 
         gravityScale = rigidbody.gravityScale;
@@ -131,11 +151,27 @@ public class EnemyBehaviour : MonoBehaviour
                     targetPos = point;
                     patrolPoints.Enqueue(point);
                 }
+
+                enemyAnimator.SetBool("isMoving", movingTowardsPoint);
+
                 MoveTowardsPoint(targetPos.transform.position);
+            }
+            else
+            {
+                enemyAnimator.SetBool("isMoving", false);
+            }
+
+            foreach (var item in detectionIndicators)
+            {
+                item.color = patrolingColor;
             }
         }
         else if (chasingPlayer)
         {
+            foreach (var item in detectionIndicators)
+            {
+                item.color = chasingColor;
+            }
             Vector2 normalizedVector = new Vector2(playerTransform.position.x, playerTransform.position.y) - new Vector2(transform.position.x, transform.position.y);
             normalizedVector.Normalize();
             Flip(normalizedVector);
@@ -194,7 +230,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject == playerTransform.gameObject)
         {
             // Player is in range, chase them
             chasingPlayer = true;
@@ -208,7 +244,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject == playerTransform.gameObject)
         {
             // Player is not in range, get back to patrolling
             chasingPlayer = false;
@@ -218,7 +254,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name != "Player" && LayerMask.LayerToName(collision.gameObject.layer) != "Ground")
+        if (collision.gameObject != playerTransform.gameObject && LayerMask.LayerToName(collision.gameObject.layer) != "Ground")
         {
             // We are in an obstacle
             movingTowardsPoint = false;
@@ -239,6 +275,12 @@ public class EnemyBehaviour : MonoBehaviour
     // Function that creates the patrol points of the Entity
     void SetPatrolPoints()
     {
+        if (givenPatrolPoints.Length != 0)
+        {
+            SetPatrolPoints(givenPatrolPoints);
+            return;
+        }
+
         if (enemyType == EnemyType.Walker)
         {
             //Debug.Log("Setting Patrol Points for Walker");
@@ -275,9 +317,18 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 GameObject patrolPoint = Instantiate(patrolPointPrefab, transform.position, transform.rotation);
                 patrolPoints.Enqueue(patrolPoint);
-                Vector2 point = new Vector2(Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)), Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)));
+                //Vector2 point = new Vector2(Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)), Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)));
+                Vector2 point = new Vector2(Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)), Random.Range(1, patrolRadius));
                 patrolPoint.GetComponent<PatrolPoint>().SetPatrolPointFlyer(point);
             }
+        }
+    }
+
+    void SetPatrolPoints(Transform[] points)
+    {
+        foreach (Transform point in points)
+        {
+            patrolPoints.Enqueue(point.gameObject);
         }
     }
 

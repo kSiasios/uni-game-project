@@ -112,7 +112,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 136, y: 243}
+    uvTransform: {x: 137, y: 243}
   - name: Gun Doors
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -134,7 +134,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 144, y: 143}
+    uvTransform: {x: 151, y: 143}
   - name: Wheel R
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -156,7 +156,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 291, y: 388}
+    uvTransform: {x: 717, y: 388}
   - name: Wheel L
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -178,7 +178,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 979, y: 388}
+    uvTransform: {x: 559, y: 388}
   - name: Lens Flare
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -200,7 +200,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 605, y: 26}
+    uvTransform: {x: 183, y: 26}
   - name: Lens
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -222,7 +222,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 590, y: 27}
+    uvTransform: {x: 168, y: 27}
   - name: Scanner
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -244,7 +244,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 667, y: -84}
+    uvTransform: {x: 309, y: -84}
   - name: Inner light cone
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -266,7 +266,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 726, y: -572}
+    uvTransform: {x: -219, y: -572}
   - name: Outer light cone
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -288,7 +288,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -24, y: 475}
+    uvTransform: {x: -1104, y: 475}
   - name: Head
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -376,7 +376,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 152, y: -2}
+    uvTransform: {x: 183, y: -2}
   platformSettings:
   - name: DefaultTexturePlatform
     overridden: 0

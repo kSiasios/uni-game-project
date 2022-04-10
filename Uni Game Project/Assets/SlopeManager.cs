@@ -33,7 +33,7 @@ public class SlopeManager : MonoBehaviour
         //Debug.Log("TRIGGER SLOPE");
         if (collision.gameObject == playerController.gameObject)
         {
-            Debug.Log("TRIGGER Player is Jumping: " + playerController.GetIfJumping());
+            //Debug.Log("TRIGGER Player is Jumping: " + playerController.GetIfJumping());
             // If colliding with player
             if (playerController.GetIfJumping())
             {

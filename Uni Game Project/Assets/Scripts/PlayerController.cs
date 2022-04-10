@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isJumping = false;
 
+
+
     private void Awake()
     {
         // Initialize reset position if the player can reset
@@ -252,6 +254,16 @@ public class PlayerController : MonoBehaviour
     public void SetAnimatorBool(string varName, bool value)
     {
         playerAnimator.SetBool(varName, value);
+    }
+
+    public void SetStartOfRunAnimation(string value)
+    {
+        if (value.ToLower() == "true") {
+            SetAnimatorBool("canStartRun", true);
+        }
+        else {
+            SetAnimatorBool("canStartRun", false);
+        }
     }
 }
 
