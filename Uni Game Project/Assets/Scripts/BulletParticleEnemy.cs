@@ -23,7 +23,7 @@ public class BulletParticleEnemy : MonoBehaviour
             PlayerController player;
             other.transform.TryGetComponent(out player);
             player.TakeDamage(bulletDamage);
-            Debug.Log("Player Hit!");
+            //Debug.Log("Player Hit!");
         }
         //Destroy(this);
     }

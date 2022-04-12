@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\InteractableCharacter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

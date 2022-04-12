@@ -43,6 +43,8 @@ public class EnemyBehaviour : MonoBehaviour
     [Range(0f, 5f)] [SerializeField] float waitOnStop = 0.5f;
     [Tooltip("How many patrolpoints will the flyer have. Ignore if enemy is walker")]
     [Range(1, 10)] [SerializeField] int patrolPointsNumber = 10;
+
+    // Variables controlling if the enemy has reached the end
     private float waitTimer = 0f;
     private bool timePassed = false;
     private float gravityScale = 0f;
@@ -55,6 +57,12 @@ public class EnemyBehaviour : MonoBehaviour
     public bool facingRight = true;
     public bool movingTowardsPoint = false;
 
+    // Variables controlling the enemy chase actions
+    [Tooltip("How much time (in seconds) should the enemy wait in warned state before chasing the player")]
+    [Range(0f, 5f)] [SerializeField] float waitBeforeChasing = 0.5f;
+    [SerializeField] private float enemyChaseTimer = 0f;
+    [SerializeField] private bool chaseTimerPassed = false;
+
     [HideInInspector] public Transform playerTransform;
 
     //[HideInInspector] 
@@ -64,9 +72,13 @@ public class EnemyBehaviour : MonoBehaviour
 
     public Queue<GameObject> patrolPoints = new Queue<GameObject>();
 
+    
+
     [Header("Enemy Visuals")]
     [Tooltip("The color of the indicators when enemy is patroling.")]
     [SerializeField] private Color patrolingColor;
+    [Tooltip("The color of the indicators when enemy is seeing the player but not yer chasing them.")]
+    [SerializeField] private Color warnedColor;
     [Tooltip("The color of the indicators when enemy is chasing the player.")]
     [SerializeField] private Color chasingColor;
     [Tooltip("Objects that indicate the state of the enemy by their color. (Usually light cones or lights in general)")]
@@ -120,6 +132,15 @@ public class EnemyBehaviour : MonoBehaviour
         else
         {
             timePassed = false;
+        }
+
+        if (enemyChaseTimer >= waitBeforeChasing)
+        {
+            chaseTimerPassed = true;
+        }
+        else
+        {
+            chaseTimerPassed = false;
         }
 
         if (state != EnemyState.Alive && gameObject.activeInHierarchy)
@@ -232,13 +253,26 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject == playerTransform.gameObject)
         {
-            // Player is in range, chase them
-            chasingPlayer = true;
-            patroling = false;
 
-            playerTransform = collision.transform;
+            if (chaseTimerPassed)
+            {
+                // Player is in range, chase them
+                chasingPlayer = true;
+                patroling = false;
 
-            ChasePlayer(collision.transform.position);
+                playerTransform = collision.transform;
+
+                ChasePlayer(collision.transform.position);
+            }
+            else
+            {
+                foreach (var item in detectionIndicators)
+                {
+                    item.color = warnedColor;
+                }
+                enemyChaseTimer += Time.fixedDeltaTime;
+
+            }
         }
     }
 
@@ -249,6 +283,7 @@ public class EnemyBehaviour : MonoBehaviour
             // Player is not in range, get back to patrolling
             chasingPlayer = false;
             patroling = true;
+            enemyChaseTimer = 0f;
         }
     }
 
