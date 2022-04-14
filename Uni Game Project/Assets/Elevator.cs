@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elevator : MonoBehaviour
+public class Elevator : InteractableEntity
 {
     public enum ElevatorDirection
     {
@@ -25,8 +25,6 @@ public class Elevator : MonoBehaviour
     [SerializeField] private bool moving = false;
     [Tooltip("Did the elevator just start moving?")]
     [SerializeField] private bool aboutToMove = false;
-    [Tooltip("Is the elevator colliding with the player?")]
-    [SerializeField] private bool collidingWithPlayer = false;
     
     [SerializeField] private float distanceFromEnd;
     [SerializeField] private float distanceFromStart;
@@ -122,25 +120,6 @@ public class Elevator : MonoBehaviour
             //transform.position = Vector2.MoveTowards(transform.position, travelPosition, elevatorSpeed * Time.deltaTime);
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, travelPosition, elevatorSpeed * Time.deltaTime);
             aboutToMove = false;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Debug.Log("Collision with " + collision.gameObject.name);
-        collision.gameObject.transform.parent = this.gameObject.transform;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            collidingWithPlayer = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        collision.gameObject.transform.parent = null;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            collidingWithPlayer = false;
         }
     }
 }

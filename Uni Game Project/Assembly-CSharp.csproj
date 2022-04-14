@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\WeaponBehaviour.cs" />
     <Compile Include="Assets\SlopeManager.cs" />
     <Compile Include="Assets\SaveData.cs" />
+    <Compile Include="Assets\InteractableCharacter.cs" />
     <Compile Include="Assets\Elevator.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviourEnemy.cs" />
     <Compile Include="Assets\AudioManager.cs" />
@@ -80,7 +81,7 @@
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\GameManager.cs" />
-    <Compile Include="Assets\InteractableCharacter.cs" />
+    <Compile Include="Assets\InteractableEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

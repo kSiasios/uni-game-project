@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableCharacter : MonoBehaviour
+public class InteractableCharacter : InteractableEntity
 {
     [SerializeField] private string[] dialogLines;
     [SerializeField] private int index = -1;
     [SerializeField] [Range(0f, 0.5f)] private float printDelay;
-
-    [Tooltip("Is the character colliding with the player?")]
-    [SerializeField] private bool collidingWithPlayer = false;
 
     Coroutine customPrintCoroutine;
 
@@ -29,22 +26,14 @@ public class InteractableCharacter : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        collision.gameObject.transform.parent = this.gameObject.transform;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            collidingWithPlayer = true;
-        }
-    }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
-        collision.gameObject.transform.parent = null;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        base.OnTriggerExit2D(collision);
+        if (customPrintCoroutine != null)
         {
-            collidingWithPlayer = false;
+            StopCoroutine(customPrintCoroutine);
         }
+        index = -1;
     }
 
     private void NextDialog()
