@@ -371,7 +371,7 @@ public class EnemyBehaviour : MonoBehaviour
     void ChasePlayer(Vector2 playerPos)
     {
         //transform.position = Vector2.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
-        Debug.Log("Chasing Player");
+        //Debug.Log("Chasing Player");
 
         if (enemyType == EnemyType.Flyer)
         {

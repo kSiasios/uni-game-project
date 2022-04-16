@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
 
 
-
     private void Awake()
     {
         // Initialize reset position if the player can reset

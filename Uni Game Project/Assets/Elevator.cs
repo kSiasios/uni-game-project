@@ -17,7 +17,7 @@ public class Elevator : InteractableEntity
     [Tooltip("The axis at which the elevator will travel on")]
     [SerializeField] private ElevatorDirection elevatorDirection = ElevatorDirection.vertical;
     [Tooltip("How fast should the elevator go?")]
-    [SerializeField] [Range(1f, 50f)] private float elevatorSpeed = 1;
+    [SerializeField][Range(1f, 50f)] private float elevatorSpeed = 1;
     [SerializeField] private float stopDistance;
     [SerializeField] private Vector3 travelPosition;
 
@@ -25,9 +25,11 @@ public class Elevator : InteractableEntity
     [SerializeField] private bool moving = false;
     [Tooltip("Did the elevator just start moving?")]
     [SerializeField] private bool aboutToMove = false;
-    
+
     [SerializeField] private float distanceFromEnd;
     [SerializeField] private float distanceFromStart;
+
+    [SerializeField] private Animator elevatorAnimator;
 
     private void Awake()
     {
@@ -36,15 +38,24 @@ public class Elevator : InteractableEntity
         stopDistance = elevatorSpeed / 100;
 
         // Fix the axis that is not used to the corresponding value of the elevator
-        if (elevatorDirection == ElevatorDirection.vertical) {
+        if (elevatorDirection == ElevatorDirection.vertical)
+        {
             //travelPoint.x = transform.position.x;
             travelPoint.x = transform.localPosition.x;
-        } else {
+        }
+        else
+        {
             //travelPoint.y = transform.position.y;
             travelPoint.y = transform.localPosition.y;
         }
-        Physics.IgnoreLayerCollision(0,2);
-        Physics.IgnoreLayerCollision(4,9);
+
+        if (elevatorAnimator == null)
+        {
+            elevatorAnimator = GetComponent<Animator>();
+        }
+
+        Physics.IgnoreLayerCollision(0, 2);
+        Physics.IgnoreLayerCollision(4, 9);
     }
 
     private void Update()
@@ -69,11 +80,11 @@ public class Elevator : InteractableEntity
 
         if (distanceFromStart < stopDistance || distanceFromEnd < stopDistance)
         {
-            //if (!aboutToMove)
-            //{
-            //    // Prevent elevator from shutting down before reaching its destination
-            //    moving = false;
-            //}
+            if (!aboutToMove)
+            {
+                // Prevent elevator from shutting down before reaching its destination
+                moving = false;
+            }
 
             if (Input.GetKeyDown(KeyCode.E) && collidingWithPlayer)
             {
@@ -118,8 +129,53 @@ public class Elevator : InteractableEntity
             //transform.position = transform.position + (transform.position - travelPosition) * Time.deltaTime * -1 * elevatorSpeed;
             //transform.position += (travelPosition - transform.position).normalized * Time.deltaTime  * elevatorSpeed;
             //transform.position = Vector2.MoveTowards(transform.position, travelPosition, elevatorSpeed * Time.deltaTime);
+            if (elevatorDirection == ElevatorDirection.vertical)
+            {
+                if (transform.localPosition.y - travelPosition.y < 0)
+                {
+                    // About to move upwards
+                    elevatorAnimator.SetBool("goingUp", true);
+                    elevatorAnimator.SetBool("goingDown", false);
+                    elevatorAnimator.SetBool("goingLeft", false);
+                    elevatorAnimator.SetBool("goingRight", false);
+                }
+                else
+                {
+                    // About to move downwards
+                    elevatorAnimator.SetBool("goingUp", false);
+                    elevatorAnimator.SetBool("goingDown", true);
+                    elevatorAnimator.SetBool("goingLeft", false);
+                    elevatorAnimator.SetBool("goingRight", false);
+                }
+            }
+            else
+            {
+                if (transform.localPosition.x - travelPosition.x < 0)
+                {
+                    // About to move to the right
+                    elevatorAnimator.SetBool("goingDown", false);
+                    elevatorAnimator.SetBool("goingUp", false);
+                    elevatorAnimator.SetBool("goingLeft", false);
+                    elevatorAnimator.SetBool("goingRight", true);
+                }
+                else
+                {
+                    // About to move to the left
+                    elevatorAnimator.SetBool("goingDown", false);
+                    elevatorAnimator.SetBool("goingUp", false);
+                    elevatorAnimator.SetBool("goingLeft", true);
+                    elevatorAnimator.SetBool("goingRight", false);
+                }
+            }
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, travelPosition, elevatorSpeed * Time.deltaTime);
             aboutToMove = false;
+        }
+        else
+        {
+            elevatorAnimator.SetBool("goingUp", false);
+            elevatorAnimator.SetBool("goingDown", false);
+            elevatorAnimator.SetBool("goingLeft", false);
+            elevatorAnimator.SetBool("goingRight", false);
         }
     }
 }

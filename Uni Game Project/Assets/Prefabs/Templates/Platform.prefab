@@ -97,12 +97,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67a4a20f75d0644084eeeae14f26af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collidingWithPlayer: 0
   travelPoint: {x: -4.21, y: 30, z: 0}
   elevatorDirection: 0
   elevatorSpeed: 30
+  stopDistance: 0
+  travelPosition: {x: 0, y: 0, z: 0}
   moving: 0
   aboutToMove: 0
-  collidingWithPlayer: 0
+  distanceFromEnd: 0
+  distanceFromStart: 0
 --- !u!58 &2988800457886269323
 CircleCollider2D:
   m_ObjectHideFlags: 0
