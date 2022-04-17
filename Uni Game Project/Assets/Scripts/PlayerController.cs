@@ -115,6 +115,17 @@ public class PlayerController : MonoBehaviour
     // Move player with custom speed
     public void MovePlayer(Vector2 direction, float speed, bool jumping)
     {
+        //if (direction == Vector2.zero && rigidbody.velocity != Vector2.zero && !jumping && groundCheck.IsTouchingLayers(groudLayerMask))
+        //{
+        //    Debug.Log("Sliding off of slope, or moved against will");
+        //    //rigidbody.velocity = Vector2.zero;
+        //    //rigidbody.gravityScale = 0;
+        //    rigidbody.bodyType = RigidbodyType2D.Static;
+        //} else
+        //{
+        //    //rigidbody.gravityScale = gravityScale;
+        //    rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        //}
         // If player is moving to the left, flip them to face to the left
         if (direction.x < 0 && facingRight)
         {

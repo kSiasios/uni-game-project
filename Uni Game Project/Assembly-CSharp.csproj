@@ -73,6 +73,7 @@
     <Compile Include="Assets\InteractableCharacter.cs" />
     <Compile Include="Assets\Elevator.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviourEnemy.cs" />
+    <Compile Include="Assets\GroundCheck.cs" />
     <Compile Include="Assets\AudioManager.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\GameManager.cs" />
-    <Compile Include="Assets\GroundCheck.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
