@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
     public List<InventoryItem> inventory = new List<InventoryItem>();
     [Tooltip("The collider responsible for detecting objects")]
-    [SerializeField] CircleCollider2D col;
+    [SerializeField] CapsuleCollider2D col;
 
     [SerializeField] TextMeshProUGUI uiItemCounter;
 
@@ -20,7 +21,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (col == null)
         {
-            col = transform.GetComponent<CircleCollider2D>();
+            col = GetComponent<CapsuleCollider2D>();
         }
 
         if (uiItemCounter == null)
@@ -56,7 +57,16 @@ public class InventoryManager : MonoBehaviour
             Collectable collectable = collision.gameObject.GetComponent<Collectable>();
             if (collectable != null)
             {
-                SendNotification(collectable.ToString());
+                item.AmountOfItems = collectable.GetAmount();
+                //if (collectable.GetIcon() != null)
+                //{
+                //    item.itemIcon = collectable.GetIcon();
+                //} else
+                //{
+                //    item.itemIcon = null;
+                //}
+                item.itemIcon = collectable.GetIcon();
+                SendNotification(collectable.ToString(), item.itemIcon);
                 if (collectable.GetSerial() != null && collectable.isKey)
                 {
                     // It is a key collectable, initialize the serial with the correct value
@@ -72,7 +82,7 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                SendNotification("1" + " x " + collision.gameObject.name);
+                SendNotification("1" + " x " + collision.gameObject.name, null);
             }
 
             item.ItemName = collectable.GetName();
@@ -81,10 +91,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void SendNotification(string notificationText)
+    void SendNotification(string notificationText, Sprite icon)
     {
         // Push new notification in the notification panel
-        notificationManager.NewNotification(notificationText);
+        notificationManager.NewNotification(notificationText, icon);
     }
 
     void AddItem(InventoryItem newItem)
@@ -166,6 +176,8 @@ public class InventoryManager : MonoBehaviour
             InventoryItem objInfo = obj.GetComponent<InventoryItem>();
             objInfo.AmountOfItems = item.AmountOfItems;
             objInfo.ItemName = item.ItemName;
+            Image objImage = obj.transform.Find("Image").GetComponent<Image>();
+            objImage.sprite = item.itemIcon != null ? item.itemIcon : objImage.sprite;
         }
     }
 

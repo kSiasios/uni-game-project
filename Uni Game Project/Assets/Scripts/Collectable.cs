@@ -12,6 +12,7 @@ public class Collectable : MonoBehaviour
     [SerializeField] string itemName = "Item";
     [SerializeField] int amount = 1;
     [SerializeField] CollectableState state = CollectableState.enabled;
+    [SerializeField] Sprite collectableIcon;
 
     public bool isKey = false;
     [SerializeField] string keySerial;
@@ -46,20 +47,9 @@ public class Collectable : MonoBehaviour
         keySerial = data.keySerial;
     }
 
-
-    public string GetName()
+    public Sprite GetIcon()
     {
-        return itemName;
-    }
-
-    public string GetSerial()
-    {
-        return keySerial;
-    }
-
-    public void SetState(CollectableState value)
-    {
-        state = value;
+        return collectableIcon;
     }
 
     void Update()
@@ -76,7 +66,7 @@ public class Collectable : MonoBehaviour
     }
     
     // Getters
-    public float GetAmount()
+    public int GetAmount()
     {
         return amount;
     }
@@ -89,6 +79,21 @@ public class Collectable : MonoBehaviour
     public CollectableState GetState()
     {
         return state;
+    }
+
+    public string GetName()
+    {
+        return itemName;
+    }
+
+    public string GetSerial()
+    {
+        return keySerial;
+    }
+
+    public void SetState(CollectableState value)
+    {
+        state = value;
     }
 }
 

@@ -9,9 +9,11 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Player's Rigidbody")]
     [SerializeField] new Rigidbody2D rigidbody;
     [Tooltip("Collider that checks if the player is touching the ground layer")]
-    [SerializeField] BoxCollider2D groundCheck;
+    [SerializeField] GroundCheck groundCheck;
     [Tooltip("The Ground Layer Mask")]
-    [SerializeField] LayerMask groudLayerMask;
+    static string[] layerMaskLayers = { "Ground", "Metal", "Wood" };
+    public static LayerMask groundLayerMask;
+    //= LayerMask.GetMask(layerMaskLayers);
 
     [Tooltip("Is the player facing to the right")]
     [SerializeField] bool facingRight = true;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        groundLayerMask = LayerMask.GetMask(layerMaskLayers);
         // Initialize reset position if the player can reset
         if (canReset)
         {
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         if (groundCheck == null)
         {
-            groundCheck = transform.Find("GroundCheck").GetComponent<BoxCollider2D>();
+            groundCheck = GetComponentInChildren<GroundCheck>();
         }
 
         // Check for mistakes in initialization
@@ -115,7 +118,7 @@ public class PlayerController : MonoBehaviour
     // Move player with custom speed
     public void MovePlayer(Vector2 direction, float speed, bool jumping)
     {
-        //if (direction == Vector2.zero && rigidbody.velocity != Vector2.zero && !jumping && groundCheck.IsTouchingLayers(groudLayerMask))
+        //if (direction == Vector2.zero && rigidbody.velocity != Vector2.zero && !jumping && groundCheck.IsTouchingLayers(groundLayerMask))
         //{
         //    Debug.Log("Sliding off of slope, or moved against will");
         //    //rigidbody.velocity = Vector2.zero;
@@ -142,10 +145,10 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Moving 2");
         rigidbody.velocity = new Vector2(direction.x * speed, rigidbody.velocity.y);
         // If the player is touching the ground, they can jump
-        if (jumping && groundCheck.IsTouchingLayers(groudLayerMask)) rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
+        if (jumping && groundCheck.GetIsTouching(groundLayerMask)) rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
 
         // If the player is landing, play landing animation
-        if (groundCheck.IsTouchingLayers(groudLayerMask))
+        if (groundCheck.GetIsTouching(groundLayerMask))
         {
             if (rigidbody.velocity.y < 0)
             {
@@ -241,9 +244,14 @@ public class PlayerController : MonoBehaviour
         return isJumping;
     }
 
+    public static LayerMask GetGroundLayerMask()
+    {
+        return groundLayerMask;
+    }
+
     //public void stopPlayer()
     //{
-    //    if(groundCheck.IsTouchingLayers(groudLayerMask) && rigidbody.velocity != Vector2.zero)
+    //    if(groundCheck.IsTouchingLayers(groundLayerMask) && rigidbody.velocity != Vector2.zero)
     //    {
     //        // IF PLAYER IS GROUNDED, THEN PREVENT THEM FROM SLIDING
     //        rigidbody.constraints = UnityEngine.RigidbodyConstraints2D.FreezePositionX;

@@ -8,8 +8,6 @@ using TMPro;
 public class InventoryItem : MonoBehaviour
 {
     [Header("Personal references")]
-    [Tooltip("A sprite that represents the item")]
-    [SerializeField] Sprite itemIcon;
     [Tooltip("The image component that will control the sprite")]
     [SerializeField] Image imageComponent;
     
@@ -80,6 +78,10 @@ public class InventoryItem : MonoBehaviour
     public string Serial { get; set; }
 
     public bool isKey { get; set; }
+
+    //[Tooltip("A sprite that represents the item")]
+    //[SerializeField] 
+    public Sprite itemIcon { get; set; }
 
     public override string ToString()
     {

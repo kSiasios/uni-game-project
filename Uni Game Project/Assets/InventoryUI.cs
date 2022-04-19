@@ -56,7 +56,7 @@ public class InventoryUI : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
-                Debug.Log("Got key down");
+                //Debug.Log("Got key down");
                 if (GameManager.gameIsPaused)
                 {
                     ResumeGame();
