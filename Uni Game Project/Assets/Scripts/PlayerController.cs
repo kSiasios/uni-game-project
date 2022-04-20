@@ -191,6 +191,11 @@ public class PlayerController : MonoBehaviour
         // Function that manages health
     }
 
+    public void Land()
+    {
+        SetAnimatorBool("isLanding", false);
+    }
+
     //public GenericSaveData Save()
     //{
     //    // Save Position
