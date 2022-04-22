@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     private CinemachineConfiner cameraConfiner;
+    private CinemachineFramingTransposer cameraBodySettings;
     [SerializeField] private BoxCollider2D triggerCollider;
 
     [SerializeField][Range(0f, 25f)] private float smallOrthographicSize = 7.5f;
@@ -22,6 +23,7 @@ public class CameraController : MonoBehaviour
         {
             virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
             cameraConfiner = virtualCamera.GetComponent<CinemachineConfiner>();
+            cameraBodySettings = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
     }
 
@@ -32,15 +34,21 @@ public class CameraController : MonoBehaviour
             //Debug.Log("Triggered!");
             cameraConfiner.m_BoundingShape2D = collision;
 
+            Vector3 cameraTrackerOffsetObject = cameraBodySettings.m_TrackedObjectOffset;
+
+
             if (collision.gameObject.GetComponent<SmallCameraBounder>())
             {
                 //Debug.Log("Small Bounding Box");
-                virtualCamera.m_Lens.OrthographicSize = smallOrthographicSize;
+                //virtualCamera.m_Lens.OrthographicSize = smallOrthographicSize;
+                virtualCamera.m_Lens.OrthographicSize = collision.gameObject.GetComponent<SmallCameraBounder>().getPreferredCameraSize();
+                cameraBodySettings.m_TrackedObjectOffset = Vector3.up;
             }
             else
             {
                 //Debug.Log("Normal Bounding Box");
                 virtualCamera.m_Lens.OrthographicSize = normalOrthographicSize;
+                cameraBodySettings.m_TrackedObjectOffset = cameraTrackerOffsetObject;
             }
         }
     }

@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
         // If the player is landing, play landing animation
         if (groundCheck.GetIsTouching(groundLayerMask))
         {
-            if (rigidbody.velocity.y < 0)
+            if (rigidbody.velocity.y < -1)
             {
                 SetAnimatorBool("isLanding", true);
             }
