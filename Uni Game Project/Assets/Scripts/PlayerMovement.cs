@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
             FindObjectOfType<GameManager>().LoadGame();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             controller.Reset();
         }
@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.F))
         //if (Input.GetKeyDown(KeyCode.Mouse0))
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetButtonDown("Fire1") || Input.GetButton("Fire1"))
         {
             controller.SetAnimatorBool("isShooting", true);
         }

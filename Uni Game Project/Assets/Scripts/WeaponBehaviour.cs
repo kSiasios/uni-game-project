@@ -32,12 +32,15 @@ public class WeaponBehaviour : MonoBehaviour
     [Tooltip("The UI field that displays the amount of bullets")]
     [SerializeField] TextMeshProUGUI bulletsAmountUI;
 
+    bool reloading = false;
+
     private void Awake()
     {
         // If playerController is not initialized in the inspector, get it using code
         if (playerController == null)
         {
-            playerController = transform.parent.GetComponent<PlayerController>();
+            playerController = FindObjectOfType<PlayerController>();
+            //playerController = GetComponent<PlayerController>();
         }
 
         if (shootingPoint == null)
@@ -53,34 +56,30 @@ public class WeaponBehaviour : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // If player's input is translated to in-game input
-        if (GameManager.canGetGameplayInput)
-        {
-            // If the fire button is pressed
-            if (Input.GetButtonDown("Fire1"))
-            {
-                // If the bullets available are enough to shoot, do it. Else, reload the weapon.
-                if (bulletsInΜagazine >= bulletsFired)
-                {
-                    Shoot();
-                }
-                else
-                {
-                    ReloadWeapon();
-                }
-                // Update the UI
-                bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
-            }
+    //// Update is called once per frame
+    //void Update()
+    //{
+        
+    //}
 
-            // If the reload key is pressed, reload the weapon
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                ReloadWeapon();
-            }
+    public void Fire()
+    {
+        if (!reloading)
+        {
+
+        // If the bullets available are enough to shoot, do it. Else, reload the weapon.
+        if (bulletsInΜagazine >= bulletsFired)
+        {
+            Shoot();
         }
+        else
+        {
+            ReloadWeapon();
+        }
+        }
+
+        // Update the UI
+        bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
     }
 
     void Shoot()
@@ -88,28 +87,31 @@ public class WeaponBehaviour : MonoBehaviour
         Debug.Log("Fire");
 
         // Create an objects that holds the parameters of the emitter
-        var emitParams = new ParticleSystem.EmitParams();
+        //var emitParams = new ParticleSystem.EmitParams();
 
         // Reduce ammo
         bulletsInΜagazine -= bulletsFired;
 
-        bulletParticleSystem.Emit(emitParams, bulletsFired);
+        //bulletParticleSystem.Emit(emitParams, bulletsFired);
+        //bulletParticleSystem.Play();
+        //bulletParticleSystem.Emit();
+        bulletParticleSystem.Emit(bulletsFired);
         bulletParticleSystem.Play();
     }
 
-    void ReloadWeapon()
+    public void ReloadWeapon()
     {
-        IEnumerator coroutine;
+        IEnumerator coroutine = Reload();
         if (bulletsInΜagazine < magazineSize)
         {
             //totalAmmo -= (magazineSize - bulletsInΜagazine);
             //bulletsInΜagazine = magazineSize;
-            coroutine = Reload();
             StartCoroutine(coroutine);
         }
         else
         {
             Debug.Log("Magazine Full!");
+            StopCoroutine(coroutine);
         }
     }
 
@@ -117,13 +119,20 @@ public class WeaponBehaviour : MonoBehaviour
     {
         while (bulletsInΜagazine < magazineSize)
         {
+            reloading = true;
             yield return new WaitForSeconds(reloadSpeed);
+            if (bulletsInΜagazine >= magazineSize)
+            {
+                reloading = false;
+                break;
+            }
             totalAmmo -= 1;
             bulletsInΜagazine++;
             // Update the UI
             bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
             Debug.Log("Reloading " + bulletsInΜagazine);
         }
+        reloading = false;
     }
 
     public int GetAmmo()

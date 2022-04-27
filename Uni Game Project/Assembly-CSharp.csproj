@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\ObjectLoader.cs" />
+    <Compile Include="Assets\LevelManager.cs" />
     <Compile Include="Assets\Scripts\PatrolPoint.cs" />
     <Compile Include="Assets\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\BulletParticleEnemy.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\SmallCameraBounder.cs" />
-    <Compile Include="Assets\LevelManager.cs" />
+    <Compile Include="Assets\WeaponManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

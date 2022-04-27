@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isJumping = false;
 
+    private WeaponManager weaponManager;
+
 
     private void Awake()
     {
@@ -96,6 +98,8 @@ public class PlayerController : MonoBehaviour
         {
             playerAnimator = gameObject.GetComponent<Animator>();
         }
+
+        weaponManager = GetComponent<WeaponManager>();
     }
 
     private void Update()
@@ -262,6 +266,11 @@ public class PlayerController : MonoBehaviour
     //        rigidbody.constraints = UnityEngine.RigidbodyConstraints2D.FreezePositionX;
     //    }
     //}.
+
+    public void FireWeapon()
+    {
+        weaponManager.FireWeapon();
+    }
 
     public void Reset()
     {
