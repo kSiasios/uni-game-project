@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Elevator.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviourEnemy.cs" />
     <Compile Include="Assets\Scripts\GroundCheck.cs" />
+    <Compile Include="Assets\WeaponManager.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
@@ -85,7 +86,8 @@
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\SmallCameraBounder.cs" />
-    <Compile Include="Assets\WeaponManager.cs" />
+    <Compile Include="Assets\LootContainer.cs" />
+    <Compile Include="Assets\LootItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

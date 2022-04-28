@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2ad2bb0faf3b240b680e9f3a56b401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageComponent: {fileID: 0}
+  imageComponent: {fileID: 6856821386639789029}
   itemInfo: {fileID: 0}
   itemImage: {fileID: 0}
   itemNameUI: {fileID: 0}

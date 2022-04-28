@@ -65,7 +65,10 @@ public class InventoryManager : MonoBehaviour
                 //{
                 //    item.itemIcon = null;
                 //}
+                Debug.Log(collectable.GetIcon());
                 item.itemIcon = collectable.GetIcon();
+                Debug.Log(item.itemIcon);
+
                 SendNotification(collectable.ToString(), item.itemIcon);
                 if (collectable.GetSerial() != null && collectable.isKey)
                 {

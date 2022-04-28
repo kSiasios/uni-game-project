@@ -27,7 +27,7 @@ public class InventoryItem : MonoBehaviour
 
         if (itemIcon == null)
         {
-            Debug.LogError("Error! itemIcon not provided... Script: InventoryItem.cs");
+            Debug.LogError("Error! itemIcon not provided... Script: InventoryItem.cs"); 
         }
         else
         {
@@ -54,12 +54,13 @@ public class InventoryItem : MonoBehaviour
     }
 
     // Constructor with input
-    public InventoryItem(int amount, string name, string serial, bool key)
+    public InventoryItem(int amount, string name, string serial, bool key, Sprite? sprite = null)
     {
         AmountOfItems = amount;
         ItemName = name;
         Serial = serial;
         isKey = key;
+        itemIcon = sprite;
     }
 
     // Constructor with no given input (Default constructor)
@@ -69,6 +70,7 @@ public class InventoryItem : MonoBehaviour
         ItemName = "New Item";
         Serial = "0000";
         isKey = false;
+        itemIcon = null;
     }
 
     // Declaration of the class' attributes along with getters and setters
@@ -90,7 +92,8 @@ public class InventoryItem : MonoBehaviour
 
     public void UpdateItemInfoUI()
     {
-        itemImage.sprite = itemIcon;
+        Debug.Log(itemIcon);
+        itemImage.sprite = imageComponent.sprite;
         itemNameUI.text = ItemName;
         itemAmountUI.text = AmountOfItems.ToString();
     }

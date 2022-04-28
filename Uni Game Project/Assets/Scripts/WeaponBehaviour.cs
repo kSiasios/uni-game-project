@@ -84,7 +84,7 @@ public class WeaponBehaviour : MonoBehaviour
 
     void Shoot()
     {
-        Debug.Log("Fire");
+        //Debug.Log("Fire");
 
         // Create an objects that holds the parameters of the emitter
         //var emitParams = new ParticleSystem.EmitParams();
@@ -130,7 +130,7 @@ public class WeaponBehaviour : MonoBehaviour
             bulletsInΜagazine++;
             // Update the UI
             bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
-            Debug.Log("Reloading " + bulletsInΜagazine);
+            //Debug.Log("Reloading " + bulletsInΜagazine);
         }
         reloading = false;
     }

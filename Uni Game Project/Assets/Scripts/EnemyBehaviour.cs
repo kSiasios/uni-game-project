@@ -72,8 +72,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     public Queue<GameObject> patrolPoints = new Queue<GameObject>();
 
-    
-
     [Header("Enemy Visuals")]
     [Tooltip("The color of the indicators when enemy is patroling.")]
     [SerializeField] private Color patrolingColor;
@@ -83,6 +81,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private Color chasingColor;
     [Tooltip("Objects that indicate the state of the enemy by their color. (Usually light cones or lights in general)")]
     [SerializeField] private SpriteRenderer[] detectionIndicators;
+
+    LootContainer lootContainer;
 
     private void Awake()
     {
@@ -116,6 +116,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             enemyAnimator = GetComponent<Animator>();
         }
+
+        TryGetComponent(out lootContainer);
 
         gravityScale = rigidbody.gravityScale;
 
@@ -409,6 +411,10 @@ public class EnemyBehaviour : MonoBehaviour
     {
         Debug.Log("Enemy Dead");
         //Destroy(this.gameObject);
+        if (lootContainer != null)
+        {
+            lootContainer.DropLoot();
+        }
         state = EnemyState.Dead;
     }
 
