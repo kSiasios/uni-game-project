@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\BulletParticleEnemy.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\DialogSystem.cs" />
     <Compile Include="Assets\Scripts\NotificationManager.cs" />
     <Compile Include="Assets\Unlockable.cs" />
     <Compile Include="Assets\Scripts\Collectable.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="Assets\LootContainer.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\SmallCameraBounder.cs" />
-    <Compile Include="Assets\DialogSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -193,6 +193,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int amount)
     {
         // Function that manages health
+        //Debug.Log("DAMAGED");
     }
 
     public void Land()

@@ -108,7 +108,7 @@ public class WeaponManager : MonoBehaviour
 
     public void FireWeapon()
     {
-        Debug.Log("GameManager.canGetGameplayInput: " + GameManager.canGetGameplayInput);
+        //Debug.Log("GameManager.canGetGameplayInput: " + GameManager.canGetGameplayInput);
         if (GameManager.canGetGameplayInput)
         {
             if ((int)equippedWeapon > 0)

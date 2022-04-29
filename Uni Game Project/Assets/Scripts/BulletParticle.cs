@@ -10,6 +10,13 @@ public class BulletParticle : MonoBehaviour
     [Tooltip("The speed of the particle")]
     [Range(5f, 100f)] public float bulletSpeed = 20f;
 
+    [SerializeField] BelongsTo bulletBelongsTo;
+
+    public enum BelongsTo
+    {
+        Player, Enemy
+    }
+
     ParticleSystem.MainModule _particleMainModule;
 
     private void Awake()
@@ -23,12 +30,28 @@ public class BulletParticle : MonoBehaviour
     // damage the enemy when collided with
     private void OnParticleCollision(GameObject other)
     {
-        if (other.layer == LayerMask.NameToLayer("Enemy"))
+        if (bulletBelongsTo == BelongsTo.Player)
         {
-            EnemyBehaviour enemy;
-            other.transform.TryGetComponent(out enemy);
-            enemy.TakeDamage(bulletDamage);
-            Debug.Log("Enemy Hit!");
+            if (other.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                EnemyBehaviour enemy;
+                other.transform.TryGetComponent(out enemy);
+                enemy.TakeDamage(bulletDamage);
+                Debug.Log("Enemy Hit!");
+            }
+        }
+
+        if (bulletBelongsTo == BelongsTo.Enemy)
+        {
+            if (other.GetComponent<PlayerController>())
+            {
+                //EnemyBehaviour enemy;
+                //other.transform.TryGetComponent(out enemy);
+                PlayerController player = other.GetComponent<PlayerController>();
+                //enemy.TakeDamage(bulletDamage);
+                player.TakeDamage(bulletDamage);
+                //Debug.Log("Player Hit!");
+            }
         }
         //Destroy(this);
     }

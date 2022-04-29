@@ -16,9 +16,9 @@ public class WeaponBehaviour : MonoBehaviour
     [Tooltip("The reload speed of the weapon in seconds")]
     [SerializeField] float reloadSpeed = 0.3f;
     [Tooltip("The amount of damage the weapon can deal")]
-    [Range(0, 100)] [SerializeField] float damage = 50;
+    [Range(0, 100)][SerializeField] float damage = 50;
     [Tooltip("The amount of bullets fired at once")]
-    [Range(1, 5)] [SerializeField] int bulletsFired = 1;
+    [Range(1, 5)][SerializeField] int bulletsFired = 1;
 
     [Header("Required References")]
     [Tooltip("The controller of this weapon")]
@@ -59,7 +59,7 @@ public class WeaponBehaviour : MonoBehaviour
     //// Update is called once per frame
     //void Update()
     //{
-        
+
     //}
 
     public void Fire()
@@ -67,15 +67,15 @@ public class WeaponBehaviour : MonoBehaviour
         if (!reloading)
         {
 
-        // If the bullets available are enough to shoot, do it. Else, reload the weapon.
-        if (bulletsInΜagazine >= bulletsFired)
-        {
-            Shoot();
-        }
-        else
-        {
-            ReloadWeapon();
-        }
+            // If the bullets available are enough to shoot, do it. Else, reload the weapon.
+            if (bulletsInΜagazine >= bulletsFired)
+            {
+                Shoot();
+            }
+            else
+            {
+                ReloadWeapon();
+            }
         }
 
         // Update the UI

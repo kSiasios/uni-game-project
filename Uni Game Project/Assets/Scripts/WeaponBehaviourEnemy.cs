@@ -9,11 +9,13 @@ public class WeaponBehaviourEnemy : MonoBehaviour
     [Tooltip("The amount of bullets the weapon can hold")]
     [SerializeField] int magazineSize = 12;
     [Tooltip("The reload speed of the weapon in seconds")]
-    [SerializeField] float reloadSpeed = 0.3f;
+    [SerializeField] float reloadSpeed = 5f;
     [Tooltip("The amount of damage the weapon can deal")]
-    [Range(0, 100)] [SerializeField] float damage = 50;
+    [SerializeField][Range(0, 100)] float damage = 50;
     [Tooltip("The amount of bullets fired at once")]
-    [Range(1, 5)] [SerializeField] int bulletsFired = 1;
+    [SerializeField][Range(1, 5)] int bulletsFired = 1;
+    [Tooltip("Time between shots")]
+    [SerializeField] float delayAfterShooting = 5f;
 
     [Header("Required References")]
     [Tooltip("The controller of this weapon")]
@@ -23,7 +25,15 @@ public class WeaponBehaviourEnemy : MonoBehaviour
     [Tooltip("The patricle system that spawns bullets")]
     [SerializeField] ParticleSystem bulletParticleSystem;
 
-    public float bulletSpeed;
+    [SerializeField][Range(0, 100)] public float bulletSpeed = 10f;
+    [SerializeField] int _bulletsFiredSoFar = 0;
+    [SerializeField] bool _reloading = false;
+
+    Coroutine reloadCoroutine;
+    Coroutine shootCoroutine;
+
+    ParticleSystem.MainModule _mainModule;
+    ParticleSystem.EmissionModule _emissionModule;
 
     private void Awake()
     {
@@ -38,55 +48,168 @@ public class WeaponBehaviourEnemy : MonoBehaviour
             shootingPoint = transform.Find("ShootingPoint").transform;
         }
 
-        if (bulletParticleSystem != null)
-        {
-            bulletSpeed = bulletParticleSystem.transform.GetComponentInChildren<BulletParticleEnemy>().bulletSpeed;
-        } else
-        {
-            bulletSpeed = 10f;
-        }
+        _mainModule = bulletParticleSystem.main;
+        _mainModule.duration = delayAfterShooting;
+
+        _emissionModule = bulletParticleSystem.emission;
+        _emissionModule.rateOverTime = 1 / delayAfterShooting;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if (controller.chasingPlayer)
+        //{
+        //    ShootWeapon();
+        //}
+
         if (controller.chasingPlayer)
         {
-            Shoot();
+            if (!_reloading)
+            {
+                // If the bullets available are enough to shoot, do it. Else, reload the weapon.
+                if (_bulletsFiredSoFar < magazineSize)
+                {
+                    ShootWeapon();
+                }
+                else
+                {
+                    //if (shootCoroutine != null)
+                    //{
+                    //    StopCoroutine(shootCoroutine);
+                    //}
+                    ReloadWeapon();
+                }
+            }
+        }
+
+        //if (_bulletsFiredSoFar >= magazineSize)
+        //{
+        //    if (!_reloading)
+        //    {
+        //        reloadCoroutine =  StartCoroutine(Reload());
+        //    }
+        //} else
+        //{
+        //    if (reloadCoroutine != null)
+        //    {
+        //        StopCoroutine(reloadCoroutine);
+        //    }
+        //}
+    }
+
+    public void ShootWeapon()
+    {
+        //IEnumerator coroutine = Shoot();
+        //if (_bulletsFiredSoFar <= magazineSize)
+        //{
+        //    //totalAmmo -= (magazineSize - bulletsIn?agazine);
+        //    //bulletsIn?agazine = magazineSize;
+        //    StartCoroutine(coroutine);
+        //}
+        //else
+        //{
+        //    Debug.Log("Magazine Empty!");
+        //    StopCoroutine(coroutine);
+        //}
+
+        if (!bulletParticleSystem.isEmitting && !_reloading)
+        {
+            bulletParticleSystem.Emit(bulletsFired);
+            bulletParticleSystem.Play();
+            //_bulletsFiredSoFar += Mathf.RoundToInt(_mainModule.startLifetime.constant / delayAfterShooting);
+            _bulletsFiredSoFar++;
+        }
+
+        //if (bulletParticleSystem.isPlaying)
+        //{
+        //    Debug.Log("PLAYING");
+        //}
+        //if (bulletParticleSystem.isEmitting)
+        //{
+        //    //bulletParticleSystem.time
+        //    //Debug.Log("Time: " + bulletParticleSystem.time);
+        //    if (bulletParticleSystem.time >= delayAfterShooting)
+        //    {
+        //        bulletParticleSystem.Stop();
+        //        //_bulletsFiredSoFar++;
+        //    }
+        //}
+    }
+
+    public void ReloadWeapon()
+    {
+        // stop shooting
+        bulletParticleSystem.Stop();
+
+        IEnumerator coroutine = Reload();
+        if (_bulletsFiredSoFar > 0)
+        {
+            //totalAmmo -= (magazineSize - bulletsIn?agazine);
+            //bulletsIn?agazine = magazineSize;
+            StartCoroutine(coroutine);
+        }
+        else
+        {
+            Debug.Log("Magazine Full!");
+            StopCoroutine(coroutine);
         }
     }
 
-    void Shoot()
+    //IEnumerator Shoot()
+    //{
+    //    //while (_bulletsFiredSoFar < magazineSize)
+    //    //{
+    //    //    _bulletsFiredSoFar += bulletsFired;
+
+    //    //    bulletParticleSystem.Emit(bulletsFired);
+    //    //    bulletParticleSystem.Play();
+    //    //        Debug.Log("Bullets fired: " + _bulletsFiredSoFar);
+    //    //    yield return new WaitForSeconds(delayAfterShooting);
+    //    //}
+
+    //    for (int i = 0; i < magazineSize; i++)
+    //    {
+    //        //for (int j = 0; j <= i; j++)
+    //        //{
+    //        //    Debug.Log(printMsg[j]);
+    //        //}
+
+    //        // Create new dialog item object
+    //        //DialogItem dialogItem = new DialogItem(printMsg.Substring(0, i + 1), currentSpeaker.Image);
+
+    //        ////Debug.Log(dialogItem);
+
+    //        //// Populate dialog system
+    //        //WriteDialog(dialogItem);
+
+    //        //Debug.Log(printMsg.Substring(0, i + 1));
+    //        //yield return new WaitForSeconds(printDelay);
+
+    //        bulletParticleSystem.Emit(bulletsFired);
+    //            bulletParticleSystem.Play();
+    //        Debug.Log("Bullets fired: " + _bulletsFiredSoFar);
+    //        _bulletsFiredSoFar = i;
+
+    //        yield return new WaitForSeconds(delayAfterShooting);
+    //    }
+    //}
+
+    public IEnumerator Reload()
     {
-        // Create an objects that holds the parameters of the emitter
-        var emitParams = new ParticleSystem.EmitParams();
 
-        // Populate the parameters object according to the type of the controller
-        if (controller.enemyType == EnemyBehaviour.EnemyType.Flyer)
+        while (_bulletsFiredSoFar > 0)
         {
-            if (bulletParticleSystem.name == "Bomb")
+            //Debug.Log("RELOADING");
+            _reloading = true;
+            yield return new WaitForSeconds(reloadSpeed);
+            if (_bulletsFiredSoFar <= 0)
             {
-                // The grenade will free fall from the position of the entity
-                emitParams.velocity = new Vector3(0, 0, 0);
+                _reloading = false;
+                break;
             }
-            else
-            {
-                // The bullet will go straight below the entity with a speed of bulletSpeed
-                emitParams.velocity = new Vector3(0, -bulletSpeed, 0);
-            }
-
-            //emitParams.velocity = new Vector3(0, 0, 0);
+            _bulletsFiredSoFar--;
         }
-        else if (controller.enemyType == EnemyBehaviour.EnemyType.Walker)
-        {
-            // The bullet will go straight to the last position of the player with a speed of bulletSpeed
-            Vector2 vectorToPlayer = (controller.playerTransform.position - controller.transform.position).normalized;
-            emitParams.velocity = vectorToPlayer * bulletSpeed;
-        }
-
-        // Spawn particles
-        bulletParticleSystem.Emit(emitParams, bulletsFired);
-        bulletParticleSystem.Play();
-        bulletParticleSystem.Stop();
+        _reloading = false;
     }
 }
