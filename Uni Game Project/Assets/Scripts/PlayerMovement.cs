@@ -63,7 +63,10 @@ public class PlayerMovement : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Mouse0))
         if (Input.GetButtonDown("Fire1") || Input.GetButton("Fire1"))
         {
-            controller.SetAnimatorBool("isShooting", true);
+            if (!GameManager.interacting)
+            {
+                controller.SetAnimatorBool("isShooting", true);
+            }
         }
         else
         {

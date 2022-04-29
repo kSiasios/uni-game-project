@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public static bool gameIsPaused = false;
     [Tooltip("Should we take input from the player or not?")]
     public static bool canGetGameplayInput = true;
+    [Tooltip("Is the game paused or not?")]
+    public static bool interacting = false;
+
 
     [Header("References needed for Saving")]
     [Tooltip("Reference to PlayerController script")]
@@ -58,6 +61,15 @@ public class GameManager : MonoBehaviour
             canGetGameplayInput = false;
         }
         else if (!gameIsPaused && !canGetGameplayInput)
+        {
+            canGetGameplayInput = true;
+        }
+
+        if (interacting && canGetGameplayInput)
+        {
+            canGetGameplayInput = false;
+        }
+        else if (!interacting && !canGetGameplayInput)
         {
             canGetGameplayInput = true;
         }

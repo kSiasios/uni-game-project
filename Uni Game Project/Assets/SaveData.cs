@@ -75,12 +75,14 @@ public class InventoryData
     public string serial;
     public int amount;
     public bool isKey;
+    public string iconPath;
 
-    public InventoryData(string n, string s, int a, bool k)
+    public InventoryData(string n, string s, int a, bool k, string i)
     {
         name = n;
         serial = s;
         amount = a;
         isKey = k;
+        iconPath = i;
     }
 }

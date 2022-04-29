@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+using UnityEditor;
+
 public class InventoryManager : MonoBehaviour
 {
     public List<InventoryItem> inventory = new List<InventoryItem>();
@@ -65,9 +67,9 @@ public class InventoryManager : MonoBehaviour
                 //{
                 //    item.itemIcon = null;
                 //}
-                Debug.Log(collectable.GetIcon());
+                Debug.Log(AssetDatabase.GetAssetPath(collectable.GetIcon()));
                 item.itemIcon = collectable.GetIcon();
-                Debug.Log(item.itemIcon);
+                //Debug.Log(item.itemIcon);
 
                 SendNotification(collectable.ToString(), item.itemIcon);
                 if (collectable.GetSerial() != null && collectable.isKey)
@@ -217,7 +219,7 @@ public class InventoryManager : MonoBehaviour
         int i = 0;
         foreach (var item in inventory)
         {
-            InventoryData saveItem = new InventoryData(item.ItemName, item.Serial, item.AmountOfItems, item.isKey);
+            InventoryData saveItem = new InventoryData(item.ItemName, item.Serial, item.AmountOfItems, item.isKey, AssetDatabase.GetAssetPath(item.itemIcon));
             saveData[i] = saveItem;
             //saveData.Add(saveItem);
         }
@@ -231,7 +233,7 @@ public class InventoryManager : MonoBehaviour
 
         foreach (var item in data)
         {
-            InventoryItem newItem = new InventoryItem(item.amount,item.name, item.serial, item.isKey);
+            InventoryItem newItem = new InventoryItem(item.amount,item.name, item.serial, item.isKey, (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite)));
             AddItem(newItem);
         }
         InitializeInventoryPanel();

@@ -3664,7 +3664,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -61.199997, y: -30}
+  m_SizeDelta: {x: -141.2, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &555494247
 MonoBehaviour:
@@ -3727,7 +3727,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.75
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4616,7 +4616,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688657987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.8, y: -0.40000558, z: -14.65}
+  m_LocalPosition: {x: 82.4, y: -0.40000558, z: -14.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1180396597}
@@ -6839,7 +6839,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -70, y: 70}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1002328244
 MonoBehaviour:
@@ -6898,14 +6898,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10457,6 +10457,7 @@ GameObject:
   - component: {fileID: 1561981206}
   - component: {fileID: 1561981208}
   - component: {fileID: 1561981207}
+  - component: {fileID: 1561981209}
   m_Layer: 5
   m_Name: DialogSystem
   m_TagString: Untagged
@@ -10522,6 +10523,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561981205}
   m_CullTransparentMesh: 1
+--- !u!114 &1561981209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561981205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9ddd61b74daca4fa21180a2e1c1384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  printDelay: 0
+  index: -1
+  dialogBox: {fileID: 0}
+  dialogText: {fileID: 0}
+  dialogImage: {fileID: 0}
 --- !u!1 &1565646031
 GameObject:
   m_ObjectHideFlags: 0
@@ -10742,7 +10760,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583670395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.8, y: -0.40000558, z: -14.65}
+  m_LocalPosition: {x: 82.4, y: -0.40000558, z: -14.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10977,8 +10995,8 @@ MonoBehaviour:
   - {fileID: 207555351}
   - {fileID: 1223569723}
   m_Bounds:
-    m_Center: {x: 2.4594169, y: -4.780029, z: 0}
-    m_Extent: {x: 1.10951, y: 2.099668, z: 0}
+    m_Center: {x: 2.4594398, y: -4.780029, z: 0}
+    m_Extent: {x: 1.1095176, y: 2.099668, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!212 &1645774745
@@ -12306,6 +12324,10 @@ PrefabInstance:
     - target: {fileID: 798497051888426657, guid: 8f11657cf0e07454c88f12053a242e66, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 798497051888426659, guid: 8f11657cf0e07454c88f12053a242e66, type: 3}
+      propertyPath: bulletSpeed
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 798497051888426662, guid: 8f11657cf0e07454c88f12053a242e66, type: 3}
       propertyPath: m_SortingOrder
@@ -14217,7 +14239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3285077778202159605, guid: d79dc1eb6cf515141a35907f68659c92, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.8
+      value: 82.4
       objectReference: {fileID: 0}
     - target: {fileID: 3285077778202159605, guid: d79dc1eb6cf515141a35907f68659c92, type: 3}
       propertyPath: m_LocalPosition.y

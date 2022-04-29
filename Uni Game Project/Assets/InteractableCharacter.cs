@@ -1,19 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class InteractableCharacter : InteractableEntity
 {
+    [SerializeField] private Sprite speakerImage;
     [SerializeField] private string[] dialogLines;
     [SerializeField] private int index = -1;
-    [SerializeField] [Range(0f, 0.5f)] private float printDelay;
+    //[SerializeField] [Range(0f, 0.5f)] private float printDelay;
 
-    Coroutine customPrintCoroutine;
+    [SerializeField] private GameObject dialogSystem;
+    [SerializeField] private GameObject dialogBox;
+    //[SerializeField] private TextMeshProUGUI dialogText;
+    //[SerializeField] private Image dialogImage;
+    [SerializeField] private Button nextDialogButton;
+
+    [SerializeField] private DialogSystem dialogSystemFunctions;
 
     private void Awake()
     {
         Physics.IgnoreLayerCollision(0, 2);
         Physics.IgnoreLayerCollision(4, 9);
+
+        if (dialogLines.Length > 0)
+        {
+            // we have dialog lines, so we will need reference to the dialog system
+
+            //dialogSystem = FindObjectOfType<DialogSystem>();
+            
+            dialogSystem = FindObjectOfType<Canvas>().transform.Find("GameplayUI").transform.Find("DialogSystem").gameObject;
+            dialogBox = dialogSystem.transform.Find("DialogBox").gameObject;
+            //dialogText = dialogBox.transform.Find("Dialog").GetComponent<TextMeshProUGUI>();
+            //dialogImage = dialogBox.transform.Find("SpeakerImage").GetComponent<Image>();
+            nextDialogButton = dialogBox.transform.Find("NextDialogButton").GetComponent<Button>();
+        }
     }
 
     private void Update()
@@ -21,51 +43,59 @@ public class InteractableCharacter : InteractableEntity
 
         if (Input.GetKeyDown(KeyCode.E) && collidingWithPlayer)
         {
-            // Activate dialog
-            NextDialog();
+            // Enable dialog system
+            //GameManager.canGetGameplayInput = false;
+            GameManager.interacting = true;
+            EnableDialogSystem();
+            dialogSystemFunctions.NextDialog(dialogLines);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        if (customPrintCoroutine != null)
-        {
-            StopCoroutine(customPrintCoroutine);
-        }
-        index = -1;
+        // Disable the dialog system
+        dialogSystemFunctions.StopDialog();
+        DisableDialogSystem();
+
+        //GameManager.canGetGameplayInput = true;
+        GameManager.interacting = false;
     }
 
-    private void NextDialog()
+    
+
+    private void EnableDialogSystem()
     {
-        if (dialogLines.Length - index > 1)
-        {
-            index++;
-        }
-        else
-        {
-            index = 0;
-        }
+        dialogSystem.gameObject.SetActive(true);
 
-        if (customPrintCoroutine != null)
-        {
-            StopCoroutine(customPrintCoroutine);
-        }
+        dialogSystemFunctions = dialogSystem.GetComponent<DialogSystem>();
 
-        //Debug.Log(dialogLines[index]);
-        customPrintCoroutine = StartCoroutine(CustomPrint(dialogLines[index]));
+        DialogSpeaker thisSpeaker = new DialogSpeaker("");
+        dialogSystemFunctions.initializeDialogSystem(thisSpeaker);
+        nextDialogButton.onClick.AddListener(() =>
+        {
+            dialogSystemFunctions.NextDialog(dialogLines);
+        });
     }
 
-    private IEnumerator CustomPrint(string printMsg)
+    private void DisableDialogSystem()
     {
-        for (int i = 0; i < printMsg.Length; i++)
-        {
-            //for (int j = 0; j <= i; j++)
-            //{
-            //    Debug.Log(printMsg[j]);
-            //}
-            Debug.Log(printMsg.Substring(0, i + 1));
-            yield return new WaitForSeconds(printDelay);
-        }
+        nextDialogButton.onClick.RemoveAllListeners();
+        dialogSystem.gameObject.SetActive(false);
     }
+}
+
+public class DialogItem
+{
+    private string dialogLine;
+    private Sprite speakerImage;
+
+    public DialogItem(string line, Sprite image = null)
+    {
+        dialogLine = line;
+        speakerImage = image;
+    }
+
+    public string DialogLine { get => dialogLine; set => dialogLine = value; }
+    public Sprite SpeakerImage { get => speakerImage; set => speakerImage = value; }
 }

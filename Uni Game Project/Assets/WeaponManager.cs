@@ -108,6 +108,13 @@ public class WeaponManager : MonoBehaviour
 
     public void FireWeapon()
     {
-        weaponsList[(int)equippedWeapon - 1].Fire();
+        Debug.Log("GameManager.canGetGameplayInput: " + GameManager.canGetGameplayInput);
+        if (GameManager.canGetGameplayInput)
+        {
+            if ((int)equippedWeapon > 0)
+            {
+                weaponsList[(int)equippedWeapon - 1].Fire();
+            }
+        }
     }
 }
