@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\BulletParticleEnemy.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\InteractionPrompt.cs" />
     <Compile Include="Assets\DialogSystem.cs" />
     <Compile Include="Assets\Scripts\NotificationManager.cs" />
     <Compile Include="Assets\Unlockable.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\Scripts\SlopeManager.cs" />
     <Compile Include="Assets\SaveData.cs" />
     <Compile Include="Assets\InteractableCharacter.cs" />
+    <Compile Include="Assets\ShopManager.cs" />
     <Compile Include="Assets\Scripts\Elevator.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviourEnemy.cs" />
     <Compile Include="Assets\Scripts\GroundCheck.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\ShopKeeper.cs" />
     <Compile Include="Assets\SaveSystem.cs" />
     <Compile Include="Assets\InteractableEntity.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Assets\LootContainer.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\SmallCameraBounder.cs" />
+    <Compile Include="Assets\ShopItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -6,20 +6,25 @@ using UnityEngine.UI;
 
 public class InteractableCharacter : InteractableEntity
 {
+    [Header("- Interactable Character Variables")]
+    [Space]
+    [Tooltip("The image of the speaker that will appear on the dialog box.")]
     [SerializeField] private Sprite speakerImage;
+    [Tooltip("A list of all the dialog lines of the character.")]
     [SerializeField] private string[] dialogLines;
-    [SerializeField] private int index = -1;
-    //[SerializeField] [Range(0f, 0.5f)] private float printDelay;
+    // The index that shows which dialog line the character is currently performing
+    private int index = -1;
 
+    [Tooltip("The gameobject that is responsible for the dialog system.")]
     [SerializeField] private GameObject dialogSystem;
+    [Tooltip("The gameobject that contains the dialog box.")]
     [SerializeField] private GameObject dialogBox;
-    //[SerializeField] private TextMeshProUGUI dialogText;
-    //[SerializeField] private Image dialogImage;
+    [Tooltip("The button that is responsible for advancing the dialog.")]
     [SerializeField] private Button nextDialogButton;
-
+    [Tooltip("The script that has the functionality of the dialog system.")]
     [SerializeField] private DialogSystem dialogSystemFunctions;
 
-    private void Awake()
+    protected void Awake()
     {
         Physics.IgnoreLayerCollision(0, 2);
         Physics.IgnoreLayerCollision(4, 9);
@@ -29,40 +34,41 @@ public class InteractableCharacter : InteractableEntity
             // we have dialog lines, so we will need reference to the dialog system
 
             //dialogSystem = FindObjectOfType<DialogSystem>();
-            
+
             dialogSystem = FindObjectOfType<Canvas>().transform.Find("GameplayUI").transform.Find("DialogSystem").gameObject;
             dialogBox = dialogSystem.transform.Find("DialogBox").gameObject;
             //dialogText = dialogBox.transform.Find("Dialog").GetComponent<TextMeshProUGUI>();
             //dialogImage = dialogBox.transform.Find("SpeakerImage").GetComponent<Image>();
             nextDialogButton = dialogBox.transform.Find("NextDialogButton").GetComponent<Button>();
         }
+
+        actionOnInteraction = InteractableCharacterAction;
     }
 
-    private void Update()
+    protected void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.E) && collidingWithPlayer)
+        if (Input.GetKeyDown(interactionKey) && collidingWithPlayer)
         {
             // Enable dialog system
             //GameManager.canGetGameplayInput = false;
-            GameManager.interacting = true;
-            EnableDialogSystem();
-            dialogSystemFunctions.NextDialog(dialogLines);
+            actionOnInteraction();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
         // Disable the dialog system
-        dialogSystemFunctions.StopDialog();
-        DisableDialogSystem();
-
+        if (dialogSystem != null)
+        {
+            dialogSystemFunctions.StopDialog();
+            DisableDialogSystem();
+        }
         //GameManager.canGetGameplayInput = true;
         GameManager.interacting = false;
     }
 
-    
+
 
     private void EnableDialogSystem()
     {
@@ -82,6 +88,17 @@ public class InteractableCharacter : InteractableEntity
     {
         nextDialogButton.onClick.RemoveAllListeners();
         dialogSystem.gameObject.SetActive(false);
+    }
+
+    private void InteractableCharacterAction()
+    {
+        Debug.Log("Henlo from InteractableCharacter!");
+        GameManager.interacting = true;
+        if (dialogSystem != null)
+        {
+            EnableDialogSystem();
+            dialogSystemFunctions.NextDialog(dialogLines);
+        }
     }
 }
 

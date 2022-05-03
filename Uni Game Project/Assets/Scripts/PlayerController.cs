@@ -44,6 +44,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The animator responsible for the player")]
     [SerializeField] Animator playerAnimator;
 
+    [Header("DEBUG ONLY")]
+    [Tooltip("On debug mode?")]
+    [SerializeField] bool debug;
+    [Tooltip("Debug Mode speed?")]
+    [SerializeField] float debugModeSpeed = 100f;
+    [Tooltip("Debug Mode gravity scale?")]
+    [SerializeField] float debugModeGravityScale = 10f;
+
 
     private bool isJumping = false;
 
@@ -100,6 +108,8 @@ public class PlayerController : MonoBehaviour
         }
 
         weaponManager = GetComponent<WeaponManager>();
+
+        SetDebug(debug);
     }
 
     private void Update()
@@ -296,6 +306,15 @@ public class PlayerController : MonoBehaviour
         }
         else {
             SetAnimatorBool("canStartRun", false);
+        }
+    }
+
+    public void SetDebug(bool enabled)
+    {
+        if (enabled)
+        {
+            speed = debugModeSpeed;
+            rigidbody.gravityScale = debugModeGravityScale;
         }
     }
 }

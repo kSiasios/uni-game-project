@@ -18,11 +18,18 @@ public class InventoryItem : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemNameUI;
     [SerializeField] TextMeshProUGUI itemAmountUI;
 
+    [Header("Item Attributes")]
+    [SerializeField] private int amountOfItems;
+    [SerializeField] private string itemName;
+    [SerializeField] private string serial;
+    [SerializeField] private bool isKey;
+    [SerializeField] private Sprite itemIcon;
+
     private void Awake()
     {
         if (imageComponent == null)
         {
-            imageComponent = this.gameObject.GetComponent<Image>();
+            imageComponent = gameObject.GetComponent<Image>();
         }
 
         if (itemIcon == null)
@@ -37,7 +44,7 @@ public class InventoryItem : MonoBehaviour
         if (itemInfo == null)
         {
             // Try and find itemInfo in the hierarchy
-            itemInfo = this.transform.parent.parent.Find("ItemInfo").gameObject;
+            itemInfo = transform.parent.parent.Find("ItemInfo").gameObject;
 
             // If found, populate local variables with their according values
             if (itemInfo != null)
@@ -74,16 +81,16 @@ public class InventoryItem : MonoBehaviour
     }
 
     // Declaration of the class' attributes along with getters and setters
-    public int AmountOfItems { get; set; }
-    public string ItemName { get; set; }
+    public int AmountOfItems { get => amountOfItems; set => amountOfItems = value; }
+    public string ItemName { get => itemName; set => itemName = value; }
 
-    public string Serial { get; set; }
+    public string Serial { get => serial; set => serial = value; }
 
-    public bool isKey { get; set; }
+    public bool IsKey { get => isKey; set => isKey = value; }
 
     //[Tooltip("A sprite that represents the item")]
     //[SerializeField] 
-    public Sprite itemIcon { get; set; }
+    public Sprite ItemIcon { get => itemIcon; set => itemIcon = value; }
 
     public override string ToString()
     {
@@ -92,7 +99,7 @@ public class InventoryItem : MonoBehaviour
 
     public void UpdateItemInfoUI()
     {
-        Debug.Log(itemIcon);
+        //Debug.Log(itemIcon);
         itemImage.sprite = imageComponent.sprite;
         itemNameUI.text = ItemName;
         itemAmountUI.text = AmountOfItems.ToString();

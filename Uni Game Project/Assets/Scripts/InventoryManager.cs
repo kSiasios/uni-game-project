@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
 using UnityEditor;
 
 public class InventoryManager : MonoBehaviour
@@ -68,10 +67,10 @@ public class InventoryManager : MonoBehaviour
                 //    item.itemIcon = null;
                 //}
                 Debug.Log(AssetDatabase.GetAssetPath(collectable.GetIcon()));
-                item.itemIcon = collectable.GetIcon();
+                item.ItemIcon = collectable.GetIcon();
                 //Debug.Log(item.itemIcon);
 
-                SendNotification(collectable.ToString(), item.itemIcon);
+                SendNotification(collectable.ToString(), item.ItemIcon);
                 if (collectable.GetSerial() != null && collectable.isKey)
                 {
                     // It is a key collectable, initialize the serial with the correct value
@@ -182,7 +181,7 @@ public class InventoryManager : MonoBehaviour
             objInfo.AmountOfItems = item.AmountOfItems;
             objInfo.ItemName = item.ItemName;
             Image objImage = obj.transform.Find("Image").GetComponent<Image>();
-            objImage.sprite = item.itemIcon != null ? item.itemIcon : objImage.sprite;
+            objImage.sprite = item.ItemIcon != null ? item.ItemIcon : objImage.sprite;
         }
     }
 
@@ -190,7 +189,7 @@ public class InventoryManager : MonoBehaviour
     {
         foreach (var item in inventory)
         {
-            if (!item.isKey)
+            if (!item.IsKey)
             {
                 uiItemCounter.text = item.AmountOfItems.ToString();
             }
@@ -219,7 +218,7 @@ public class InventoryManager : MonoBehaviour
         int i = 0;
         foreach (var item in inventory)
         {
-            InventoryData saveItem = new InventoryData(item.ItemName, item.Serial, item.AmountOfItems, item.isKey, AssetDatabase.GetAssetPath(item.itemIcon));
+            InventoryData saveItem = new InventoryData(item.ItemName, item.Serial, item.AmountOfItems, item.IsKey, AssetDatabase.GetAssetPath(item.ItemIcon));
             saveData[i] = saveItem;
             //saveData.Add(saveItem);
         }
