@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     [Header("Shop Item Grid")]
     [SerializeField] GameObject shopGrid;
     [Header("Item Info Panel")]
+    [Space]
     [SerializeField] GameObject itemInfo;
     [SerializeField] Image itemImage;
     [SerializeField] TextMeshProUGUI itemName;
@@ -17,11 +18,17 @@ public class ShopManager : MonoBehaviour
     [SerializeField] Button increaseAmountButton;
     [SerializeField] Button decreaseAmountButton;
     [SerializeField] Button buyButton;
-    [Header("Dialog Object")]
+    [Header("Confirm Dialog Object")]
+    [Space]
     [SerializeField] GameObject confirmDialog;
     [SerializeField] TextMeshProUGUI confirmDialogText;
     [SerializeField] Button cancelButton;
     [SerializeField] Button confirmButton;
+    [Header("Confirm Dialog Object")]
+    [Space]
+    [SerializeField] GameObject notEnoughDialog;
+    [SerializeField] TextMeshProUGUI notEnoughDialogText;
+    [SerializeField] Button notEnoughOKButton;
 
     [SerializeField] ShopItem currentlyDisplaying;
 
@@ -29,85 +36,108 @@ public class ShopManager : MonoBehaviour
 
     public int currentAmount = 1;
     string originalConfirmDialogText;
+
+    string originalNotEnoughDialogText;
+
+    InventoryItem justBoughtItem;
     private void Awake()
     {
-        if (shopGrid == null)
+        if (ShopGrid == null)
         {
-            shopGrid = transform.Find("Backdrop").transform.Find("Grid").gameObject;
+            ShopGrid = transform.Find("Backdrop").transform.Find("Grid").gameObject;
         }
 
-        if (itemInfo == null)
+        if (ItemInfo == null)
         {
-            itemInfo = transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
+            ItemInfo = transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
         }
 
-        if (itemImage == null)
+        if (ItemImage == null)
         {
-            itemImage = itemInfo.transform.Find("Image").GetComponent<Image>();
+            ItemImage = ItemInfo.transform.Find("Image").GetComponent<Image>();
         }
 
-        if (itemName == null)
+        if (ItemName == null)
         {
-            itemName = itemInfo.transform.Find("ItemName").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+            ItemName = ItemInfo.transform.Find("ItemName").transform.Find("Value").GetComponent<TextMeshProUGUI>();
         }
 
-        if (itemPrice == null)
+        if (ItemPrice == null)
         {
-            itemPrice = itemInfo.transform.Find("ItemPrice").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+            ItemPrice = ItemInfo.transform.Find("ItemPrice").transform.Find("Value").GetComponent<TextMeshProUGUI>();
         }
 
-        if (itemAmount == null)
+        if (ItemAmount == null)
         {
-            itemAmount = itemInfo.transform.Find("AmountSetter").transform.Find("AmountInput").GetComponent<TMP_InputField>();
-            //itemAmount = itemInfo.transform.Find("AmountSetter").transform.Find("AmountInput").transform.Find("Text Area").transform.Find("Text").GetComponent<TMP_InputField>();
+            ItemAmount = ItemInfo.transform.Find("AmountSetter").transform.Find("AmountInput").GetComponent<TMP_InputField>();
+            //ItemAmount = ItemInfo.transform.Find("AmountSetter").transform.Find("AmountInput").transform.Find("Text Area").transform.Find("Text").GetComponent<TMP_InputField>();
         }
 
-        if (decreaseAmountButton == null)
+        if (DecreaseAmountButton == null)
         {
-            decreaseAmountButton = itemInfo.transform.Find("AmountSetter").transform.Find("ButtonSubtract").GetComponent<Button>();
+            DecreaseAmountButton = ItemInfo.transform.Find("AmountSetter").transform.Find("ButtonSubtract").GetComponent<Button>();
         }
 
-        if (increaseAmountButton == null)
+        if (IncreaseAmountButton == null)
         {
-            increaseAmountButton = itemInfo.transform.Find("AmountSetter").transform.Find("ButtonAdd").GetComponent<Button>();
+            IncreaseAmountButton = ItemInfo.transform.Find("AmountSetter").transform.Find("ButtonAdd").GetComponent<Button>();
         }
 
-        if (buyButton == null)
+        if (BuyButton == null)
         {
-            buyButton = itemInfo.transform.Find("BuyButton").GetComponent<Button>();
+            BuyButton = ItemInfo.transform.Find("BuyButton").GetComponent<Button>();
         }
 
-        if (confirmDialog == null)
+        if (ConfirmDialog == null)
         {
-            confirmDialog = transform.Find("ConfirmDialog").gameObject;
+            ConfirmDialog = transform.Find("ConfirmDialog").gameObject;
         }
 
-        if (confirmDialogText == null)
+        if (ConfirmDialogText == null)
         {
-            confirmDialogText = confirmDialog.transform.Find("DialogText").GetComponent<TextMeshProUGUI>();
+            ConfirmDialogText = confirmDialog.transform.Find("DialogText").GetComponent<TextMeshProUGUI>();
         }
 
-        if (cancelButton == null)
+        if (CancelButton == null)
         {
-            cancelButton = confirmDialog.transform.Find("ButtonCancel").GetComponent<Button>();
+            CancelButton = confirmDialog.transform.Find("ButtonCancel").GetComponent<Button>();
         }
 
-        if (confirmButton == null)
+        if (ConfirmButton == null)
         {
-            confirmButton = confirmDialog.transform.Find("ButtonConfirm").GetComponent<Button>();
+            ConfirmButton = confirmDialog.transform.Find("ButtonConfirm").GetComponent<Button>();
         }
 
-        confirmDialog.SetActive(false);
+        if (NotEnoughDialog == null)
+        {
+            NotEnoughDialog = transform.Find("NotEnoughDialog").gameObject;
+        }
 
-        decreaseAmountButton.onClick.AddListener(SubtractAmount);
-        increaseAmountButton.onClick.AddListener(AddAmount);
+        if (NotEnoughDialogText == null)
+        {
+            NotEnoughDialogText = notEnoughDialog.transform.Find("DialogText").GetComponent<TextMeshProUGUI>();
+        }
 
-        confirmButton.onClick.AddListener(ConfirmTransaction);
-        cancelButton.onClick.AddListener(CancelTransaction);
+        if (NotEnoughOKButton == null)
+        {
+            NotEnoughOKButton = notEnoughDialog.transform.Find("ButtonOK").GetComponent<Button>();
+        }
 
-        buyButton.onClick.AddListener(TriggerTransaction);
+        ConfirmDialog.SetActive(false);
+        NotEnoughDialog.SetActive(false);
 
-        originalConfirmDialogText = confirmDialogText.text;
+        DecreaseAmountButton.onClick.AddListener(SubtractAmount);
+        IncreaseAmountButton.onClick.AddListener(AddAmount);
+
+        ConfirmButton.onClick.AddListener(ConfirmTransaction);
+        CancelButton.onClick.AddListener(CancelTransaction);
+
+        BuyButton.onClick.AddListener(TriggerTransaction);
+
+        NotEnoughOKButton.onClick.AddListener(NotEnoughConfirm);
+
+        originalConfirmDialogText = ConfirmDialogText.text;
+        originalNotEnoughDialogText = NotEnoughDialogText.text;
 
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
@@ -170,39 +200,119 @@ public class ShopManager : MonoBehaviour
     void ConfirmTransaction()
     {
         Debug.Log("Confirm Transaction");
+        BuyItem();
     }
 
     void TriggerTransaction()
     {
         //Debug.Log("Triggered Transaction");
         // Activate Dialog
-        ConfirmDialog.SetActive(true);
 
         string text = ConfirmDialogText.text;
-        // Replace {number} with the actual amount in the input field
-        text = text.Replace("{number}", currentAmount.ToString());
-        // Replace {item} with the item's name
-        text = text.Replace("{item}", CurrentlyDisplaying.Item.ItemName);
-        // Replace {amount} with the cost * amount of items
-        text = text.Replace("{amount}", (CurrentlyDisplaying.Price * currentAmount).ToString());
-        // Replace {currency} with the currency used to buy the item
-        text = text.Replace("{currency}", CurrentlyDisplaying.Currency.ToString());
+        //// Replace {number} with the actual amount in the input field
+        //text = text.Replace("{number}", currentAmount.ToString());
+        //// Replace {item} with the item's name
+        //text = text.Replace("{item}", CurrentlyDisplaying.Item.ItemName);
+        //// Replace {amount} with the cost * amount of items
+        //text = text.Replace("{amount}", (CurrentlyDisplaying.Price * currentAmount).ToString());
+        //// Replace {currency} with the currency used to buy the item
+        //text = text.Replace("{currency}", CurrentlyDisplaying.Currency.ToString());
 
+        text = text.Replace("{number}", currentAmount.ToString())
+            .Replace("{item}", CurrentlyDisplaying.Item.ItemName)
+            .Replace("{amount}", (CurrentlyDisplaying.Price * currentAmount).ToString())
+            .Replace("{currency}", CurrentlyDisplaying.Currency.ToString());
+
+        ConfirmDialog.SetActive(true);
+        ConfirmDialogText.text = text;
+
+        bool found = false;
         foreach (var item in inventoryManager.inventory)
         {
+            // if the inventory contains the currency at which the item is sold
             if (item.ItemName.ToLower() == CurrentlyDisplaying.Currency.ToString().ToLower())
             {
+                found = true;
                 Debug.Log($"Item: {item.ItemName}, Amount: {item.AmountOfItems}");
+                if (item.AmountOfItems < CurrentlyDisplaying.Price * currentAmount)
+                {
+                    // not enough of currency, trigger notEnoughDialog
+                    TriggerNotEnoughDialog();
+                }
+                return;
             }
         }
 
-        ConfirmDialogText.text = text;
+        if (!found)
+        {
+            TriggerNotEnoughDialog();
+        }
+    }
+
+    void NotEnoughConfirm()
+    {
+        // close NotEnoughDialog
+        NotEnoughDialogText.text = originalNotEnoughDialogText;
+        NotEnoughDialog.gameObject.SetActive(false);
+
+        ConfirmDialogText.text = originalConfirmDialogText;
+        ConfirmDialog.gameObject.SetActive(false);
+    }
+
+    void TriggerNotEnoughDialog()
+    {
+        // open NotEnoughDialog
+        notEnoughDialog.gameObject.SetActive(true);
+
+        string newText = notEnoughDialogText.text;
+        notEnoughDialogText.text = newText.Replace("{currency}", CurrentlyDisplaying.Currency.ToString().ToLower());
     }
 
     public void DeactivatePanel()
     {
+        //Time.timeScale = 1f;
+        //gameObject.SetActive(false);
+
         Time.timeScale = 1f;
+        GameManager.gameIsPaused = false;
         gameObject.SetActive(false);
+
+    }
+
+    void BuyItem()
+    {
+        CurrentlyDisplaying.Item.AmountOfItems = currentAmount;
+        inventoryManager.AddItem(CurrentlyDisplaying.Item);
+        // Find currency and subtract from it.
+        //foreach (var item in inventoryManager.inventory)
+        //{
+        //    if (item.ItemName.ToLower() == CurrentlyDisplaying.Item.ItemName.ToLower())
+        //    {
+        //        Debug.Log($"Old Amount: {item.AmountOfItems}");
+        //        // Found currency, decrease its amount
+        //        item.AmountOfItems = item.AmountOfItems - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount);
+        //        Debug.Log($"New Amount: {item.AmountOfItems}");
+        //        inventoryManager.EditItem(item);
+        //        break;
+        //    }
+        //}
+        foreach (var item in inventoryManager.inventory)
+        {
+            // if the inventory contains the currency at which the item is sold
+            if (item.ItemName.ToLower() == CurrentlyDisplaying.Currency.ToString().ToLower())
+            {
+                item.AmountOfItems = item.AmountOfItems - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount);
+                //Debug.Log($"New Amount: {item.AmountOfItems}");
+                inventoryManager.EditItem(item);
+                CurrentlyDisplaying.UpdateItemInfoUI();
+                break;
+            }
+        }
+
+        justBoughtItem = CurrentlyDisplaying.Item;
+        justBoughtItem.AmountOfItems = currentAmount;
+
+        ConfirmDialog.SetActive(false);
     }
 
     public GameObject ShopGrid { get => shopGrid; set => shopGrid = value; }
@@ -219,4 +329,8 @@ public class ShopManager : MonoBehaviour
     public Button CancelButton { get => cancelButton; set => cancelButton = value; }
     public Button ConfirmButton { get => confirmButton; set => confirmButton = value; }
     public ShopItem CurrentlyDisplaying { get => currentlyDisplaying; set => currentlyDisplaying = value; }
+    public GameObject NotEnoughDialog { get => notEnoughDialog; set => notEnoughDialog = value; }
+    public TextMeshProUGUI NotEnoughDialogText { get => notEnoughDialogText; set => notEnoughDialogText = value; }
+    public Button NotEnoughOKButton { get => notEnoughOKButton; set => notEnoughOKButton = value; }
+    public InventoryItem JustBoughtItem { get => justBoughtItem; set => justBoughtItem = value; }
 }

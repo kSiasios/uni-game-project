@@ -13,6 +13,8 @@ public class ShopKeeper : InteractableCharacter
     public GameObject inventoryItemPrefab;
 
     bool UIActive = false;
+
+    InventoryItem previouslyBoughtItem;
     private void Awake()
     {
         base.Awake();
@@ -28,6 +30,25 @@ public class ShopKeeper : InteractableCharacter
     private void Update()
     {
         base.Update();
+        if (shopManager.JustBoughtItem != null && shopManager.JustBoughtItem != previouslyBoughtItem)
+        {
+            // loop through inventory and decrease the amount of the given item
+            foreach (var item in inventory)
+            {
+                if (item.Item.ItemName == shopManager.JustBoughtItem.ItemName)
+                {
+                    item.Availability = item.Availability - shopManager.JustBoughtItem.AmountOfItems;
+                    EnableUI(true);
+                    break;
+                }
+            }
+            previouslyBoughtItem = shopManager.JustBoughtItem;
+        }
+
+        if (!GameManager.gameIsPaused && shopManager.gameObject.activeInHierarchy)
+        {
+            EnableUI(true);
+        }
     }
     void ActivateShop()
     {
@@ -110,6 +131,13 @@ public class ShopKeeper : InteractableCharacter
         }
         foreach (var item in inventory)
         {
+            if (item.Availability <= 0)
+            {
+                inventory.Remove(item);
+                InitializeShopPanel();
+                shopManager.CurrentlyDisplaying.UpdateItemInfoUI();
+                continue;
+            }
             //Debug.Log($"Creating {item}");
             GameObject obj = Instantiate(inventoryItemPrefab, shopManager.ShopGrid.transform);
             InventoryItem objInfo = obj.GetComponent<InventoryItem>();

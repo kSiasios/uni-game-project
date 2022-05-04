@@ -37,19 +37,39 @@ public class ShopItem : MonoBehaviour
     {
         //Debug.Log(Item.ItemIcon);
         //Debug.Log($"Price: {price}");
-        shopManager.CurrentlyDisplaying = this;
-        shopManager.ItemImage.sprite = Item.ItemIcon;
-        //itemImage.sprite = imageComponent.sprite;
-        shopManager.ItemName.text = Item.ItemName;
-        //itemNameUI.text = ItemName;
-        //shopManager.ItemAmount.text = Availability.ToString();
+        if (Availability > 0)
+        {
+            shopManager.CurrentlyDisplaying = this;
+            shopManager.ItemImage.sprite = Item.ItemIcon;
+            //itemImage.sprite = imageComponent.sprite;
+            shopManager.ItemName.text = Item.ItemName;
+            //itemNameUI.text = ItemName;
+            //shopManager.ItemAmount.text = Availability.ToString();
 
-        shopManager.ItemPrice.text = Price.ToString();
+            shopManager.ItemPrice.text = Price.ToString();
 
-        shopManager.currentAmount = 1;
-        shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
-        //shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
-        //itemAmountUI.text = AmountOfItems.ToString();
+            shopManager.currentAmount = 1;
+            shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
+            //shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
+            //itemAmountUI.text = AmountOfItems.ToString();
+        }
+        else
+        {
+            shopManager.CurrentlyDisplaying = null;
+            shopManager.ItemImage.sprite = null;
+            //itemImage.sprite = imageComponent.sprite;
+            shopManager.ItemName.text = "";
+            //itemNameUI.text = ItemName;
+            //shopManager.ItemAmount.text = Availability.ToString();
+
+            shopManager.ItemPrice.text = "";
+
+            shopManager.currentAmount = 1;
+            shopManager.ItemAmount.text = "0";
+            //shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
+            //itemAmountUI.text = AmountOfItems.ToString();
+        }
+
     }
 
     private void Awake()

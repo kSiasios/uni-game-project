@@ -78,7 +78,7 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    uiItemCounter.text = "1";
+                    uiItemCounter.text = item.AmountOfItems.ToString();
                     item.Serial = null;
                 }
                 // Change the state of the collectable to collected
@@ -101,7 +101,7 @@ public class InventoryManager : MonoBehaviour
         notificationManager.NewNotification(notificationText, icon);
     }
 
-    void AddItem(InventoryItem newItem)
+    public void AddItem(InventoryItem newItem)
     {
         // Function that handles adding items to the inventory
         bool alreadyExists = false;
@@ -166,6 +166,36 @@ public class InventoryManager : MonoBehaviour
         {
             print(list[i].ToString());
         }
+    }
+
+    public void EditItem(InventoryItem newValues)
+    {
+        // Function that handles editing items to the inventory
+        //bool alreadyExists = false;
+        // Iterate through the inventory to see if there already is an item of the same type
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i].ItemName == newValues.ItemName)
+            {
+                // If there is an item of the same type in the inventory, just icrease its amount
+                //alreadyExists = true;
+                //Debug.Log("Item exists: " + (inventory[i].AmountOfItems + newItem.AmountOfItems));
+                inventory[i].AmountOfItems = newValues.AmountOfItems;
+                inventory[i].IsKey = newValues.IsKey;
+                inventory[i].ItemIcon = newValues.ItemIcon;
+                //inventory[i].= newItem.AmountOfItems;
+
+                // Update the UI
+                uiItemCounter.text = inventory[i].AmountOfItems.ToString();
+
+                break;
+            } else
+            {
+                return;
+            }
+        }
+
+        InitializeInventoryPanel();
     }
 
     void InitializeInventoryPanel()
