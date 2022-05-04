@@ -67,6 +67,7 @@
     <Compile Include="Assets\InteractionPrompt.cs" />
     <Compile Include="Assets\DialogSystem.cs" />
     <Compile Include="Assets\Scripts\NotificationManager.cs" />
+    <Compile Include="Assets\ShopItem.cs" />
     <Compile Include="Assets\Unlockable.cs" />
     <Compile Include="Assets\Scripts\Collectable.cs" />
     <Compile Include="Assets\Scripts\NotificationItem.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="Assets\LootContainer.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\SmallCameraBounder.cs" />
-    <Compile Include="Assets\ShopItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

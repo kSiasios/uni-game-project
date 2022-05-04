@@ -10,7 +10,7 @@ public class InventoryItem : MonoBehaviour
     [Header("Personal references")]
     [Tooltip("The image component that will control the sprite")]
     [SerializeField] Image imageComponent;
-    
+
     [Header("References to UI")]
     [Tooltip("References to the ItemInfo UI element and its sub-components")]
     [SerializeField] GameObject itemInfo;
@@ -32,11 +32,12 @@ public class InventoryItem : MonoBehaviour
             imageComponent = gameObject.GetComponent<Image>();
         }
 
-        if (itemIcon == null)
-        {
-            Debug.LogError("Error! itemIcon not provided... Script: InventoryItem.cs"); 
-        }
-        else
+        //if (itemIcon == null)
+        //{
+        //    Debug.LogError("Error! itemIcon not provided... Script: InventoryItem.cs"); 
+        //}
+        //else
+        if (itemIcon != null)
         {
             imageComponent.sprite = itemIcon;
         }
@@ -44,19 +45,39 @@ public class InventoryItem : MonoBehaviour
         if (itemInfo == null)
         {
             // Try and find itemInfo in the hierarchy
-            itemInfo = transform.parent.parent.Find("ItemInfo").gameObject;
+            //itemInfo = transform.parent.parent.Find("ItemInfo").gameObject;
+            if (transform.parent.name == "Grid")
+            {
+                if (GetComponent<ShopItem>())
+                {
+                    // we have a shop item, look for item info under shop
+                    itemInfo = GameObject.Find("ShopPanel").transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
+                }
+                else
+                {
+                    // we have a regular inventory item, look for item info under inventory
+                    itemInfo = GameObject.Find("InventoryPanel").transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
+                }
 
-            // If found, populate local variables with their according values
-            if (itemInfo != null)
-            {
-                itemImage = itemInfo.transform.Find("Image").GetComponentInChildren<Image>();
-                itemNameUI = itemInfo.transform.Find("ItemName").transform.Find("Value").GetComponent<TextMeshProUGUI>();
-                itemAmountUI = itemInfo.transform.Find("ItemAmount").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+
+                // If found, populate local variables with their according values
+                if (itemInfo != null)
+                {
+                    itemImage = itemInfo.transform.Find("Image").GetComponentInChildren<Image>();
+                    itemNameUI = itemInfo.transform.Find("ItemName").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+                    itemAmountUI = itemInfo.transform.Find("ItemAmount").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+                }
+                else
+                {
+                    Debug.LogError("ItemInfo not found!");
+                }
             }
-            else
-            {
-                Debug.LogError("ItemInfo not found!");
-            }
+        }
+        else
+        {
+            itemImage = itemInfo.transform.Find("Image").GetComponentInChildren<Image>();
+            itemNameUI = itemInfo.transform.Find("ItemName").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+            itemAmountUI = itemInfo.transform.Find("ItemAmount").transform.Find("Value").GetComponent<TextMeshProUGUI>();
         }
     }
 

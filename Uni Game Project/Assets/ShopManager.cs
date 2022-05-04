@@ -25,6 +25,8 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] ShopItem currentlyDisplaying;
 
+    InventoryManager inventoryManager;
+
     public int currentAmount = 1;
     string originalConfirmDialogText;
     private void Awake()
@@ -106,6 +108,8 @@ public class ShopManager : MonoBehaviour
         buyButton.onClick.AddListener(TriggerTransaction);
 
         originalConfirmDialogText = confirmDialogText.text;
+
+        inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
     private void Update()
@@ -136,7 +140,7 @@ public class ShopManager : MonoBehaviour
 
     void AddAmount()
     {
-        Debug.Log("Increasing amount");
+        //Debug.Log("Increasing amount");
         //int currentAmount = int.Parse(ItemAmount.text);
         int newAmount = CurrentlyDisplaying.Availability >= currentAmount + 1 ? currentAmount + 1 : currentAmount;
         currentAmount = newAmount;
@@ -145,7 +149,7 @@ public class ShopManager : MonoBehaviour
 
     void SubtractAmount()
     {
-        Debug.Log("Decreasing amount");
+        //Debug.Log("Decreasing amount");
         //int currentAmount = int.Parse(ItemAmount.text);
         int newAmount = currentAmount > 1 ? currentAmount - 1 : currentAmount;
         currentAmount = newAmount;
@@ -159,6 +163,7 @@ public class ShopManager : MonoBehaviour
 
         // reset variables
         currentAmount = 1;
+        ItemAmount.text = currentAmount.ToString();
         ConfirmDialogText.text = originalConfirmDialogText;
     }
 
@@ -169,7 +174,7 @@ public class ShopManager : MonoBehaviour
 
     void TriggerTransaction()
     {
-        Debug.Log("Triggered Transaction");
+        //Debug.Log("Triggered Transaction");
         // Activate Dialog
         ConfirmDialog.SetActive(true);
 
@@ -181,9 +186,23 @@ public class ShopManager : MonoBehaviour
         // Replace {amount} with the cost * amount of items
         text = text.Replace("{amount}", (CurrentlyDisplaying.Price * currentAmount).ToString());
         // Replace {currency} with the currency used to buy the item
-        text = text.Replace("{currency}", "coins");
+        text = text.Replace("{currency}", CurrentlyDisplaying.Currency.ToString());
+
+        foreach (var item in inventoryManager.inventory)
+        {
+            if (item.ItemName.ToLower() == CurrentlyDisplaying.Currency.ToString().ToLower())
+            {
+                Debug.Log($"Item: {item.ItemName}, Amount: {item.AmountOfItems}");
+            }
+        }
 
         ConfirmDialogText.text = text;
+    }
+
+    public void DeactivatePanel()
+    {
+        Time.timeScale = 1f;
+        gameObject.SetActive(false);
     }
 
     public GameObject ShopGrid { get => shopGrid; set => shopGrid = value; }

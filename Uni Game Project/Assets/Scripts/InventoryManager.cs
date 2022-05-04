@@ -66,7 +66,7 @@ public class InventoryManager : MonoBehaviour
                 //{
                 //    item.itemIcon = null;
                 //}
-                Debug.Log(AssetDatabase.GetAssetPath(collectable.GetIcon()));
+                //Debug.Log(AssetDatabase.GetAssetPath(collectable.GetIcon()));
                 item.ItemIcon = collectable.GetIcon();
                 //Debug.Log(item.itemIcon);
 
@@ -91,7 +91,7 @@ public class InventoryManager : MonoBehaviour
 
             item.ItemName = collectable.GetName();
             AddItem(item);
-            PrintList(inventory);
+            //PrintList(inventory);
         }
     }
 

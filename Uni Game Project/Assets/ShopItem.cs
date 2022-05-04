@@ -8,6 +8,7 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private InventoryItem item;
     [SerializeField] private int availability;
     [SerializeField] private float price;
+    [SerializeField] private Currencies currency;
 
     [Header("UI References")]
     [SerializeField] ShopManager shopManager;
@@ -15,6 +16,10 @@ public class ShopItem : MonoBehaviour
     //[SerializeField] private int availability;
     //[SerializeField] private float price;
 
+    public enum Currencies
+    {
+        coins, energy
+    }
 
     public ShopItem(InventoryItem item, int availability, float price)
     {
@@ -26,6 +31,7 @@ public class ShopItem : MonoBehaviour
     public InventoryItem Item { get => item; set => item = value; }
     public int Availability { get => availability; set => availability = value; }
     public float Price { get => price; set => price = value; }
+    public Currencies Currency { get => currency; set => currency = value; }
 
     public void UpdateItemInfoUI()
     {
@@ -57,6 +63,10 @@ public class ShopItem : MonoBehaviour
         {
             item = GetComponent<InventoryItem>();
         }
-        GetComponent<Button>().onClick.AddListener(UpdateItemInfoUI);
+
+        if (transform.parent.name == "Grid")
+        {
+            GetComponent<Button>().onClick.AddListener(UpdateItemInfoUI);
+        }
     }
 }

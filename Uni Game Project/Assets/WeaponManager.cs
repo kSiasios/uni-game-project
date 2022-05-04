@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private WeaponBehaviour[] weaponsList;
@@ -10,6 +10,10 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private GameObject regularArm;
     [SerializeField] private GameObject armHoldingWeapon;
+
+    [Header("UI References")]
+    [Tooltip("The UI field that displays the amount of bullets")]
+    [SerializeField] TextMeshProUGUI bulletsAmountUI;
 
     enum EquipedWeapon
     {
@@ -36,10 +40,19 @@ public class WeaponManager : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
         }
 
+
+        if (bulletsAmountUI == null)
+        {
+            bulletsAmountUI = FindObjectOfType<Canvas>().transform.Find("GameplayUI").transform.Find("AmmoCounter").transform.Find("Item").transform.Find("ItemAmount").GetComponent<TextMeshProUGUI>();
+        }
+
         DeactivateAllWeapons();
         if (equippedWeapon != EquipedWeapon.none)
         {
             ActivateWeapon((int)equippedWeapon);
+        } else
+        {
+            bulletsAmountUI.text = "-";
         }
     }
 
@@ -85,6 +98,8 @@ public class WeaponManager : MonoBehaviour
             //regularArm.SetActive(true);
             //armHoldingWeapon.SetActive(false);
             DeactivateAllWeapons();
+
+            bulletsAmountUI.text = "-";
         }
         Debug.Log("Equipped Weapon: " + equippedWeapon);
     }

@@ -42,29 +42,60 @@ public class ShopKeeper : InteractableCharacter
     void ShopKeeperAction()
     {
         //Debug.Log("Henlo from ShopKeeper!");
-        EnableUI();
-        if (GameManager.gameIsPaused)
+        //EnableUI();
+        //if (GameManager.gameIsPaused)
+        //{
+        //    // Resume Time
+        //    Time.timeScale = 1f;
+        //    GameManager.gameIsPaused = false;
+        //}
+        //else
+        //{
+        //    Time.timeScale = 0f;
+        //    GameManager.gameIsPaused = true;
+        //}
+
+        if (!GameManager.gameIsPaused && shopManager.gameObject.activeInHierarchy)
         {
-            // Resume Time
+            EnableUI(true);
+        }
+        //if (GameManager.gameIsPaused && !shopManager.isActiveAndEnabled)
+        //{
+        //    EnableUI(false);
+        //}
+
+        if (!GameManager.gameIsPaused && shopManager.gameObject.activeInHierarchy)
+        {
+            EnableUI(true);
+        }
+        if (!GameManager.gameIsPaused || shopManager.gameObject.activeInHierarchy)
+        {
+            if (GameManager.gameIsPaused)
+            {
+                // Resume Time
+                EnableUI(false);
+            }
+            else
+            {
+                EnableUI(true);
+            }
+        }
+    }
+
+    void EnableUI(bool enable)
+    {
+        if (!enable)
+        {
             Time.timeScale = 1f;
             GameManager.gameIsPaused = false;
+            DeactivateShop();
+            UIActive = false;
+            
         }
         else
         {
             Time.timeScale = 0f;
             GameManager.gameIsPaused = true;
-        }
-    }
-
-    void EnableUI()
-    {
-        if (UIActive)
-        {
-            DeactivateShop();
-            UIActive = false;
-        }
-        else
-        {
             ActivateShop();
             InitializeShopPanel();
             UIActive = true;
@@ -92,6 +123,7 @@ public class ShopKeeper : InteractableCharacter
 
             shopItemInfo.Availability = item.Availability;
             shopItemInfo.Price = item.Price;
+            shopItemInfo.Currency = item.Currency;
         }
     }
 }
