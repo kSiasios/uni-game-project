@@ -12,9 +12,6 @@ public class ShopItem : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] ShopManager shopManager;
-    //[SerializeField] private InventoryItem item;
-    //[SerializeField] private int availability;
-    //[SerializeField] private float price;
 
     public enum Currencies
     {
@@ -35,41 +32,37 @@ public class ShopItem : MonoBehaviour
 
     public void UpdateItemInfoUI()
     {
-        //Debug.Log(Item.ItemIcon);
-        //Debug.Log($"Price: {price}");
         if (Availability > 0)
         {
-            shopManager.CurrentlyDisplaying = this;
             shopManager.ItemImage.sprite = Item.ItemIcon;
-            //itemImage.sprite = imageComponent.sprite;
             shopManager.ItemName.text = Item.ItemName;
-            //itemNameUI.text = ItemName;
-            //shopManager.ItemAmount.text = Availability.ToString();
-
             shopManager.ItemPrice.text = Price.ToString();
-
             shopManager.currentAmount = 1;
             shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
-            //shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
-            //itemAmountUI.text = AmountOfItems.ToString();
         }
         else
         {
-            shopManager.CurrentlyDisplaying = null;
             shopManager.ItemImage.sprite = null;
-            //itemImage.sprite = imageComponent.sprite;
             shopManager.ItemName.text = "";
-            //itemNameUI.text = ItemName;
-            //shopManager.ItemAmount.text = Availability.ToString();
-
             shopManager.ItemPrice.text = "";
-
             shopManager.currentAmount = 1;
             shopManager.ItemAmount.text = "0";
-            //shopManager.ItemAmount.text = shopManager.currentAmount.ToString();
-            //itemAmountUI.text = AmountOfItems.ToString();
         }
+    }
 
+    public void FlushItemInfoPanel()
+    {
+        shopManager.ItemImage.sprite = null;
+        shopManager.ItemName.text = "";
+        shopManager.ItemPrice.text = "";
+        shopManager.currentAmount = 1;
+        shopManager.ItemAmount.text = "0";
+    }
+
+    public void UpdateItemInfoPanel()
+    {
+        shopManager.CurrentlyDisplaying = this;
+        UpdateItemInfoUI();
     }
 
     private void Awake()
@@ -86,7 +79,12 @@ public class ShopItem : MonoBehaviour
 
         if (transform.parent.name == "Grid")
         {
-            GetComponent<Button>().onClick.AddListener(UpdateItemInfoUI);
+            GetComponent<Button>().onClick.AddListener(UpdateItemInfoPanel);
         }
+    }
+
+    public override string ToString()
+    {
+        return $"Availability: {Availability}, Currency: {Currency}, Price: {Price}, Item: {Item}";
     }
 }

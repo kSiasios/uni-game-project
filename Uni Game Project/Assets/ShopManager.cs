@@ -31,6 +31,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] Button notEnoughOKButton;
 
     [SerializeField] ShopItem currentlyDisplaying;
+    [SerializeField] InventoryItem justBoughtItem;
 
     InventoryManager inventoryManager;
 
@@ -39,7 +40,6 @@ public class ShopManager : MonoBehaviour
 
     string originalNotEnoughDialogText;
 
-    InventoryItem justBoughtItem;
     private void Awake()
     {
         if (ShopGrid == null)
@@ -70,7 +70,6 @@ public class ShopManager : MonoBehaviour
         if (ItemAmount == null)
         {
             ItemAmount = ItemInfo.transform.Find("AmountSetter").transform.Find("AmountInput").GetComponent<TMP_InputField>();
-            //ItemAmount = ItemInfo.transform.Find("AmountSetter").transform.Find("AmountInput").transform.Find("Text Area").transform.Find("Text").GetComponent<TMP_InputField>();
         }
 
         if (DecreaseAmountButton == null)
@@ -144,19 +143,18 @@ public class ShopManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentAmount == 1)
-        {
-            // disable subtract button
-            DecreaseAmountButton.interactable = false;
-        }
-        else
-        {
-            DecreaseAmountButton.interactable = true;
-        }
-
         if (CurrentlyDisplaying != null)
         {
-            if (currentAmount == CurrentlyDisplaying.Availability)
+            if (currentAmount == 1)
+            {
+                // disable subtract button
+                DecreaseAmountButton.interactable = false;
+            }
+            else
+            {
+                DecreaseAmountButton.interactable = true;
+            }
+            if (currentAmount >= CurrentlyDisplaying.Availability)
             {
                 // disable add button
                 IncreaseAmountButton.interactable = false;
@@ -165,13 +163,16 @@ public class ShopManager : MonoBehaviour
             {
                 IncreaseAmountButton.interactable = true;
             }
+            BuyButton.interactable = true;
+        }
+        else
+        {
+            BuyButton.interactable = false;
         }
     }
 
     void AddAmount()
     {
-        //Debug.Log("Increasing amount");
-        //int currentAmount = int.Parse(ItemAmount.text);
         int newAmount = CurrentlyDisplaying.Availability >= currentAmount + 1 ? currentAmount + 1 : currentAmount;
         currentAmount = newAmount;
         ItemAmount.text = newAmount.ToString();
@@ -179,8 +180,6 @@ public class ShopManager : MonoBehaviour
 
     void SubtractAmount()
     {
-        //Debug.Log("Decreasing amount");
-        //int currentAmount = int.Parse(ItemAmount.text);
         int newAmount = currentAmount > 1 ? currentAmount - 1 : currentAmount;
         currentAmount = newAmount;
         ItemAmount.text = newAmount.ToString();
@@ -199,7 +198,6 @@ public class ShopManager : MonoBehaviour
 
     void ConfirmTransaction()
     {
-        Debug.Log("Confirm Transaction");
         BuyItem();
     }
 
@@ -227,7 +225,6 @@ public class ShopManager : MonoBehaviour
             if (item.ItemName.ToLower() == CurrentlyDisplaying.Currency.ToString().ToLower())
             {
                 found = true;
-                Debug.Log($"Item: {item.ItemName}, Amount: {item.AmountOfItems}");
                 if (item.AmountOfItems < CurrentlyDisplaying.Price * currentAmount)
                 {
                     // not enough of currency, trigger notEnoughDialog
@@ -248,7 +245,6 @@ public class ShopManager : MonoBehaviour
         // close NotEnoughDialog
         NotEnoughDialogText.text = originalNotEnoughDialogText;
         NotEnoughDialog.gameObject.SetActive(false);
-
         ConfirmDialogText.text = originalConfirmDialogText;
         ConfirmDialog.gameObject.SetActive(false);
     }
@@ -257,7 +253,6 @@ public class ShopManager : MonoBehaviour
     {
         // open NotEnoughDialog
         notEnoughDialog.gameObject.SetActive(true);
-
         string newText = notEnoughDialogText.text;
         notEnoughDialogText.text = newText.Replace("{currency}", CurrentlyDisplaying.Currency.ToString().ToLower());
     }
@@ -272,8 +267,9 @@ public class ShopManager : MonoBehaviour
 
     void BuyItem()
     {
-        CurrentlyDisplaying.Item.AmountOfItems = currentAmount;
-        inventoryManager.AddItem(CurrentlyDisplaying.Item);
+        Debug.Log(CurrentlyDisplaying);
+        Debug.Log(currentAmount);
+        //CurrentlyDisplaying.Item.AmountOfItems = currentAmount;
         // Find currency and subtract from it.
         foreach (var item in inventoryManager.inventory)
         {
@@ -281,21 +277,40 @@ public class ShopManager : MonoBehaviour
             if (item.ItemName.ToLower() == CurrentlyDisplaying.Currency.ToString().ToLower())
             {
                 item.AmountOfItems = item.AmountOfItems - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount);
+                //Debug.Log($"Item: {item}");
                 inventoryManager.EditItem(item);
+                CurrentlyDisplaying.Availability = CurrentlyDisplaying.Availability - currentAmount;
+                CurrentlyDisplaying.Item.AmountOfItems = currentAmount;
+                Debug.Log($"Currently displaying {CurrentlyDisplaying}");
+                inventoryManager.AddItem(CurrentlyDisplaying.Item);
                 CurrentlyDisplaying.UpdateItemInfoUI();
+
+                if (JustBoughtItem == null)
+                {
+                    JustBoughtItem = CurrentlyDisplaying.Item;
+                }
+                if (JustBoughtItem.ItemName == CurrentlyDisplaying.Item.ItemName)
+                {
+                    JustBoughtItem.AmountOfItems = CurrentlyDisplaying.Item.AmountOfItems;
+                }
+                else
+                {
+                    JustBoughtItem = CurrentlyDisplaying.Item;
+                }
+
+                currentAmount = 1;
+                ConfirmDialog.SetActive(false);
                 break;
             }
         }
+        //Debug.Log(CurrentlyDisplaying.Item);
+        //inventoryManager.AddItem(CurrentlyDisplaying.Item);
 
-        justBoughtItem = CurrentlyDisplaying.Item;
-        justBoughtItem.AmountOfItems = currentAmount;
+        CurrentlyDisplaying.FlushItemInfoPanel();
+        CurrentlyDisplaying = null;
+        //Debug.Log($"Availability: {CurrentlyDisplaying.Availability}");
 
-        ConfirmDialog.SetActive(false);
-    }
 
-    void ButtonHover()
-    {
-        Debug.Log("Hovering Button");
     }
 
     public GameObject ShopGrid { get => shopGrid; set => shopGrid = value; }

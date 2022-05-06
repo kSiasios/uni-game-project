@@ -30,7 +30,7 @@ public class ShopKeeper : InteractableCharacter
     private void Update()
     {
         base.Update();
-        if (shopManager.JustBoughtItem != null && shopManager.JustBoughtItem != previouslyBoughtItem)
+        if (shopManager.JustBoughtItem != null)
         {
             // loop through inventory and decrease the amount of the given item
             foreach (var item in inventory)
@@ -38,6 +38,10 @@ public class ShopKeeper : InteractableCharacter
                 if (item.Item.ItemName == shopManager.JustBoughtItem.ItemName)
                 {
                     item.Availability = item.Availability - shopManager.JustBoughtItem.AmountOfItems;
+                    if (shopManager.CurrentlyDisplaying != null)
+                    {
+                        shopManager.CurrentlyDisplaying.Availability = item.Availability;
+                    }
                     EnableUI(true);
                     break;
                 }
@@ -111,7 +115,7 @@ public class ShopKeeper : InteractableCharacter
             GameManager.gameIsPaused = false;
             DeactivateShop();
             UIActive = false;
-            
+
         }
         else
         {
@@ -125,6 +129,8 @@ public class ShopKeeper : InteractableCharacter
 
     void InitializeShopPanel()
     {
+        //Debug.Log("Initializing Shop Panel");
+
         foreach (Transform child in shopManager.ShopGrid.transform)
         {
             Destroy(child.gameObject);
@@ -135,6 +141,7 @@ public class ShopKeeper : InteractableCharacter
             {
                 inventory.Remove(item);
                 InitializeShopPanel();
+                //shopManager.CurrentlyDisplaying.UpdateItemInfoUI();
                 shopManager.CurrentlyDisplaying.UpdateItemInfoUI();
                 continue;
             }

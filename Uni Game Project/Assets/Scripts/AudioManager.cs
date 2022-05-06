@@ -18,6 +18,9 @@ public class AudioManager : MonoBehaviour
     private LayerMask wood;
     private LayerMask ground;
 
+    private float originalVolume;
+    private float originalPitch;
+
     private void Awake()
     {
         metal = LayerMask.GetMask("Metal");
@@ -33,6 +36,9 @@ public class AudioManager : MonoBehaviour
             //groundCheck = transform.Find("GroundCheck").GetComponent<BoxCollider2D>();
             groundCheckFunctions = GetComponentInChildren<GroundCheck>();
         }
+
+        originalVolume = audioSource.volume;
+        originalPitch = audioSource.pitch;
     }
 
     public void PlaySound(string soundName)
@@ -42,6 +48,8 @@ public class AudioManager : MonoBehaviour
         //audioSource.Play();
         if (soundName == "footstep")
         {
+            audioSource.volume = 0.3f;
+            audioSource.pitch = Random.Range((float)(originalPitch - 0.1 * originalPitch), (float)(originalPitch + 0.1 * originalPitch));
             //Debug.Log("Touching: " + LayerMask.LayerToName(groundCheckFunctions.GetCurrentlyTouchingLayers()));
             if (checkLayer(ground))
             {
@@ -51,9 +59,13 @@ public class AudioManager : MonoBehaviour
             {
                 audioSource.PlayOneShot(footstepWood);
             }
-            else
+            else if (checkLayer(metal))
             {
                 audioSource.PlayOneShot(footstepMetal);
+            }
+            else
+            {
+                audioSource.PlayOneShot(footstepGravel);
                 //audioSource.Play();
             }
         }

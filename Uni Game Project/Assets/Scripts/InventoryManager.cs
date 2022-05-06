@@ -18,6 +18,15 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] GameObject inventoryGrid;
     [SerializeField] GameObject inventoryItemPrefab;
 
+    [SerializeField] InventoryItem placeholderInventoryItem;
+
+    public enum Currencies
+    {
+        coins, energy
+    }
+
+    Currencies defaultCurrency = Currencies.coins;
+
     private void Awake()
     {
         if (col == null)
@@ -42,6 +51,8 @@ public class InventoryManager : MonoBehaviour
                 .transform.Find("Backdrop")
                 .transform.Find("Grid").transform.gameObject;
         }
+
+        placeholderInventoryItem = GetComponentInChildren<InventoryItem>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -49,7 +60,10 @@ public class InventoryManager : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Collectable"))
         {
             // Add object to inventory
-            InventoryItem item = new InventoryItem();
+            //InventoryItem item = new InventoryItem();
+            //item.AmountOfItems = 1;
+
+            InventoryItem item = placeholderInventoryItem;
             item.AmountOfItems = 1;
 
             // Update the UI
@@ -103,20 +117,26 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(InventoryItem newItem)
     {
+        //Debug.Log($"New Item: {newItem}");
         // Function that handles adding items to the inventory
         bool alreadyExists = false;
         // Iterate through the inventory to see if there already is an item of the same type
-        for (int i = 0; i < inventory.Count; i++)
+        foreach (var item in inventory)
         {
-            if (inventory[i].ItemName == newItem.ItemName)
+            if (item.ItemName == newItem.ItemName)
             {
+                //Debug.Log($"Same name");
                 // If there is an item of the same type in the inventory, just icrease its amount
                 alreadyExists = true;
-                Debug.Log("Item exists: " + (inventory[i].AmountOfItems + newItem.AmountOfItems));
-                inventory[i].AmountOfItems += newItem.AmountOfItems;
-
+                //Debug.Log("Item exists: " + (item.AmountOfItems + newItem.AmountOfItems));
+                item.AmountOfItems = item.AmountOfItems + newItem.AmountOfItems;
+                EditItem(item);
+                PrintInventory();
                 // Update the UI
-                uiItemCounter.text = inventory[i].AmountOfItems.ToString();
+                if (item.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
+                {
+                    uiItemCounter.text = item.AmountOfItems.ToString();
+                }
 
                 break;
             }
@@ -180,34 +200,33 @@ public class InventoryManager : MonoBehaviour
         // Function that handles editing items to the inventory
         //bool alreadyExists = false;
         // Iterate through the inventory to see if there already is an item of the same type
-        for (int i = 0; i < inventory.Count; i++)
+        foreach (var item in inventory)
         {
-            if (inventory[i].ItemName == newValues.ItemName)
+            if (item.ItemName == newValues.ItemName)
             {
                 // If there is an item of the same type in the inventory, just icrease its amount
                 //alreadyExists = true;
-                //Debug.Log("Item exists: " + (inventory[i].AmountOfItems + newItem.AmountOfItems));
-                inventory[i].AmountOfItems = newValues.AmountOfItems;
-                inventory[i].IsKey = newValues.IsKey;
-                inventory[i].ItemIcon = newValues.ItemIcon;
-                inventory[i].Serial = newValues.Serial;
-                //inventory[i].= newItem.AmountOfItems;
+                //Debug.Log("Item exists: " + (item.AmountOfItems + newItem.AmountOfItems));
+                item.AmountOfItems = newValues.AmountOfItems;
+                item.IsKey = newValues.IsKey;
+                item.ItemIcon = newValues.ItemIcon;
+                item.Serial = newValues.Serial;
+                //item.= newItem.AmountOfItems;
 
                 // Update the UI
-                uiItemCounter.text = inventory[i].AmountOfItems.ToString();
-
-                break;
-            } else
-            {
+                if (item.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
+                {
+                    uiItemCounter.text = item.AmountOfItems.ToString();
+                }
+                InitializeInventoryPanel();
                 return;
             }
         }
-
-        InitializeInventoryPanel();
     }
 
     void InitializeInventoryPanel()
     {
+        //Debug.Log("Initializing Inventory Panel");
         foreach (Transform child in inventoryGrid.transform)
         {
             Destroy(child.gameObject);
@@ -270,7 +289,7 @@ public class InventoryManager : MonoBehaviour
 
         foreach (var item in data)
         {
-            InventoryItem newItem = new InventoryItem(item.amount,item.name, item.serial, item.isKey, (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite)));
+            InventoryItem newItem = new InventoryItem(item.amount, item.name, item.serial, item.isKey, (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite)));
             AddItem(newItem);
         }
         InitializeInventoryPanel();
