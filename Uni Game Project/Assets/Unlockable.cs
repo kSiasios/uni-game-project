@@ -2,47 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unlockable : MonoBehaviour
+public class Unlockable : InteractableEntity
 {
     [SerializeField] string serial = "0000";
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        actionOnInteraction = UnlockableFunction;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UnlockableFunction()
     {
-        
-    }
+        InventoryManager iManager = FindObjectOfType<InventoryManager>();
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        //Debug.Log("Trigger");
-        if(Input.GetKey(KeyCode.E))
+        //iManager.PrintInventory();
+
+        foreach (var item in iManager.inventory)
         {
-            if (collision.gameObject.name == "Player")
+            if (item.Serial != null && item.Serial == serial)
             {
-                InventoryManager iManager = collision.gameObject.GetComponentInChildren<InventoryManager>();
+                Debug.Log("Opening Unlockable...");
 
-                foreach (var item in iManager.inventory)
+                if (playerGameObject != null)
                 {
-                    if (item.Serial != null && item.Serial == serial)
-                    {
-                        Debug.Log("Opening Unlockable...");
-                        transform.gameObject.SetActive(false);
-                        break;
-                    }
+                    playerGameObject.transform.parent = null;
                 }
 
-                if (transform.gameObject.activeInHierarchy)
-                {
-                    Debug.Log("You don't have a key!");
-                }
+                transform.gameObject.SetActive(false);
+                break;
             }
-            
+        }
+
+        if (transform.gameObject.activeInHierarchy)
+        {
+            Debug.Log("You don't have a key!");
         }
     }
 }

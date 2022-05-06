@@ -45,15 +45,15 @@ public class InteractableCharacter : InteractableEntity
         actionOnInteraction = InteractableCharacterAction;
     }
 
-    protected void Update()
-    {
-        if (Input.GetKeyDown(interactionKey) && collidingWithPlayer)
-        {
-            // Enable dialog system
-            //GameManager.canGetGameplayInput = false;
-            actionOnInteraction();
-        }
-    }
+    //protected void Update()
+    //{
+    //    if (Input.GetKeyDown(interactionKey) && collidingWithPlayer)
+    //    {
+    //        // Enable dialog system
+    //        //GameManager.canGetGameplayInput = false;
+    //        actionOnInteraction();
+    //    }
+    //}
 
     protected void OnTriggerExit2D(Collider2D collision)
     {

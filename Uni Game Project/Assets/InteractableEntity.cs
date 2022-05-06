@@ -13,6 +13,8 @@ public class InteractableEntity : MonoBehaviour
     [Tooltip("Is the player currently interacting with the entity?")]
     [SerializeField] protected bool currentlyInteracting = false;
 
+    protected GameObject playerGameObject;
+
     protected delegate void FunctionOnInteraction();
 
     protected FunctionOnInteraction actionOnInteraction;
@@ -22,6 +24,7 @@ public class InteractableEntity : MonoBehaviour
         if (collision.gameObject.GetComponent<PlayerController>())
         {
             collidingWithPlayer = true;
+            playerGameObject = collision.gameObject;
             collision.gameObject.transform.parent = gameObject.transform;
 
             InteractionPrompt.SetPromptKey(interactionKey.ToString());
@@ -36,6 +39,13 @@ public class InteractableEntity : MonoBehaviour
             collidingWithPlayer = false;
             collision.gameObject.transform.parent = null;
             InteractionPrompt.DisableInteractPrompt();
+        }
+    }
+    protected void Update()
+    {
+        if (Input.GetKeyDown(interactionKey) && collidingWithPlayer)
+        {
+            actionOnInteraction();
         }
     }
 }

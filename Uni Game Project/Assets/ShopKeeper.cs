@@ -146,6 +146,8 @@ public class ShopKeeper : InteractableCharacter
 
             objInfo.AmountOfItems = item.Item.AmountOfItems;
             objInfo.ItemName = item.Item.ItemName;
+            objInfo.IsKey = item.Item.IsKey;
+            objInfo.Serial = item.Item.Serial;
             Image objImage = obj.transform.Find("Image").GetComponent<Image>();
             objImage.sprite = item.Item.ItemIcon != null ? item.Item.ItemIcon : objImage.sprite;
 

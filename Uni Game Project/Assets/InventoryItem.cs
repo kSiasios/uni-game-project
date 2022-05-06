@@ -104,9 +104,7 @@ public class InventoryItem : MonoBehaviour
     // Declaration of the class' attributes along with getters and setters
     public int AmountOfItems { get => amountOfItems; set => amountOfItems = value; }
     public string ItemName { get => itemName; set => itemName = value; }
-
     public string Serial { get => serial; set => serial = value; }
-
     public bool IsKey { get => isKey; set => isKey = value; }
 
     //[Tooltip("A sprite that represents the item")]
@@ -115,7 +113,10 @@ public class InventoryItem : MonoBehaviour
 
     public override string ToString()
     {
-        return $"{ItemName}: {AmountOfItems}";
+        return $"Name: {ItemName}\n" +
+            $"Amount: {AmountOfItems}\t" +
+            $"IsKey: {IsKey}\t" +
+            $"Serial: {Serial}";
     }
 
     public void UpdateItemInfoUI()

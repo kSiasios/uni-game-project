@@ -205,19 +205,13 @@ public class ShopManager : MonoBehaviour
 
     void TriggerTransaction()
     {
-        //Debug.Log("Triggered Transaction");
         // Activate Dialog
-
         string text = ConfirmDialogText.text;
-        //// Replace {number} with the actual amount in the input field
-        //text = text.Replace("{number}", currentAmount.ToString());
-        //// Replace {item} with the item's name
-        //text = text.Replace("{item}", CurrentlyDisplaying.Item.ItemName);
-        //// Replace {amount} with the cost * amount of items
-        //text = text.Replace("{amount}", (CurrentlyDisplaying.Price * currentAmount).ToString());
-        //// Replace {currency} with the currency used to buy the item
-        //text = text.Replace("{currency}", CurrentlyDisplaying.Currency.ToString());
 
+        // Replace {number} with the actual amount in the input field
+        // Replace {item} with the item's name
+        // Replace {amount} with the cost * amount of items
+        // Replace {currency} with the currency used to buy the item
         text = text.Replace("{number}", currentAmount.ToString())
             .Replace("{item}", CurrentlyDisplaying.Item.ItemName)
             .Replace("{amount}", (CurrentlyDisplaying.Price * currentAmount).ToString())
@@ -270,9 +264,6 @@ public class ShopManager : MonoBehaviour
 
     public void DeactivatePanel()
     {
-        //Time.timeScale = 1f;
-        //gameObject.SetActive(false);
-
         Time.timeScale = 1f;
         GameManager.gameIsPaused = false;
         gameObject.SetActive(false);
@@ -284,25 +275,12 @@ public class ShopManager : MonoBehaviour
         CurrentlyDisplaying.Item.AmountOfItems = currentAmount;
         inventoryManager.AddItem(CurrentlyDisplaying.Item);
         // Find currency and subtract from it.
-        //foreach (var item in inventoryManager.inventory)
-        //{
-        //    if (item.ItemName.ToLower() == CurrentlyDisplaying.Item.ItemName.ToLower())
-        //    {
-        //        Debug.Log($"Old Amount: {item.AmountOfItems}");
-        //        // Found currency, decrease its amount
-        //        item.AmountOfItems = item.AmountOfItems - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount);
-        //        Debug.Log($"New Amount: {item.AmountOfItems}");
-        //        inventoryManager.EditItem(item);
-        //        break;
-        //    }
-        //}
         foreach (var item in inventoryManager.inventory)
         {
             // if the inventory contains the currency at which the item is sold
             if (item.ItemName.ToLower() == CurrentlyDisplaying.Currency.ToString().ToLower())
             {
                 item.AmountOfItems = item.AmountOfItems - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount);
-                //Debug.Log($"New Amount: {item.AmountOfItems}");
                 inventoryManager.EditItem(item);
                 CurrentlyDisplaying.UpdateItemInfoUI();
                 break;
@@ -313,6 +291,11 @@ public class ShopManager : MonoBehaviour
         justBoughtItem.AmountOfItems = currentAmount;
 
         ConfirmDialog.SetActive(false);
+    }
+
+    void ButtonHover()
+    {
+        Debug.Log("Hovering Button");
     }
 
     public GameObject ShopGrid { get => shopGrid; set => shopGrid = value; }

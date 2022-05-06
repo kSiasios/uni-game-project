@@ -103,7 +103,7 @@ MonoBehaviour:
   itemAmountUI: {fileID: 0}
   amountOfItems: 1
   itemName: Blue Key
-  serial: 0000
+  serial: 1234
   isKey: 1
   itemIcon: {fileID: 0}
 --- !u!114 &-8535415814378853138
@@ -121,4 +121,5 @@ MonoBehaviour:
   item: {fileID: 0}
   availability: 3
   price: 100
+  currency: 0
   shopManager: {fileID: 0}

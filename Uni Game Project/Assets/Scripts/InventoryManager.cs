@@ -128,6 +128,8 @@ public class InventoryManager : MonoBehaviour
         }
 
         InitializeInventoryPanel();
+
+        //PrintList(inventory);
     }
 
     // Remove the whole stack of this item
@@ -168,6 +170,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void PrintInventory()
+    {
+        PrintList(inventory);
+    }
+
     public void EditItem(InventoryItem newValues)
     {
         // Function that handles editing items to the inventory
@@ -183,6 +190,7 @@ public class InventoryManager : MonoBehaviour
                 inventory[i].AmountOfItems = newValues.AmountOfItems;
                 inventory[i].IsKey = newValues.IsKey;
                 inventory[i].ItemIcon = newValues.ItemIcon;
+                inventory[i].Serial = newValues.Serial;
                 //inventory[i].= newItem.AmountOfItems;
 
                 // Update the UI
