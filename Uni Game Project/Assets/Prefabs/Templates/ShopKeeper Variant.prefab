@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2738870121251058428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8722784460385768298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bab4222870b3c4f9fb92ee2477819f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collidingWithPlayer: 0
+  interactionKey: 101
+  currentlyInteracting: 0
+  speakerImage: {fileID: 0}
+  dialogLines: []
+  dialogSystem: {fileID: 0}
+  dialogBox: {fileID: 0}
+  nextDialogButton: {fileID: 0}
+  dialogSystemFunctions: {fileID: 0}
+  inventory: []
+  shopManager: {fileID: 0}
+  inventoryItemPrefab: {fileID: 4541773283009878638, guid: fdf06b79294780042aaf7f092241d35b, type: 3}
 --- !u!1001 &3525291398658792892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67,27 +91,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5323773287587335894, guid: a08dfab8c35edc54e9f95e833c28ca7e, type: 3}
   m_PrefabInstance: {fileID: 3525291398658792892}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2738870121251058428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8722784460385768298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26bab4222870b3c4f9fb92ee2477819f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collidingWithPlayer: 0
-  interactionKey: 101
-  currentlyInteracting: 0
-  speakerImage: {fileID: 0}
-  dialogLines: []
-  dialogSystem: {fileID: 0}
-  dialogBox: {fileID: 0}
-  nextDialogButton: {fileID: 0}
-  dialogSystemFunctions: {fileID: 0}
-  inventory: []
-  shopManager: {fileID: 0}
-  inventoryItemPrefab: {fileID: 4541773283009878638, guid: fdf06b79294780042aaf7f092241d35b, type: 3}

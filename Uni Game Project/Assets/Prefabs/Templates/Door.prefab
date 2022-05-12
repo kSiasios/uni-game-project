@@ -139,4 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8518ab830f1a6f44ab83cc1b7aa6bb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collidingWithPlayer: 0
+  interactionKey: 101
+  currentlyInteracting: 0
   serial: 1234

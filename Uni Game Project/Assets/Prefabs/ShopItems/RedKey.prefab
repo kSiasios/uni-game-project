@@ -121,4 +121,5 @@ MonoBehaviour:
   item: {fileID: 0}
   availability: 1
   price: 1000
+  currency: 0
   shopManager: {fileID: 0}

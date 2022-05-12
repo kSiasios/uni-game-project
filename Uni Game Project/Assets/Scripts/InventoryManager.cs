@@ -253,6 +253,22 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void UseItem(InventoryItem givenItem)
+    {
+        Debug.Log("Using Item");
+        PrintInventory();
+        //Remove(item, amount);
+        //Remove(item);
+        foreach (var item in inventory)
+        {
+            if (givenItem.ItemName == item.ItemName)
+            {
+                inventory.Remove(item);
+                break;
+            }
+        }
+    }
+
     //public List<InventoryData> Save()
     //{
     //    // Save each item along with their amount

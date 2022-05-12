@@ -113,10 +113,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collidingWithPlayer: 0
+  interactionKey: 101
+  currentlyInteracting: 0
+  speakerImage: {fileID: 0}
   dialogLines:
   - Hello, friend!
   - That's lame.
   - Maybe I should give you a name.
   - How about Sam?
-  index: -1
-  printDelay: 0.15
+  dialogSystem: {fileID: 0}
+  dialogBox: {fileID: 0}
+  nextDialogButton: {fileID: 0}
+  dialogSystemFunctions: {fileID: 0}

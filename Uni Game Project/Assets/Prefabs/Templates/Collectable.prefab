@@ -115,5 +115,6 @@ MonoBehaviour:
   itemName: Coin
   amount: 1
   state: 0
+  collectableIcon: {fileID: 0}
   isKey: 0
   keySerial: 
