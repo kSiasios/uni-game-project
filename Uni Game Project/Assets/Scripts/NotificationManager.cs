@@ -25,6 +25,13 @@ public class NotificationManager : MonoBehaviour
         {
             Image notificationIcon = notification.GetComponentInChildren<Image>();
             notificationIcon.sprite = icon;
+        } else
+        {
+            Image notificationIcon = notification.GetComponentInChildren<Image>();
+            //destroy(notificationIcon);
+
+            //notificationIcon.enabled = false;
+            Destroy(notificationIcon.gameObject);
         }
     }
 }

@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [Tooltip("The script that controls the player")]
     [SerializeField] PlayerController controller;
+    [Tooltip("The script that controls the player's weapons")]
+    [SerializeField] WeaponManager weaponManager;
 
     private float horizontalAxis = 0;       // -1 if the player is moving to the left, 1 if player is moving to the right
     private float verticalAxis = 0;         // -1 if the player is moving downwards, 1 if player is moving upwards
@@ -19,6 +21,11 @@ public class PlayerMovement : MonoBehaviour
         if (controller == null)
         {
             controller = FindObjectOfType<PlayerController>();
+        }
+
+        if (weaponManager == null)
+        {
+            weaponManager = GetComponent<WeaponManager>();
         }
 
         defaultPlayerSpeed = controller.GetSpeed();
@@ -63,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Mouse0))
         if (Input.GetButtonDown("Fire1") || Input.GetButton("Fire1"))
         {
-            if (!GameManager.interacting)
+            if (!GameManager.interacting && weaponManager.GetWeapon() != WeaponManager.EquipedWeapon.none)
             {
                 controller.SetAnimatorBool("isShooting", true);
             }

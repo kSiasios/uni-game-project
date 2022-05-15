@@ -204,6 +204,8 @@ public class PlayerController : MonoBehaviour
     {
         // Function that manages health
         //Debug.Log("DAMAGED");
+        health -= amount;
+        Debug.Log($"Current Health: {health}");
     }
 
     public void Land()

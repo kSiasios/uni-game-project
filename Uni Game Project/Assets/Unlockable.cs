@@ -47,7 +47,8 @@ public class Unlockable : InteractableEntity
 
         if (!foundKey)
         {
-            Debug.Log("You don't have a key!");
+            //Debug.Log("You don't have a key!");
+            iManager.SendNotification("You don't have a key!", null);
         }
     }
 

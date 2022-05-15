@@ -518,4 +518,6 @@ ScriptedImporter:
   textureAssetName: Enemy_walker - raster Texture
   prefabAssetName: Enemy_walker - raster Prefab
   spriteLibAssetName: Enemy_walker - raster Sprite Lib
-  secondarySpriteTextures: []
+  secondarySpriteTextures:
+  - name: _Emission
+    texture: {fileID: -5610859916418227836, guid: aa5ba109b0d357e488ccc69c989a3d27, type: 3}

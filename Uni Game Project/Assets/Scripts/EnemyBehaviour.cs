@@ -198,6 +198,8 @@ public class EnemyBehaviour : MonoBehaviour
             Vector2 normalizedVector = new Vector2(playerTransform.position.x, playerTransform.position.y) - new Vector2(transform.position.x, transform.position.y);
             normalizedVector.Normalize();
             Flip(normalizedVector);
+            enemyAnimator.SetBool("chasingPlayer", true);
+
         }
     }
 
@@ -286,6 +288,7 @@ public class EnemyBehaviour : MonoBehaviour
             chasingPlayer = false;
             patroling = true;
             enemyChaseTimer = 0f;
+            enemyAnimator.SetBool("chasingPlayer", false);
         }
     }
 
@@ -372,6 +375,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Function that handles chasing the player
     void ChasePlayer(Vector2 playerPos)
     {
+        enemyAnimator.SetBool("chasingPlayer", true);
         //transform.position = Vector2.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         //Debug.Log("Chasing Player");
 
@@ -384,11 +388,15 @@ public class EnemyBehaviour : MonoBehaviour
             //ShootPlayer();
 
         }
-        else if (enemyType == EnemyType.Walker)
-        {
-            //transform.position = Vector2.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
-            //MoveTowardsPoint(playerPos);
-        }
+
+        //else if (enemyType == EnemyType.Walker)
+        //{
+        //    //transform.position = Vector2.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
+        //    //MoveTowardsPoint(playerPos);
+
+        //    // Set animation
+        //    //enemyAnimator.SetBool("chasingPlayer", true);
+        //}
     }
 
     // Function handling the health of the Entity

@@ -65,6 +65,7 @@ public class WeaponBehaviourEnemy : MonoBehaviour
 
         if (controller.chasingPlayer)
         {
+            Debug.Log("chasing Player");
             if (!_reloading)
             {
                 // If the bullets available are enough to shoot, do it. Else, reload the weapon.
@@ -81,6 +82,9 @@ public class WeaponBehaviourEnemy : MonoBehaviour
                     ReloadWeapon();
                 }
             }
+        } else
+        {
+            bulletParticleSystem.Stop();
         }
 
         //if (_bulletsFiredSoFar >= magazineSize)

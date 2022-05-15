@@ -109,7 +109,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void SendNotification(string notificationText, Sprite icon)
+    public void SendNotification(string notificationText, Sprite icon)
     {
         // Push new notification in the notification panel
         notificationManager.NewNotification(notificationText, icon);
