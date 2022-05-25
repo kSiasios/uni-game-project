@@ -42,6 +42,7 @@ public class InteractionPrompt : MonoBehaviour
 
     public static void EnableInteractPrompt()
     {
+        //Debug.Log("Enable Prompt");
         InteractionPrompt prompt = FindObjectOfType<InteractionPrompt>();
         //prompt.transform.childCount;
 

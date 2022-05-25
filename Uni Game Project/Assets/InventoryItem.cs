@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -32,14 +30,12 @@ public class InventoryItem : MonoBehaviour
             imageComponent = gameObject.GetComponent<Image>();
         }
 
-        //if (itemIcon == null)
-        //{
-        //    Debug.LogError("Error! itemIcon not provided... Script: InventoryItem.cs"); 
-        //}
-        //else
-        if (itemIcon != null)
+        if (imageComponent != null)
         {
-            imageComponent.sprite = itemIcon;
+            if (itemIcon != null)
+            {
+                imageComponent.sprite = itemIcon;
+            }
         }
 
         if (itemInfo == null)
@@ -122,7 +118,8 @@ public class InventoryItem : MonoBehaviour
     public void UpdateItemInfoUI()
     {
         //Debug.Log(itemIcon);
-        itemImage.sprite = imageComponent.sprite;
+        itemImage.sprite = itemIcon;
+        itemImage.color = new Color(255f, 255f, 255f, 100f);
         itemNameUI.text = ItemName;
         itemAmountUI.text = AmountOfItems.ToString();
     }

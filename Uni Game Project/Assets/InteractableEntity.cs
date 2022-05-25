@@ -13,6 +13,9 @@ public class InteractableEntity : MonoBehaviour
     [Tooltip("Is the player currently interacting with the entity?")]
     [SerializeField] protected bool currentlyInteracting = false;
 
+    // isSelfish determines if the entity wants the player as their child, it will prevail among other entities
+    protected bool isSelfish = false;
+
     protected GameObject playerGameObject;
 
     protected delegate void FunctionOnInteraction();
@@ -25,10 +28,51 @@ public class InteractableEntity : MonoBehaviour
         {
             collidingWithPlayer = true;
             playerGameObject = collision.gameObject;
-            collision.gameObject.transform.parent = gameObject.transform;
+
+            if (isSelfish)
+            {
+                collision.gameObject.transform.parent = gameObject.transform;
+            }
+            // check player's parent to see if it is selfish or not
+            if (!isSelfish)
+            {
+                Transform playerParent = collision.gameObject.transform.parent;
+                //playerParent.TryGetComponent(out isParentInteractable);
+                //Debug.Log(isParentInteractable);
+
+                if (playerParent != null)
+                {
+                    InteractableEntity isParentInteractable = playerParent.gameObject.GetComponent<InteractableEntity>();
+
+                    if (isParentInteractable != null)
+                    {
+                        if (!isParentInteractable.isSelfish)
+                        {
+                            collision.gameObject.transform.parent = gameObject.transform;
+                        }
+
+                    }
+                }
+
+            }
+
 
             InteractionPrompt.SetPromptKey(interactionKey.ToString());
             InteractionPrompt.EnableInteractPrompt();
+        }
+    }
+
+    protected void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerController>())
+        {
+            if (isSelfish)
+            {
+                collision.gameObject.transform.parent = gameObject.transform;
+
+                InteractionPrompt.SetPromptKey(interactionKey.ToString());
+                InteractionPrompt.EnableInteractPrompt();
+            }
         }
     }
 

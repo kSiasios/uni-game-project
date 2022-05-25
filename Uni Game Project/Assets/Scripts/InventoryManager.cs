@@ -25,7 +25,9 @@ public class InventoryManager : MonoBehaviour
         coins, energy
     }
 
-    Currencies defaultCurrency = Currencies.coins;
+    Currencies defaultCurrency = Currencies.energy;
+
+    int amountPlaceholder = 0;
 
     private void Awake()
     {
@@ -64,6 +66,9 @@ public class InventoryManager : MonoBehaviour
             //item.AmountOfItems = 1;
 
             InventoryItem item = placeholderInventoryItem;
+
+            amountPlaceholder = item.AmountOfItems;
+
             item.AmountOfItems = 1;
 
             // Update the UI
@@ -82,9 +87,9 @@ public class InventoryManager : MonoBehaviour
                 //}
                 //Debug.Log(AssetDatabase.GetAssetPath(collectable.GetIcon()));
                 item.ItemIcon = collectable.GetIcon();
-                //Debug.Log(item.itemIcon);
+                //Debug.Log(item.AmountOfItems);
 
-                SendNotification(collectable.ToString(), item.ItemIcon);
+                notificationManager.NewNotification(collectable.ToString(), item.ItemIcon);
                 if (collectable.GetSerial() != null && collectable.isKey)
                 {
                     // It is a key collectable, initialize the serial with the correct value
@@ -92,7 +97,7 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    uiItemCounter.text = item.AmountOfItems.ToString();
+                    //uiItemCounter.text = (int.Parse(uiItemCounter.text) + item.AmountOfItems).ToString();
                     item.Serial = null;
                 }
                 // Change the state of the collectable to collected
@@ -100,7 +105,7 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                SendNotification("1" + " x " + collision.gameObject.name, null);
+                notificationManager.NewNotification("1" + " x " + collision.gameObject.name, null);
             }
 
             item.ItemName = collectable.GetName();
@@ -109,11 +114,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void SendNotification(string notificationText, Sprite icon)
-    {
-        // Push new notification in the notification panel
-        notificationManager.NewNotification(notificationText, icon);
-    }
 
     public void AddItem(InventoryItem newItem)
     {
@@ -123,18 +123,22 @@ public class InventoryManager : MonoBehaviour
         // Iterate through the inventory to see if there already is an item of the same type
         foreach (var item in inventory)
         {
-            if (item.ItemName == newItem.ItemName)
+            if (item.ItemName.ToLower() == newItem.ItemName.ToLower())
             {
-                //Debug.Log($"Same name");
+                //Debug.Log($"Exists");
                 // If there is an item of the same type in the inventory, just icrease its amount
                 alreadyExists = true;
+                //Debug.Log("Old value: " + (amountPlaceholder));
+                //Debug.Log("New value: " + (newItem.AmountOfItems));
                 //Debug.Log("Item exists: " + (item.AmountOfItems + newItem.AmountOfItems));
-                item.AmountOfItems = item.AmountOfItems + newItem.AmountOfItems;
-                EditItem(item);
-                PrintInventory();
+                //item.AmountOfItems = item.AmountOfItems + newItem.AmountOfItems;
+                EditItem(newItem);
+                //PrintInventory();
                 // Update the UI
                 if (item.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
                 {
+                    //uiItemCounter.text = item.AmountOfItems.ToString();
+                    //uiItemCounter.text = (int.Parse(uiItemCounter.text) + item.AmountOfItems).ToString();
                     uiItemCounter.text = item.AmountOfItems.ToString();
                 }
 
@@ -145,6 +149,10 @@ public class InventoryManager : MonoBehaviour
         {
             // If there is not an item of this type in the inventory, create one
             inventory.Add(newItem);
+            if (newItem.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
+            {
+                uiItemCounter.text = newItem.AmountOfItems.ToString();
+            }
         }
 
         InitializeInventoryPanel();
@@ -207,7 +215,7 @@ public class InventoryManager : MonoBehaviour
                 // If there is an item of the same type in the inventory, just icrease its amount
                 //alreadyExists = true;
                 //Debug.Log("Item exists: " + (item.AmountOfItems + newItem.AmountOfItems));
-                item.AmountOfItems = newValues.AmountOfItems;
+                item.AmountOfItems += amountPlaceholder;
                 item.IsKey = newValues.IsKey;
                 item.ItemIcon = newValues.ItemIcon;
                 item.Serial = newValues.Serial;
@@ -239,19 +247,10 @@ public class InventoryManager : MonoBehaviour
             objInfo.ItemName = item.ItemName;
             Image objImage = obj.transform.Find("Image").GetComponent<Image>();
             objImage.sprite = item.ItemIcon != null ? item.ItemIcon : objImage.sprite;
+            objInfo.ItemIcon = objImage.sprite;
         }
     }
 
-    void RefreshUI()
-    {
-        foreach (var item in inventory)
-        {
-            if (!item.IsKey)
-            {
-                uiItemCounter.text = item.AmountOfItems.ToString();
-            }
-        }
-    }
 
     public void UseItem(InventoryItem givenItem)
     {
@@ -310,5 +309,23 @@ public class InventoryManager : MonoBehaviour
         }
         InitializeInventoryPanel();
         RefreshUI();
+    }
+    // to delete
+    void RefreshUI()
+    {
+        //foreach (var item in inventory)
+        //{
+        //    if (!item.IsKey)
+        //    {
+        //        uiItemCounter.text = item.AmountOfItems.ToString();
+        //    }
+        //}
+    }
+    
+    // to delete
+    public void SendNotification(string notificationText, Sprite icon)
+    {
+        // Push new notification in the notification panel
+        notificationManager.NewNotification(notificationText, icon);
     }
 }

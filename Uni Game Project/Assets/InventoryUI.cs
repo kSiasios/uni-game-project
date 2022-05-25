@@ -93,6 +93,7 @@ public class InventoryUI : MonoBehaviour
     void ResetInventoryPanel()
     {
         itemImage.sprite = null;
+        itemImage.color = new Color(0f, 0f, 0f, 0f);
         itemNameUI.text = "";
         itemAmountUI.text = "";
     }

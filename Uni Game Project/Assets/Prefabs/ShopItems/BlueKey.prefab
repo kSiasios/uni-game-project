@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7582706391335190742}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 115.73, y: -38.700005, z: 0}
   m_LocalScale: {x: 0.36172, y: 0.36172, z: 0.36172}
   m_Children: []
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -103,9 +103,9 @@ MonoBehaviour:
   itemAmountUI: {fileID: 0}
   amountOfItems: 1
   itemName: Blue Key
-  serial: 1234
+  serial: 4567
   isKey: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 6782411477518436802, guid: 02a193d338643974696cdddf1c7b6443, type: 3}
 --- !u!114 &-8535415814378853138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,5 +121,5 @@ MonoBehaviour:
   item: {fileID: 0}
   availability: 3
   price: 100
-  currency: 0
+  currency: 1
   shopManager: {fileID: 0}

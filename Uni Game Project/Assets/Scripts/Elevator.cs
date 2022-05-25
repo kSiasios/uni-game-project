@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Elevator : InteractableEntity
@@ -8,6 +5,11 @@ public class Elevator : InteractableEntity
     public enum ElevatorDirection
     {
         vertical, horizontal
+    }
+
+    public enum ElevatorButtonSide
+    {
+        left, right
     }
 
     private Vector3 defaultElevatorPosition;
@@ -31,21 +33,27 @@ public class Elevator : InteractableEntity
 
     [SerializeField] private Animator elevatorAnimator;
 
+    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private GameObject elevatorButtonPrefab;
+
+    ElevatorButton startButtonScript;
+    [SerializeField] private ElevatorButtonSide startButtonSide = ElevatorButtonSide.left;
+    ElevatorButton endButtonScript;
+    [SerializeField] private ElevatorButtonSide endButtonSide = ElevatorButtonSide.left;
+
     private void Awake()
     {
-        //defaultElevatorPosition = transform.position;
         defaultElevatorPosition = transform.localPosition;
         stopDistance = elevatorSpeed / 100;
 
         // Fix the axis that is not used to the corresponding value of the elevator
         if (elevatorDirection == ElevatorDirection.vertical)
         {
-            //travelPoint.x = transform.position.x;
             travelPoint.x = transform.localPosition.x;
         }
         else
         {
-            //travelPoint.y = transform.position.y;
             travelPoint.y = transform.localPosition.y;
         }
 
@@ -54,8 +62,18 @@ public class Elevator : InteractableEntity
             elevatorAnimator = GetComponent<Animator>();
         }
 
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
         Physics.IgnoreLayerCollision(0, 2);
         Physics.IgnoreLayerCollision(4, 9);
+
+        // Spawn elevatorCallers at start position and end position
+        SetupElevatorButtons();
+
+        isSelfish = true;
     }
 
     private void Update()
@@ -80,43 +98,32 @@ public class Elevator : InteractableEntity
 
         if (distanceFromStart < stopDistance || distanceFromEnd < stopDistance)
         {
+            if (distanceFromStart < stopDistance)
+            {
+                // disable start button
+                startButtonScript.Interactable = false;
+                // enable end button
+                endButtonScript.Interactable = true;
+            }
+
+            if (distanceFromEnd < stopDistance)
+            {
+                // disable end button
+                endButtonScript.Interactable = false;
+                // enable start button
+                startButtonScript.Interactable = true;
+            }
+
             if (!aboutToMove)
             {
                 // Prevent elevator from shutting down before reaching its destination
                 moving = false;
+                StopSound();
             }
 
             if (Input.GetKeyDown(KeyCode.E) && collidingWithPlayer)
             {
-                // Activate elevator
-                if (distanceFromEnd < stopDistance)
-                {
-                    // We are in the destination point
-                    if (elevatorDirection == ElevatorDirection.vertical)
-                    {
-                        travelPosition = new Vector3(transform.localPosition.x, defaultElevatorPosition.y, transform.localPosition.z);
-                    }
-                    else
-                    {
-                        travelPosition = new Vector3(defaultElevatorPosition.x, transform.localPosition.y, transform.localPosition.z);
-                    }
-                    moving = true;
-                    aboutToMove = true;
-                }
-                else if (distanceFromStart < stopDistance)
-                {
-                    // We are in the deafult point
-                    if (elevatorDirection == ElevatorDirection.vertical)
-                    {
-                        travelPosition = new Vector3(transform.localPosition.x, travelPoint.y, transform.localPosition.z);
-                    }
-                    else
-                    {
-                        travelPosition = new Vector3(travelPoint.x, transform.localPosition.y, transform.localPosition.z);
-                    }
-                    moving = true;
-                    aboutToMove = true;
-                }
+                MoveElevator();
             }
         }
     }
@@ -167,7 +174,8 @@ public class Elevator : InteractableEntity
                     elevatorAnimator.SetBool("goingRight", false);
                 }
             }
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, travelPosition, elevatorSpeed * Time.deltaTime);
+            //transform.localPosition = Vector3.MoveTowards(transform.localPosition, travelPosition, elevatorSpeed * Time.deltaTime);
+            MoveToPosition(travelPosition);
             aboutToMove = false;
         }
         else
@@ -178,4 +186,138 @@ public class Elevator : InteractableEntity
             elevatorAnimator.SetBool("goingRight", false);
         }
     }
+
+    private void PlaySound()
+    {
+        //audioSource.time = Random.Range(0f, audioSource.clip.length);
+        audioSource.time = Random.Range(0f, audioSource.clip.length);
+        audioSource.Play();
+    }
+
+    private void StopSound()
+    {
+        audioSource.Stop();
+    }
+
+    void MoveToPosition(Vector3 travelPosition)
+    {
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, travelPosition, elevatorSpeed * Time.deltaTime);
+    }
+    public void MoveElevator()
+    {
+        // Activate elevator
+        if (distanceFromEnd < stopDistance)
+        {
+            // We are in the destination point
+            if (elevatorDirection == ElevatorDirection.vertical)
+            {
+                travelPosition = new Vector3(transform.localPosition.x, defaultElevatorPosition.y, transform.localPosition.z);
+            }
+            else
+            {
+                travelPosition = new Vector3(defaultElevatorPosition.x, transform.localPosition.y, transform.localPosition.z);
+            }
+            moving = true;
+            aboutToMove = true;
+
+            PlaySound();
+        }
+        else if (distanceFromStart < stopDistance)
+        {
+            // We are in the deafult point
+            if (elevatorDirection == ElevatorDirection.vertical)
+            {
+                travelPosition = new Vector3(transform.localPosition.x, travelPoint.y, transform.localPosition.z);
+            }
+            else
+            {
+                travelPosition = new Vector3(travelPoint.x, transform.localPosition.y, transform.localPosition.z);
+            }
+            moving = true;
+            aboutToMove = true;
+
+            PlaySound();
+        }
+    }
+
+    private void SetupElevatorButtons()
+    {
+        // Start
+        GameObject startButton = Instantiate(elevatorButtonPrefab, transform.position, Quaternion.identity);
+        startButton.transform.parent = transform.parent;
+        //startButton.transform.position = transform.position;
+        // End
+        //GameObject endButton = Instantiate(elevatorButtonPrefab, transform);
+        GameObject endButton = Instantiate(elevatorButtonPrefab, transform.position, Quaternion.identity);
+        endButton.transform.parent = transform.parent;
+
+        //endButton.transform.position = transform.localPosition;
+        if (elevatorDirection == ElevatorDirection.vertical)
+        {
+            //travelPoint.x = transform.position.x;
+            Vector3 newPos = new Vector3(
+                endButton.transform.position.x,
+                endButton.transform.position.y - Vector2.Distance(new Vector2(0, endButton.transform.localPosition.y), new Vector2(0, travelPoint.y)),
+                endButton.transform.position.z);
+            //endButton.transform.position.x = transform.localPosition.x;
+            endButton.transform.position = newPos;
+        }
+        else
+        {
+            //travelPoint.y = transform.position.y;
+            //endButton.transform.position.y = transform.localPosition.y;
+            Vector3 newPos = new Vector3(endButton.transform.position.x + travelPoint.x, endButton.transform.position.y, endButton.transform.position.z);
+            //endButton.transform.position.x = transform.localPosition.x;
+            endButton.transform.position = newPos;
+        }
+
+        float elevatorWidth = GetComponent<BoxCollider2D>().size.x;
+        //Debug.Log($"ELEVATOR WIDTH: {elevatorWidth}");
+
+        Vector3 pushToSide;
+
+        if (startButtonSide == ElevatorButtonSide.left)
+        {
+            pushToSide = new Vector3(
+            startButton.transform.position.x - elevatorWidth / 4,
+            startButton.transform.position.y,
+            startButton.transform.position.z
+            );
+        }
+        else
+        {
+            pushToSide = new Vector3(
+            startButton.transform.position.x + elevatorWidth / 4,
+            startButton.transform.position.y,
+            startButton.transform.position.z
+            );
+        }
+        startButton.transform.position = pushToSide;
+
+        if (endButtonSide == ElevatorButtonSide.left)
+        {
+            pushToSide = new Vector3(
+            endButton.transform.position.x - elevatorWidth / 4,
+            endButton.transform.position.y,
+            endButton.transform.position.z
+            );
+        }
+        else
+        {
+            pushToSide = new Vector3(
+            endButton.transform.position.x + elevatorWidth / 4,
+            endButton.transform.position.y,
+            endButton.transform.position.z
+            );
+        }
+        endButton.transform.position = pushToSide;
+
+        startButtonScript = startButton.GetComponent<ElevatorButton>();
+        startButtonScript.Elevator = this;
+        startButtonScript.Position = transform.position;
+        endButtonScript = endButton.GetComponent<ElevatorButton>();
+        endButtonScript.Elevator = this;
+        endButtonScript.Position = travelPoint;
+    }
+
 }

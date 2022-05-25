@@ -306,11 +306,22 @@ public class ShopManager : MonoBehaviour
         //Debug.Log(CurrentlyDisplaying.Item);
         //inventoryManager.AddItem(CurrentlyDisplaying.Item);
 
-        CurrentlyDisplaying.FlushItemInfoPanel();
+        FlushItemInfoPanel();
         CurrentlyDisplaying = null;
         //Debug.Log($"Availability: {CurrentlyDisplaying.Availability}");
 
 
+    }
+
+    public void FlushItemInfoPanel()
+    {
+        ItemImage.sprite = null;
+        ItemImage.color = new Color(0f, 0f, 0f, 0f);
+
+        ItemName.text = "";
+        ItemPrice.text = "";
+        currentAmount = 1;
+        ItemAmount.text = "0";
     }
 
     public GameObject ShopGrid { get => shopGrid; set => shopGrid = value; }

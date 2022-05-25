@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
         //audioSource.Play();
         if (soundName == "footstep")
         {
-            audioSource.volume = 0.3f;
+            //audioSource.volume = 0.3f;
             audioSource.pitch = Random.Range((float)(originalPitch - 0.1 * originalPitch), (float)(originalPitch + 0.1 * originalPitch));
             //Debug.Log("Touching: " + LayerMask.LayerToName(groundCheckFunctions.GetCurrentlyTouchingLayers()));
             if (checkLayer(ground))

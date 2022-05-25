@@ -56,6 +56,7 @@ public class Collectable : MonoBehaviour
     {
         if ((state == CollectableState.collected || state == CollectableState.disabled) && this.transform.gameObject.activeInHierarchy)
         {
+            // play sound
             transform.gameObject.SetActive(false);
         }
 

@@ -53,21 +53,26 @@
     <UnityVersion>2020.3.20f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ButtonFX.cs" />
     <Compile Include="Assets\InventoryUI.cs" />
     <Compile Include="Assets\InteractionPrompt.cs" />
     <Compile Include="Assets\DialogSystem.cs" />
+    <Compile Include="Assets\AudioSourceController.cs" />
     <Compile Include="Assets\ShopItem.cs" />
     <Compile Include="Assets\Unlockable.cs" />
     <Compile Include="Assets\Scripts\NotificationItem.cs" />
+    <Compile Include="Assets\Genarator.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviour.cs" />
+    <Compile Include="Assets\BlinkingLight.cs" />
     <Compile Include="Assets\SaveData.cs" />
     <Compile Include="Assets\Scripts\GroundCheck.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\SaveSystem.cs" />
+    <Compile Include="Assets\EnviromentalAudioSource.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\LootContainer.cs" />
     <Compile Include="Assets\GameManager.cs" />
@@ -80,7 +85,9 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\NotificationManager.cs" />
+    <Compile Include="Assets\ElevatorButton.cs" />
     <Compile Include="Assets\Scripts\Collectable.cs" />
+    <Compile Include="Assets\ParticleAudioManager.cs" />
     <Compile Include="Assets\FlickeringLight.cs" />
     <Compile Include="Assets\Scripts\SlopeManager.cs" />
     <Compile Include="Assets\InteractableCharacter.cs" />
@@ -94,7 +101,7 @@
     <Compile Include="Assets\InteractableEntity.cs" />
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
-    <Compile Include="Assets\EnviromentalAudioSource.cs" />
+    <Compile Include="Assets\AudioTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

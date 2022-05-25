@@ -3,19 +3,19 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class FlickeringLight : MonoBehaviour
 {
-    [SerializeField] Light2D light;
+    [SerializeField] protected Light2D light;
     [Tooltip("How often should the light flicker?")]
-    [SerializeField] [Range(0f, 100f)] float flickerPosibility = 3f;
+    [SerializeField] [Range(0f, 100f)] protected float flickerPosibility = 3f;
     [Tooltip("How much should the light flicker vary?")]
-    [SerializeField] [Range(0f, 100f)] float flickerAmount = 3f;
+    [SerializeField] [Range(0f, 100f)] protected float flickerAmount = 3f;
     [Tooltip("What kind of light is it?")]
     [SerializeField] LightType lightType = LightType.flame;
     [Tooltip("Should the radius be affected as well?")]
-    [SerializeField] bool affectRadius = false;
+    [SerializeField] protected bool affectRadius = false;
 
-    [SerializeField] float defaultIntensity;
-    [SerializeField] float defaultInnerRadius;
-    [SerializeField] float defaultOuterRadius;
+    [SerializeField] protected float defaultIntensity;
+    [SerializeField] protected float defaultInnerRadius;
+    [SerializeField] protected float defaultOuterRadius;
 
     public enum LightType
     {
@@ -23,7 +23,7 @@ public class FlickeringLight : MonoBehaviour
         flame
     }
 
-    private void Awake()
+    protected void Awake()
     {
         if (light == null)
         {
@@ -34,7 +34,7 @@ public class FlickeringLight : MonoBehaviour
         defaultOuterRadius = light.pointLightOuterRadius;
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         float randomNum = Random.Range(0f, 100f);
 
@@ -44,7 +44,7 @@ public class FlickeringLight : MonoBehaviour
         }
     }
 
-    void Flicker()
+    protected void Flicker()
     {
         if (lightType == LightType.flame)
         {

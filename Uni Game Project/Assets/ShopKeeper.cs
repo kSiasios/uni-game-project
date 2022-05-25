@@ -41,6 +41,7 @@ public class ShopKeeper : InteractableCharacter
                     if (shopManager.CurrentlyDisplaying != null)
                     {
                         shopManager.CurrentlyDisplaying.Availability = item.Availability;
+                        shopManager.CurrentlyDisplaying.Item.ItemIcon = item.Item.ItemIcon;
                     }
                     EnableUI(true);
                     break;
@@ -57,6 +58,8 @@ public class ShopKeeper : InteractableCharacter
     void ActivateShop()
     {
         shopManager.gameObject.SetActive(true);
+        shopManager.FlushItemInfoPanel();
+
     }
 
     void DeactivateShop()
@@ -109,6 +112,7 @@ public class ShopKeeper : InteractableCharacter
 
     void EnableUI(bool enable)
     {
+
         if (!enable)
         {
             Time.timeScale = 1f;
@@ -155,12 +159,20 @@ public class ShopKeeper : InteractableCharacter
             objInfo.ItemName = item.Item.ItemName;
             objInfo.IsKey = item.Item.IsKey;
             objInfo.Serial = item.Item.Serial;
+
+            objInfo.ItemIcon = item.Item.ItemIcon;
+
             Image objImage = obj.transform.Find("Image").GetComponent<Image>();
-            objImage.sprite = item.Item.ItemIcon != null ? item.Item.ItemIcon : objImage.sprite;
+            //objImage.sprite = item.Item.ItemIcon != null ? item.Item.ItemIcon : objImage.sprite;
+            objImage.sprite = objInfo.ItemIcon;
+            //Debug.Log($"IMAGE: {item.Item.ItemIcon}");
+            //Debug.Log($"SPRITE: {objImage.sprite}");
 
             shopItemInfo.Availability = item.Availability;
             shopItemInfo.Price = item.Price;
             shopItemInfo.Currency = item.Currency;
         }
+
+        //shopManager.FlushItemInfoPanel();
     }
 }

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Unlockable : InteractableEntity
 {
+    [Header("- Unlockable Script Variables")]
+    [Space(20f)]
     [SerializeField] string serial = "0000";
-    [SerializeField] Animator unlockableAnimator;
+    [SerializeField] protected Animator unlockableAnimator;
 
-    private void Awake()
+    [SerializeField] protected CustomAudioClip clipOnUnlock;
+
+    protected void Awake()
     {
         if (unlockableAnimator == null)
         {
@@ -52,15 +56,17 @@ public class Unlockable : InteractableEntity
         }
     }
 
-    private void TriggerUnlockAnimation()
+    protected void TriggerUnlockAnimation()
     {
         if (unlockableAnimator != null)
         {
             unlockableAnimator.SetBool("unlock", true);
         }
+
+        clipOnUnlock.PlayClip(gameObject);
     }
 
-    private void DisableGameObject()
+    protected void DisableGameObject()
     {
         transform.gameObject.SetActive(false);
     }

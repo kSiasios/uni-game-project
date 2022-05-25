@@ -49,11 +49,11 @@ public class EnemyBehaviour : MonoBehaviour
     private bool timePassed = false;
     private float gravityScale = 0f;
 
-    //[HideInInspector] 
+    [HideInInspector] 
     public bool chasingPlayer = false;
-    //[HideInInspector] 
+    [HideInInspector] 
     public bool patroling = true;
-    //[HideInInspector] 
+    [HideInInspector]
     public bool facingRight = true;
     public bool movingTowardsPoint = false;
 
@@ -65,7 +65,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     [HideInInspector] public Transform playerTransform;
 
-    //[HideInInspector] 
+    [HideInInspector]
     public EnemyState state = EnemyState.Alive;
 
     GameObject targetPos;
@@ -81,6 +81,21 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private Color chasingColor;
     [Tooltip("Objects that indicate the state of the enemy by their color. (Usually light cones or lights in general)")]
     [SerializeField] private SpriteRenderer[] detectionIndicators;
+
+    [Header("Enemy Audio")]
+    [Tooltip("The script that controls the enemy's audio.")]
+    [SerializeField] private AudioSourceController audioSourceController;
+    [Tooltip("The audio clip that will play when enemy is patroling.")]
+    [SerializeField] private CustomAudioClip patrolingAudioClip;
+    //[SerializeField] private AudioClip patrolingAudioClip;
+    //[SerializeField] private float patrolingAudioClipVolume;
+    //[SerializeField] private bool patrolingAudioClipRandomizePitch;
+    [Tooltip("The audio clip that will play when enemy is chasing the player.")]
+    [SerializeField] private CustomAudioClip chasingAudioClip;
+    [Tooltip("The audio clip that will play when enemy is shooting.")]
+    [SerializeField] private CustomAudioClip shootingAudioClip;
+    [Tooltip("The audio clip that will play when enemy is taking damage.")]
+    [SerializeField] private CustomAudioClip tookDamageAudioClip;
 
     LootContainer lootContainer;
 
@@ -109,12 +124,21 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (playerTransform == null)
         {
+            if (FindObjectOfType<PlayerController>())
+            {
+
             playerTransform = FindObjectOfType<PlayerController>().gameObject.transform;
+            }
         }
 
         if (enemyAnimator == null)
         {
             enemyAnimator = GetComponent<Animator>();
+        }
+
+        if (audioSourceController == null)
+        {
+            audioSourceController = GetComponent<AudioSourceController>();
         }
 
         TryGetComponent(out lootContainer);
@@ -160,6 +184,10 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (patroling)
         {
+            if (!audioSourceController.IsPlaying())
+            {
+                audioSourceController.FadeIn(null, 0f);
+            }
             if (timePassed)
             {
                 if (rigidbody.velocity == Vector2.zero)
@@ -182,6 +210,11 @@ public class EnemyBehaviour : MonoBehaviour
             else
             {
                 enemyAnimator.SetBool("isMoving", false);
+                if (enemyType == EnemyType.Walker)
+                {
+                    // stop playing patroling sound
+                    audioSourceController.FadeOut(0.01f);
+                }
             }
 
             foreach (var item in detectionIndicators)
@@ -347,7 +380,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (enemyType == EnemyType.Flyer)
         {
-            //Debug.Log("Setting Patrol Points for Flyer");
+            Debug.Log("Setting Patrol Points for Flyer");
 
             // For each patrol point of the flyer,
             //      create a gameobject,
@@ -403,6 +436,15 @@ public class EnemyBehaviour : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+
+        //if (tookDamageAudioClip.RandomizePitch)
+        //{
+
+        //}
+        //audioSourceController.FadeIn(tookDamageAudioClip)
+
+        tookDamageAudioClip.PlayClip(audioSourceController);
+
         if (health <= 0)
         {
             Death();
@@ -411,7 +453,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void ShootPlayer()
     {
-
+        shootingAudioClip.PlayClip(audioSourceController);
     }
 
     // Function that destroys the GameObject
@@ -498,5 +540,69 @@ public class SerializableEnemy
         type = (int)enemy.enemyType;
 
         state = (int)enemy.state;
+    }
+}
+
+[System.Serializable]
+public class CustomAudioClip
+{
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] [Range(0f, 1f)] private float volume = 0.3f;
+    [SerializeField] private bool randomizePitch = true;
+    [SerializeField] [Range(0f, 100f)] private float pitchRandomizationPercentage = 20f;
+
+    public CustomAudioClip(AudioClip clip, float volume, bool randomPitch)
+    {
+        audioClip = clip;
+        this.volume = volume;
+        randomizePitch = randomPitch;
+    }
+
+    public AudioClip AudioClip { get => audioClip; set => audioClip = value; }
+    public float Volume { get => volume; set => volume = value; }
+    public bool RandomizePitch { get => randomizePitch; set => randomizePitch = value; }
+
+    public void PlayClip(AudioSourceController controller)
+    {
+        //Debug.Log("Playing clip");
+        //float pitch = controller.GetPitch();
+        //if (randomizePitch)
+        //{
+        //    controller.SetPitch(Random.Range(pitch - (pitchRandomizationPercentage * pitch / 100), pitch + (pitchRandomizationPercentage * pitch / 100)));
+        //}
+
+        //controller.FadeIn(audioClip, 0.01f);
+
+        AudioSource newAudioSource = controller.CreateAudioSource(audioClip);
+        newAudioSource.clip = audioClip;
+        if (randomizePitch)
+        {
+            newAudioSource.pitch = Random.Range(
+                newAudioSource.pitch - (pitchRandomizationPercentage * newAudioSource.pitch / 100),
+                newAudioSource.pitch + (pitchRandomizationPercentage * newAudioSource.pitch / 100));
+
+        }
+        newAudioSource.volume = volume;
+        newAudioSource.Play();
+    }
+
+    public void PlayClip(GameObject obj)
+    {
+        Debug.Log("Playing clip");
+
+        AudioSource newAudioSource = obj.AddComponent<AudioSource>();
+        newAudioSource.clip = audioClip;
+        newAudioSource.spatialBlend = 1f;
+        newAudioSource.rolloffMode = AudioRolloffMode.Linear;
+        newAudioSource.maxDistance = 50f;
+        if (randomizePitch)
+        {
+            newAudioSource.pitch = Random.Range(
+                newAudioSource.pitch - (pitchRandomizationPercentage * newAudioSource.pitch / 100),
+                newAudioSource.pitch + (pitchRandomizationPercentage * newAudioSource.pitch / 100));
+
+        }
+        newAudioSource.volume = volume;
+        newAudioSource.Play();
     }
 }
