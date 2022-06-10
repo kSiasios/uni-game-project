@@ -32,26 +32,26 @@ public class EnemyBehaviour : MonoBehaviour
 
     [Header("Enemy Attributes")]
     [Tooltip("How much health does the enemy have")]
-    [Range(1, 100)] [SerializeField] int health = 50;
+    [Range(1, 100)][SerializeField] int health = 50;
     [Tooltip("What is the type of the enemy")]
     public EnemyType enemyType = EnemyType.Walker;
     [Tooltip("How quickly will the enemy move")]
-    [Range(0f, 10f)] [SerializeField] float speed = 10f;
+    [Range(0f, 10f)][SerializeField] float speed = 10f;
     [Tooltip("How far will the patrol points be from the center of the enemy")]
-    [Range(5f, 10f)] [SerializeField] float patrolRadius = 1f;
+    [Range(5f, 10f)][SerializeField] float patrolRadius = 1f;
     [Tooltip("How much time (in seconds) should the enemy wait before moving on to the next patrol point")]
-    [Range(0f, 5f)] [SerializeField] float waitOnStop = 0.5f;
+    [Range(0f, 5f)][SerializeField] float waitOnStop = 0.5f;
     [Tooltip("How many patrolpoints will the flyer have. Ignore if enemy is walker")]
-    [Range(1, 10)] [SerializeField] int patrolPointsNumber = 10;
+    [Range(1, 10)][SerializeField] int patrolPointsNumber = 10;
 
     // Variables controlling if the enemy has reached the end
     private float waitTimer = 0f;
     private bool timePassed = false;
     private float gravityScale = 0f;
 
-    [HideInInspector] 
+    [HideInInspector]
     public bool chasingPlayer = false;
-    [HideInInspector] 
+    [HideInInspector]
     public bool patroling = true;
     [HideInInspector]
     public bool facingRight = true;
@@ -59,7 +59,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     // Variables controlling the enemy chase actions
     [Tooltip("How much time (in seconds) should the enemy wait in warned state before chasing the player")]
-    [Range(0f, 5f)] [SerializeField] float waitBeforeChasing = 0.5f;
+    [Range(0f, 5f)][SerializeField] float waitBeforeChasing = 0.5f;
     [SerializeField] private float enemyChaseTimer = 0f;
     [SerializeField] private bool chaseTimerPassed = false;
 
@@ -81,6 +81,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private Color chasingColor;
     [Tooltip("Objects that indicate the state of the enemy by their color. (Usually light cones or lights in general)")]
     [SerializeField] private SpriteRenderer[] detectionIndicators;
+    [Tooltip("Enemy Death Particle System")]
+    [SerializeField] private ParticleSystem enemyDeathParticleSystem;
 
     [Header("Enemy Audio")]
     [Tooltip("The script that controls the enemy's audio.")]
@@ -127,7 +129,7 @@ public class EnemyBehaviour : MonoBehaviour
             if (FindObjectOfType<PlayerController>())
             {
 
-            playerTransform = FindObjectOfType<PlayerController>().gameObject.transform;
+                playerTransform = FindObjectOfType<PlayerController>().gameObject.transform;
             }
         }
 
@@ -380,7 +382,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else if (enemyType == EnemyType.Flyer)
         {
-            Debug.Log("Setting Patrol Points for Flyer");
+            //Debug.Log("Setting Patrol Points for Flyer");
 
             // For each patrol point of the flyer,
             //      create a gameobject,
@@ -389,6 +391,7 @@ public class EnemyBehaviour : MonoBehaviour
             for (int i = 0; i < patrolPointsNumber; i++)
             {
                 GameObject patrolPoint = Instantiate(patrolPointPrefab, transform.position, transform.rotation);
+                Destroy(patrolPoint.GetComponent<BoxCollider2D>());
                 patrolPoints.Enqueue(patrolPoint);
                 //Vector2 point = new Vector2(Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)), Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)));
                 Vector2 point = new Vector2(Random.Range(1, patrolRadius) * Mathf.Sign(Random.Range(-1, 1)), Random.Range(1, patrolRadius));
@@ -459,12 +462,17 @@ public class EnemyBehaviour : MonoBehaviour
     // Function that destroys the GameObject
     void Death()
     {
-        Debug.Log("Enemy Dead");
+        //Debug.Log("Enemy Dead");
         //Destroy(this.gameObject);
         if (lootContainer != null)
         {
             lootContainer.DropLoot();
         }
+        //enemyDeathParticleSystem.Emit(1);
+        ParticleSystem deathPS = Instantiate(enemyDeathParticleSystem);
+        deathPS.transform.position = transform.position;
+        deathPS.Play(true);
+        
         state = EnemyState.Dead;
     }
 
@@ -505,7 +513,16 @@ public class EnemyBehaviour : MonoBehaviour
         health = Mathf.RoundToInt(data.health);
         state = (EnemyState)data.state;
         enemyType = (EnemyType)data.type;
-        transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        //transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        if (data.parentName != "")
+        {
+            GameObject parentGameObject = GameManager.FindInActiveObjectByName(data.parentName);
+            Debug.Log($"Trying to find: {data.parentName}, Found: {parentGameObject}");
+            parentGameObject.SetActive(true);
+            transform.parent = parentGameObject.transform;
+        }
+        transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
+        //Debug.Log($"Enemy Position: ({data.positionX}, {data.positionY}, {data.positionZ})");
     }
 
     // Getters
@@ -517,29 +534,95 @@ public class EnemyBehaviour : MonoBehaviour
     {
         return transform.position;
     }
+    public Transform[] GetPatrolPoints()
+    {
+        //return patrolPoints.ToArray();
+        return givenPatrolPoints;
+    }
+
+    // Setters
+    public void SetState(EnemyState value)
+    {
+        state = value;
+    }
+
+    public void SetCustomPatrolPoints(GameObject[] patrolPoints)
+    {
+        this.patrolPoints.Clear();
+        int i = 0;
+        foreach (var item in patrolPoints)
+        {
+            this.patrolPoints.Enqueue(item);
+            givenPatrolPoints[i] = item.transform;
+            i++;
+        }
+
+        SetPatrolPoints();
+    }
 }
 
 [System.Serializable]
 public class SerializableEnemy
 {
     public float health;
-    public float[] position;
+    //public float[] position;
+    public float positionX, positionY, positionZ;
     public int type;
     public int state;
+    public string parentName;
+
+    // positions for the patrol points used by walker
+    public float ppPos1X, ppPos1Y, ppPos1Z;
+    public float ppPos2X, ppPos2Y, ppPos2Z;
+
 
     public SerializableEnemy(EnemyBehaviour enemy)
     {
+        //Debug.Log($"Serializing {enemy}");
         health = enemy.GetHealth();
 
-        position = new float[3];
+        //position = new float[3];
         Vector3 v3Pos = enemy.GetPosition();
-        position[0] = v3Pos.x;
-        position[1] = v3Pos.y;
-        position[2] = v3Pos.z;
+        //position[0] = v3Pos.x;
+        //position[1] = v3Pos.y;
+        //position[2] = v3Pos.z;
+        positionX = v3Pos.x;
+        positionY = v3Pos.y;
+        positionZ = v3Pos.z;
 
         type = (int)enemy.enemyType;
 
         state = (int)enemy.state;
+
+        string tempParentName = "";
+        if (enemy.transform.parent != null)
+        {
+            tempParentName = enemy.transform.parent.name;
+        }
+        parentName = tempParentName;
+
+        Transform[] patrolPoints = enemy.GetPatrolPoints();
+        if (enemy.enemyType == EnemyBehaviour.EnemyType.Walker)
+        {
+            ppPos1X = patrolPoints[0].position.x;
+            ppPos1Y = patrolPoints[0].position.y;
+            ppPos1Z = patrolPoints[0].position.z;
+            ppPos2X = patrolPoints[1].position.x;
+            ppPos2Y = patrolPoints[1].position.y;
+            ppPos2Z = patrolPoints[1].position.z;
+        } else
+        {
+            ppPos1X = 0;
+            ppPos1Y = 0;
+            ppPos1Z = 0;
+            ppPos2X = 0;
+            ppPos2Y = 0;
+            ppPos2Z = 0;
+        }
+
+        //parentName = enemy.transform.parent.name;
+        //Debug.Log($"Serialized {enemy}... Parent Name: {parentName}");
+
     }
 }
 
@@ -547,9 +630,9 @@ public class SerializableEnemy
 public class CustomAudioClip
 {
     [SerializeField] private AudioClip audioClip;
-    [SerializeField] [Range(0f, 1f)] private float volume = 0.3f;
+    [SerializeField][Range(0f, 1f)] private float volume = 0.3f;
     [SerializeField] private bool randomizePitch = true;
-    [SerializeField] [Range(0f, 100f)] private float pitchRandomizationPercentage = 20f;
+    [SerializeField][Range(0f, 100f)] private float pitchRandomizationPercentage = 20f;
 
     public CustomAudioClip(AudioClip clip, float volume, bool randomPitch)
     {
@@ -573,36 +656,36 @@ public class CustomAudioClip
 
         //controller.FadeIn(audioClip, 0.01f);
 
+
         AudioSource newAudioSource = controller.CreateAudioSource(audioClip);
         newAudioSource.clip = audioClip;
-        if (randomizePitch)
-        {
-            newAudioSource.pitch = Random.Range(
-                newAudioSource.pitch - (pitchRandomizationPercentage * newAudioSource.pitch / 100),
-                newAudioSource.pitch + (pitchRandomizationPercentage * newAudioSource.pitch / 100));
-
-        }
-        newAudioSource.volume = volume;
+        SetAudioSourceSettings(newAudioSource);
         newAudioSource.Play();
     }
 
     public void PlayClip(GameObject obj)
     {
-        Debug.Log("Playing clip");
+        //Debug.Log("Playing clip");
 
         AudioSource newAudioSource = obj.AddComponent<AudioSource>();
         newAudioSource.clip = audioClip;
-        newAudioSource.spatialBlend = 1f;
-        newAudioSource.rolloffMode = AudioRolloffMode.Linear;
         newAudioSource.maxDistance = 50f;
+        SetAudioSourceSettings(newAudioSource);
+        newAudioSource.Play();
+    }
+
+    void SetAudioSourceSettings(AudioSource audioSource)
+    {
+        audioSource.spatialBlend = 1f;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
         if (randomizePitch)
         {
-            newAudioSource.pitch = Random.Range(
-                newAudioSource.pitch - (pitchRandomizationPercentage * newAudioSource.pitch / 100),
-                newAudioSource.pitch + (pitchRandomizationPercentage * newAudioSource.pitch / 100));
+            audioSource.pitch = Random.Range(
+                audioSource.pitch - (pitchRandomizationPercentage * audioSource.pitch / 100),
+                audioSource.pitch + (pitchRandomizationPercentage * audioSource.pitch / 100));
 
         }
-        newAudioSource.volume = volume;
-        newAudioSource.Play();
+        audioSource.volume = volume;
+        audioSource.dopplerLevel = 0f;
     }
 }

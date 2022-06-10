@@ -146,8 +146,13 @@ public class ShopKeeper : InteractableCharacter
                 inventory.Remove(item);
                 InitializeShopPanel();
                 //shopManager.CurrentlyDisplaying.UpdateItemInfoUI();
+                if (shopManager.CurrentlyDisplaying != null)
+                {
+
                 shopManager.CurrentlyDisplaying.UpdateItemInfoUI();
-                continue;
+                }
+                //continue;
+                break;
             }
             //Debug.Log($"Creating {item}");
             GameObject obj = Instantiate(inventoryItemPrefab, shopManager.ShopGrid.transform);

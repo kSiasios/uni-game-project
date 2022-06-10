@@ -34,6 +34,7 @@ public class InventoryItem : MonoBehaviour
         {
             if (itemIcon != null)
             {
+            //Debug.Log("itemIcon != null");
                 imageComponent.sprite = itemIcon;
             }
         }
@@ -42,32 +43,37 @@ public class InventoryItem : MonoBehaviour
         {
             // Try and find itemInfo in the hierarchy
             //itemInfo = transform.parent.parent.Find("ItemInfo").gameObject;
-            if (transform.parent.name == "Grid")
+            if (transform.parent != null)
             {
-                if (GetComponent<ShopItem>())
+
+                if (transform.parent.name == "Grid")
                 {
-                    // we have a shop item, look for item info under shop
-                    itemInfo = GameObject.Find("ShopPanel").transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
-                }
-                else
-                {
-                    // we have a regular inventory item, look for item info under inventory
-                    itemInfo = GameObject.Find("InventoryPanel").transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
-                }
+                    if (GetComponent<ShopItem>())
+                    {
+                        // we have a shop item, look for item info under shop
+                        itemInfo = GameObject.Find("ShopPanel").transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
+                    }
+                    else
+                    {
+                        // we have a regular inventory item, look for item info under inventory
+                        itemInfo = GameObject.Find("InventoryPanel").transform.Find("Backdrop").transform.Find("ItemInfo").gameObject;
+                    }
 
 
-                // If found, populate local variables with their according values
-                if (itemInfo != null)
-                {
-                    itemImage = itemInfo.transform.Find("Image").GetComponentInChildren<Image>();
-                    itemNameUI = itemInfo.transform.Find("ItemName").transform.Find("Value").GetComponent<TextMeshProUGUI>();
-                    itemAmountUI = itemInfo.transform.Find("ItemAmount").transform.Find("Value").GetComponent<TextMeshProUGUI>();
-                }
-                else
-                {
-                    Debug.LogError("ItemInfo not found!");
+                    // If found, populate local variables with their according values
+                    if (itemInfo != null)
+                    {
+                        itemImage = itemInfo.transform.Find("Image").GetComponentInChildren<Image>();
+                        itemNameUI = itemInfo.transform.Find("ItemName").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+                        itemAmountUI = itemInfo.transform.Find("ItemAmount").transform.Find("Value").GetComponent<TextMeshProUGUI>();
+                    }
+                    else
+                    {
+                        Debug.LogError("ItemInfo not found!");
+                    }
                 }
             }
+
         }
         else
         {
@@ -78,24 +84,24 @@ public class InventoryItem : MonoBehaviour
     }
 
     // Constructor with input
-    public InventoryItem(int amount, string name, string serial, bool key, Sprite? sprite = null)
-    {
-        AmountOfItems = amount;
-        ItemName = name;
-        Serial = serial;
-        isKey = key;
-        itemIcon = sprite;
-    }
+    //public InventoryItem(int amount, string name, string serial, bool key, Sprite? sprite = null)
+    //{
+    //    AmountOfItems = amount;
+    //    ItemName = name;
+    //    Serial = serial;
+    //    isKey = key;
+    //    itemIcon = sprite;
+    //}
 
     // Constructor with no given input (Default constructor)
-    public InventoryItem()
-    {
-        AmountOfItems = 0;
-        ItemName = "New Item";
-        Serial = "0000";
-        isKey = false;
-        itemIcon = null;
-    }
+    //public InventoryItem()
+    //{
+    //    AmountOfItems = 0;
+    //    ItemName = "New Item";
+    //    Serial = "0000";
+    //    isKey = false;
+    //    itemIcon = null;
+    //}
 
     // Declaration of the class' attributes along with getters and setters
     public int AmountOfItems { get => amountOfItems; set => amountOfItems = value; }
@@ -112,15 +118,36 @@ public class InventoryItem : MonoBehaviour
         return $"Name: {ItemName}\n" +
             $"Amount: {AmountOfItems}\t" +
             $"IsKey: {IsKey}\t" +
-            $"Serial: {Serial}";
+            $"Serial: {Serial}\t" +
+            $"Icon: {ItemIcon}\t";
     }
 
     public void UpdateItemInfoUI()
     {
         //Debug.Log(itemIcon);
-        itemImage.sprite = itemIcon;
+        itemImage.sprite = ItemIcon;
         itemImage.color = new Color(255f, 255f, 255f, 100f);
         itemNameUI.text = ItemName;
         itemAmountUI.text = AmountOfItems.ToString();
     }
+
+    // Setters
+    public void Setter(int amount, string name, string serial, bool isKey, Sprite sprite)
+    {
+        AmountOfItems = amount;
+        ItemName = name;
+        Serial = serial;
+        IsKey = isKey;
+        ItemIcon = sprite;
+
+        //imageComponent.sprite = ItemIcon;
+    }
+
+    public void SetAmount(int value)
+    {
+        amountOfItems = value;
+        return;
+    }
+
+
 }

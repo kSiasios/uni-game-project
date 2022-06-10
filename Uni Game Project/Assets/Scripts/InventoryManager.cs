@@ -20,6 +20,12 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] InventoryItem placeholderInventoryItem;
 
+    [SerializeField] AudioClip collectClip;
+
+    [SerializeField] Sprite[] potentialItemSprites;
+
+    //[SerializeField] Gam
+
     public enum Currencies
     {
         coins, energy
@@ -57,15 +63,31 @@ public class InventoryManager : MonoBehaviour
         placeholderInventoryItem = GetComponentInChildren<InventoryItem>();
     }
 
+    private void FixedUpdate()
+    {
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        foreach (var item in audioSources)
+        {
+            if (!item.isPlaying)
+            {
+                Destroy(item);
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
+    {
+        CollectItem(collision);
+    }
+
+    private void CollectItem(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Collectable"))
         {
-            // Add object to inventory
-            //InventoryItem item = new InventoryItem();
-            //item.AmountOfItems = 1;
 
-            InventoryItem item = placeholderInventoryItem;
+
+            // Add object to inventory
+            InventoryItem item = Instantiate(inventoryItemPrefab).GetComponent<InventoryItem>();
 
             amountPlaceholder = item.AmountOfItems;
 
@@ -77,14 +99,8 @@ public class InventoryManager : MonoBehaviour
             Collectable collectable = collision.gameObject.GetComponent<Collectable>();
             if (collectable != null)
             {
+                //Debug.Log($"Collected {collectable.GetName()}");
                 item.AmountOfItems = collectable.GetAmount();
-                //if (collectable.GetIcon() != null)
-                //{
-                //    item.itemIcon = collectable.GetIcon();
-                //} else
-                //{
-                //    item.itemIcon = null;
-                //}
                 //Debug.Log(AssetDatabase.GetAssetPath(collectable.GetIcon()));
                 item.ItemIcon = collectable.GetIcon();
                 //Debug.Log(item.AmountOfItems);
@@ -105,26 +121,54 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                notificationManager.NewNotification("1" + " x " + collision.gameObject.name, null);
+                notificationManager.NewNotification($"1 x {collision.gameObject.name}", null);
             }
 
             item.ItemName = collectable.GetName();
             AddItem(item);
             //PrintList(inventory);
+
+            // Play Collect Sound
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.PlayOneShot(collectClip);
         }
     }
 
-
     public void AddItem(InventoryItem newItem)
+    {
+        //Debug.Log($"Sending sprite path: {newItem.ItemIcon}");
+        Sprite itemSprite = null;
+        if (newItem.ItemName == "Green Key")
+        {
+            itemSprite = potentialItemSprites[0];
+        }
+        if (newItem.ItemName == "Red Key")
+        {
+            itemSprite = potentialItemSprites[1];
+        }
+        if (newItem.ItemName == "Blue Key")
+        {
+            itemSprite = potentialItemSprites[2];
+        }
+        if (newItem.ItemName == "Energy")
+        {
+            itemSprite = potentialItemSprites[3];
+        }
+        AddItem(newItem.AmountOfItems, newItem.ItemName, newItem.Serial, newItem.IsKey, itemSprite);
+    }
+
+    public void AddItem(int newAmount, string newName, string newSerial, bool newIsKey, Sprite newSprite)
     {
         //Debug.Log($"New Item: {newItem}");
         // Function that handles adding items to the inventory
+        Debug.Log($"Adding Item ==> Name: '{newName}', Amount: '{newAmount}', Sprite: '{newSprite}'");
         bool alreadyExists = false;
         // Iterate through the inventory to see if there already is an item of the same type
         foreach (var item in inventory)
         {
-            if (item.ItemName.ToLower() == newItem.ItemName.ToLower())
+            if (item.ItemName.ToLower() == newName.ToLower())
             {
+                //Debug.Log($"Item {item.ItemName} exists in the inventory");
                 //Debug.Log($"Exists");
                 // If there is an item of the same type in the inventory, just icrease its amount
                 alreadyExists = true;
@@ -132,7 +176,7 @@ public class InventoryManager : MonoBehaviour
                 //Debug.Log("New value: " + (newItem.AmountOfItems));
                 //Debug.Log("Item exists: " + (item.AmountOfItems + newItem.AmountOfItems));
                 //item.AmountOfItems = item.AmountOfItems + newItem.AmountOfItems;
-                EditItem(newItem);
+                EditItem(newAmount, newName, newSerial, newIsKey, newSprite);
                 //PrintInventory();
                 // Update the UI
                 if (item.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
@@ -148,10 +192,19 @@ public class InventoryManager : MonoBehaviour
         if (!alreadyExists)
         {
             // If there is not an item of this type in the inventory, create one
+            InventoryItem newItem = Instantiate(inventoryItemPrefab).GetComponent<InventoryItem>();
+            newItem.Setter(newAmount, newName, newSerial, newIsKey, newSprite);
             inventory.Add(newItem);
-            if (newItem.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
+            //foreach (var inventoryItem in inventory)
+            //{
+            //    if (inventoryItem.ItemName == newName)
+            //    {
+            //        Debug.Log($"Found {inventoryItem.ItemName} with sprite: ({inventoryItem.ItemIcon})");
+            //    }
+            //}
+            if (newName.ToLower() == defaultCurrency.ToString().ToLower())
             {
-                uiItemCounter.text = newItem.AmountOfItems.ToString();
+                uiItemCounter.text = newAmount.ToString();
             }
         }
 
@@ -205,31 +258,51 @@ public class InventoryManager : MonoBehaviour
 
     public void EditItem(InventoryItem newValues)
     {
+        EditItem(newValues.AmountOfItems, newValues.ItemName, newValues.Serial, newValues.IsKey, newValues.ItemIcon);
+    }
+
+    private void EditItem(int newAmount, string newName, string newSerial, bool newIsKey, Sprite newSprite)
+    {
         // Function that handles editing items to the inventory
         //bool alreadyExists = false;
         // Iterate through the inventory to see if there already is an item of the same type
         foreach (var item in inventory)
         {
-            if (item.ItemName == newValues.ItemName)
+            if (item.ItemName == newName)
             {
                 // If there is an item of the same type in the inventory, just icrease its amount
                 //alreadyExists = true;
                 //Debug.Log("Item exists: " + (item.AmountOfItems + newItem.AmountOfItems));
-                item.AmountOfItems += amountPlaceholder;
-                item.IsKey = newValues.IsKey;
-                item.ItemIcon = newValues.ItemIcon;
-                item.Serial = newValues.Serial;
+
+                if (amountPlaceholder > newAmount)
+                {
+                    Debug.Log($"***** Editing {item.ItemName}, New Amount = item.AmountOfItems({item.AmountOfItems}) + amountPlaceholder({amountPlaceholder}) == {item.AmountOfItems + amountPlaceholder}");
+                    item.AmountOfItems += amountPlaceholder;
+                }
+                else
+                {
+                    Debug.Log($"***** Editing {item.ItemName}, New Amount = item.AmountOfItems({item.AmountOfItems}) + newAmount({newAmount}) == {item.AmountOfItems + newAmount}");
+                    item.AmountOfItems += newAmount;
+                }
+
+                item.IsKey = newIsKey;
+                item.ItemIcon = newSprite;
+                item.Serial = newSerial;
                 //item.= newItem.AmountOfItems;
 
                 // Update the UI
                 if (item.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
                 {
-                    uiItemCounter.text = item.AmountOfItems.ToString();
+                    UpdateItemCounter(item.AmountOfItems);
                 }
                 InitializeInventoryPanel();
                 return;
             }
         }
+    }
+    public void UpdateItemCounter(int newAmount)
+    {
+        uiItemCounter.text = newAmount.ToString();
     }
 
     void InitializeInventoryPanel()
@@ -246,6 +319,7 @@ public class InventoryManager : MonoBehaviour
             objInfo.AmountOfItems = item.AmountOfItems;
             objInfo.ItemName = item.ItemName;
             Image objImage = obj.transform.Find("Image").GetComponent<Image>();
+            //Debug.Log($"ItemIcon: {item.ItemIcon}");
             objImage.sprite = item.ItemIcon != null ? item.ItemIcon : objImage.sprite;
             objInfo.ItemIcon = objImage.sprite;
         }
@@ -286,11 +360,19 @@ public class InventoryManager : MonoBehaviour
         // Save each item along with their amount
         //List<InventoryData> saveData = new List<InventoryData>();
 
+        Debug.Log($"Inventory: {inventory}");
+        foreach (var item in inventory)
+        {
+            Debug.Log($"--------- Printing Inventory ====> {item}");
+        }
+
         InventoryData[] saveData = new InventoryData[inventory.Count];
         int i = 0;
         foreach (var item in inventory)
         {
+            //Debug.Log($"Saving {item}, ItemIcon: {item.ItemIcon}");
             InventoryData saveItem = new InventoryData(item.ItemName, item.Serial, item.AmountOfItems, item.IsKey, AssetDatabase.GetAssetPath(item.ItemIcon));
+            //Debug.Log($"Saved Path {saveItem.iconPath}");
             saveData[i] = saveItem;
             //saveData.Add(saveItem);
         }
@@ -304,11 +386,41 @@ public class InventoryManager : MonoBehaviour
 
         foreach (var item in data)
         {
-            InventoryItem newItem = new InventoryItem(item.amount, item.name, item.serial, item.isKey, (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite)));
+            if (item == null)
+            {
+                continue;
+            }
+            //Debug.Log($"IconPath = ({item.iconPath})");
+
+            ////InventoryItem newItem = new InventoryItem(item.amount, item.name, item.serial, item.isKey, (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite)));
+            //GameObject newItemGO = Instantiate(inventoryItemPrefab, inventoryGrid.transform);
+            InventoryItem newItem = Instantiate(inventoryItemPrefab).GetComponent<InventoryItem>();
+            ////InventoryItem newItem = newItemGO.AddComponent<InventoryItem>();
+            //Debug.Log($"Loading from path ({item.iconPath})");
+            //Sprite itemSprite = (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite));
+            Debug.Log($"Loading Item: {item}");
+            //Debug.Log($"Item Reference = ({item.name})");
+            newItem.Setter(item.amount, item.name, item.serial, item.isKey, (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite)));
+            //Debug.Log($"Sprite Path AFTER = ({newItem.ItemIcon})");
+
             AddItem(newItem);
+            //Destroy(newItemGO);
         }
         InitializeInventoryPanel();
         RefreshUI();
+
+        // purge extra inventory items
+        InventoryItem[] extraInventoryItems = FindObjectsOfType<InventoryItem>();
+        foreach (var item in extraInventoryItems)
+        {
+            Transform parentTransform = item.transform.parent;
+            if (parentTransform != null)
+            {
+                continue;
+            }
+
+            Destroy(item.gameObject);
+        }
     }
     // to delete
     void RefreshUI()
@@ -321,7 +433,7 @@ public class InventoryManager : MonoBehaviour
         //    }
         //}
     }
-    
+
     // to delete
     public void SendNotification(string notificationText, Sprite icon)
     {

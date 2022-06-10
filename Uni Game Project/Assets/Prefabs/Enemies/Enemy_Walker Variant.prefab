@@ -251,102 +251,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 4.99}
   m_Size: {x: 8.08, y: 9.84}
   m_Direction: 0
---- !u!95 &511449190
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7663869241314928440}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d19e68d7091b96b48a700a8e1e2a1f13, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &48233243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7663869241314928440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03f0bcb065c4fe445a5cf565a05093c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chance: 100
-  possibleDropItems:
-  - {fileID: -244483675641204827, guid: 916805e3920c3584b8ddc0715d423dcd, type: 3}
---- !u!114 &1118417932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7663869241314928440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 337ff1c838c5d37458ac33487d1629ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: 0}
-  enemyCollider: {fileID: 0}
-  actingAreaCollider: {fileID: 0}
-  enemyAnimator: {fileID: 0}
-  patrolPointPrefab: {fileID: 0}
-  givenPatrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  health: 50
-  enemyType: 0
-  speed: 10
-  patrolRadius: 1
-  waitOnStop: 0.5
-  patrolPointsNumber: 10
-  chasingPlayer: 0
-  patroling: 1
-  facingRight: 1
-  movingTowardsPoint: 0
-  waitBeforeChasing: 0.5
-  enemyChaseTimer: 0
-  chaseTimerPassed: 0
-  playerTransform: {fileID: 0}
-  state: 0
-  patrolingColor: {r: 0.7058824, g: 1, b: 0.47058824, a: 1}
-  warnedColor: {r: 1, g: 0.72156864, b: 0, a: 1}
-  chasingColor: {r: 0.9372549, g: 0.33333334, b: 0.27058825, a: 1}
-  detectionIndicators:
-  - {fileID: 6927430867382419513}
-  - {fileID: 791837748356288661}
-  audioSourceController: {fileID: 0}
-  patrolingAudioClip:
-    audioClip: {fileID: 8300000, guid: fe6d9cfe4d0c90d4d8884f9f62cb4ac8, type: 3}
-    volume: 0
-    randomizePitch: 0
-    pitchRandomizationPercentage: 0
-  chasingAudioClip:
-    audioClip: {fileID: 0}
-    volume: 0
-    randomizePitch: 0
-    pitchRandomizationPercentage: 0
-  shootingAudioClip:
-    audioClip: {fileID: 0}
-    volume: 0
-    randomizePitch: 0
-    pitchRandomizationPercentage: 0
-  tookDamageAudioClip:
-    audioClip: {fileID: 8300000, guid: cd83b8e3bd058e3409b4fc561616a64c, type: 3}
-    volume: 0.2
-    randomizePitch: 1
-    pitchRandomizationPercentage: 15
 --- !u!82 &601594002
 AudioSource:
   m_ObjectHideFlags: 0
@@ -443,6 +347,40 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &511449190
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663869241314928440}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d19e68d7091b96b48a700a8e1e2a1f13, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &48233243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663869241314928440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f0bcb065c4fe445a5cf565a05093c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chance: 100
+  possibleDropItems:
+  - {fileID: 8483035308393106047, guid: c413b76a7809df24b8defea141af4bc0, type: 3}
 --- !u!114 &601594003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +395,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volume: 0.3
   timeToFade: 0.5
+--- !u!114 &1118417932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663869241314928440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337ff1c838c5d37458ac33487d1629ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
+  enemyCollider: {fileID: 0}
+  actingAreaCollider: {fileID: 0}
+  enemyAnimator: {fileID: 0}
+  patrolPointPrefab: {fileID: 0}
+  givenPatrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  health: 50
+  enemyType: 0
+  speed: 10
+  patrolRadius: 1
+  waitOnStop: 0.5
+  patrolPointsNumber: 10
+  chasingPlayer: 0
+  patroling: 1
+  facingRight: 1
+  movingTowardsPoint: 0
+  waitBeforeChasing: 0.5
+  enemyChaseTimer: 0
+  chaseTimerPassed: 0
+  playerTransform: {fileID: 0}
+  state: 0
+  patrolingColor: {r: 0.7058824, g: 1, b: 0.47058824, a: 1}
+  warnedColor: {r: 1, g: 0.72156864, b: 0, a: 1}
+  chasingColor: {r: 0.9372549, g: 0.33333334, b: 0.27058825, a: 1}
+  detectionIndicators:
+  - {fileID: 6927430867382419513}
+  - {fileID: 791837748356288661}
+  enemyDeathParticleSystem: {fileID: 5596560602191231992, guid: e83a05f056663ff49bf283efdbf9cd78, type: 3}
+  audioSourceController: {fileID: 0}
+  patrolingAudioClip:
+    audioClip: {fileID: 8300000, guid: fe6d9cfe4d0c90d4d8884f9f62cb4ac8, type: 3}
+    volume: 0
+    randomizePitch: 0
+    pitchRandomizationPercentage: 0
+  chasingAudioClip:
+    audioClip: {fileID: 0}
+    volume: 0
+    randomizePitch: 0
+    pitchRandomizationPercentage: 0
+  shootingAudioClip:
+    audioClip: {fileID: 8300000, guid: 0102db847fe11944aa6eee4eabab1946, type: 3}
+    volume: 1
+    randomizePitch: 1
+    pitchRandomizationPercentage: 10
+  tookDamageAudioClip:
+    audioClip: {fileID: 8300000, guid: cd83b8e3bd058e3409b4fc561616a64c, type: 3}
+    volume: 0.2
+    randomizePitch: 1
+    pitchRandomizationPercentage: 15
 --- !u!1 &8461814399390013818
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,7 +779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8499810631740656450, guid: 0f93db3715d124440acd261845bed35b, type: 3}
       propertyPath: m_Name
-      value: Enemy_Walker
+      value: Enemy_Walker Variant (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8499810631740656450, guid: 0f93db3715d124440acd261845bed35b, type: 3}
       propertyPath: m_Layer
@@ -806,11 +807,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8853548642947161599, guid: 0f93db3715d124440acd261845bed35b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.64589
+      value: 2.5994987
       objectReference: {fileID: 0}
     - target: {fileID: 8853548642947161599, guid: 0f93db3715d124440acd261845bed35b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.32959
+      value: 13.413422
       objectReference: {fileID: 0}
     - target: {fileID: 8853548642947161599, guid: 0f93db3715d124440acd261845bed35b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -930,6 +931,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798497051888426656, guid: 8f11657cf0e07454c88f12053a242e66, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798497051888426657, guid: 8f11657cf0e07454c88f12053a242e66, type: 3}
+      propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 798497051888426657, guid: 8f11657cf0e07454c88f12053a242e66, type: 3}

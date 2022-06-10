@@ -5,9 +5,12 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource;
+    [Header("Footsteps")]
     [SerializeField] private AudioClip footstepGravel;
     [SerializeField] private AudioClip footstepMetal;
     [SerializeField] private AudioClip footstepWood;
+    [Header("Health")]
+    [SerializeField] private AudioClip playerHit;
 
     //[SerializeField] private BoxCollider2D groundCheck;
     [SerializeField] private GroundCheck groundCheckFunctions;
@@ -20,6 +23,7 @@ public class AudioManager : MonoBehaviour
 
     private float originalVolume;
     private float originalPitch;
+
 
     private void Awake()
     {
@@ -69,6 +73,27 @@ public class AudioManager : MonoBehaviour
                 //audioSource.Play();
             }
         }
+    }
+
+    public void PlayerHit()
+    {
+        //audioSource.PlayOneShot(playerHit);
+        GameObject audioSourceContainer;
+        //audioSourceContainer = gameObject.transform.Find("Audio Source Container").gameObject;
+        Transform audioSourceContainerTransform = gameObject.transform.Find("Audio Source Container");
+        AudioSource playerHitAS;
+        if (audioSourceContainerTransform == null)
+        {
+            audioSourceContainer = new GameObject();
+            audioSourceContainer.name = "Audio Source Container";
+            audioSourceContainer.transform.parent = transform;
+            playerHitAS = audioSourceContainer.AddComponent<AudioSource>();
+        } else
+        {
+            audioSourceContainer = audioSourceContainerTransform.gameObject;
+            playerHitAS = audioSourceContainer.GetComponent<AudioSource>();
+        }
+        playerHitAS.PlayOneShot(playerHit);
     }
 
     // Function that returns true if the player is touching the given layerMask

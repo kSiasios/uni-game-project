@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] Collider2D colliderOnEnter;
+    [SerializeField] Collider2D colliderOnExit;
+
     [SerializeField] Transform[] customLoadUnloadList;
+
+    private bool load = false;
     private void Awake()
     {
         foreach (Transform child in transform)
@@ -16,34 +21,125 @@ public class LevelManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerController>())
+        //if (gameObject.name == "LevelChuck - Fog")
+        //{
+        //    Debug.Log($"ENTER: Collision with {collision}. Checking with {colliderOnEnter}");
+        //}
+        if (colliderOnEnter != null)
         {
-            foreach (Transform child in transform)
+            if (colliderOnEnter == collision)
             {
-                //Debug.Log(child.name);
-                child.gameObject.SetActive(true);
+                LoadObjects(collision);
+                load = true;
             }
-            foreach (Transform customTransform in customLoadUnloadList)
-            {
-                //Debug.Log(child.name);
-                customTransform.gameObject.SetActive(false);
-            }
+        }
+        else
+        {
+            LoadObjects(collision);
+                load = true;
         }
     }
 
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerController>())
+        //if (gameObject.name == "LevelChuck - Fog")
+        //{
+        //    Debug.Log($"EXIT: Collision with {collision}. Checking with {colliderOnExit}");
+        //}
+        if (colliderOnExit != null)
         {
-            foreach (Transform child in transform)
+            if (colliderOnExit == collision)
             {
-                child.gameObject.SetActive(false);
+                UnloadObjects(collision);
+                load = false;
             }
-            foreach (Transform customTransform in customLoadUnloadList)
+        }
+        else
+        {
+            UnloadObjects(collision);
+                load = false;
+        }
+    }
+
+    private void LoadObjects(Collider2D collision)
+    {
+        //Debug.Log($"Colliding with {collision.gameObject}");
+        PlayerController collisionIsPlayer = collision.GetComponent<PlayerController>();
+
+        if (collisionIsPlayer == null)
+        {
+            // check parent
+            GameObject collisionParent = collision.transform.parent == null ? null : collision.transform.parent.gameObject;
+            if (collisionParent != null)
             {
-                //Debug.Log(child.name);
-                customTransform.gameObject.SetActive(true);
+                collisionIsPlayer = collisionParent.GetComponent<PlayerController>();
             }
+        }
+
+        if (collisionIsPlayer != null)
+        {
+            LoadLoop();
+        }
+    }
+
+    private void LoadLoop()
+    {
+        foreach (Transform child in transform)
+        {
+            //Debug.Log(child.name);
+            child.gameObject.SetActive(true);
+        }
+        foreach (Transform customTransform in customLoadUnloadList)
+        {
+            //Debug.Log(child.name);
+            customTransform.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTransformChildrenChanged()
+    {
+        if (load)
+        {
+            LoadLoop();
+        } else
+        {
+            UnloadLoop();
+        }
+    }
+
+    private void UnloadObjects(Collider2D collision)
+    {
+        //GameObject collisionParent = collision.transform.parent;
+        //Debug.Log($"Colliding with {collision.gameObject}");
+        PlayerController collisionIsPlayer = collision.GetComponent<PlayerController>();
+
+        if (collisionIsPlayer == null)
+        {
+            // check parent
+            GameObject collisionParent = collision.transform.parent == null ? null : collision.transform.parent.gameObject;
+            if (collisionParent != null)
+            {
+                collisionIsPlayer = collisionParent.GetComponent<PlayerController>();
+            }
+        }
+
+        if (collisionIsPlayer != null)
+        {
+            UnloadLoop();
+        }
+    }
+
+    private void UnloadLoop()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+        foreach (Transform customTransform in customLoadUnloadList)
+        {
+            //Debug.Log(child.name);
+            customTransform.gameObject.SetActive(true);
         }
     }
 }

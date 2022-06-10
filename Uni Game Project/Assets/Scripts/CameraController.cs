@@ -49,7 +49,35 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Camera Boundary"))
+    //    {
+    //        //Debug.Log("Triggered!");
+    //        cameraConfiner.m_BoundingShape2D = collision;
+
+    //        Vector3 cameraTrackerOffsetObject = cameraBodySettings.m_TrackedObjectOffset;
+
+
+    //        if (collision.gameObject.GetComponent<SmallCameraBounder>())
+    //        {
+    //            //Debug.Log("Small Bounding Box");
+    //            //virtualCamera.m_Lens.OrthographicSize = smallOrthographicSize;
+    //            virtualCamera.m_Lens.OrthographicSize = collision.gameObject.GetComponent<SmallCameraBounder>().getPreferredCameraSize();
+    //            SetCameraSettings(smallCameraBodySettings);
+    //            cameraBodySettings.m_TrackedObjectOffset = Vector3.up;
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Normal Bounding Box");
+    //            virtualCamera.m_Lens.OrthographicSize = normalOrthographicSize;
+    //            SetCameraSettings(normalCameraBodySettings);
+    //            cameraBodySettings.m_TrackedObjectOffset = cameraTrackerOffsetObject;
+    //        }
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Camera Boundary"))
         {

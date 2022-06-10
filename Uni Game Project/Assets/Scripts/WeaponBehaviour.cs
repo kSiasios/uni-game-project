@@ -19,6 +19,8 @@ public class WeaponBehaviour : MonoBehaviour
     [Range(0, 100)][SerializeField] float damage = 50;
     [Tooltip("The amount of bullets fired at once")]
     [Range(1, 5)][SerializeField] int bulletsFired = 1;
+    [Tooltip("Should the player have infinite ammo?")]
+    [SerializeField] bool infiniteAmmo = false;
 
     [Header("Required References")]
     [Tooltip("The controller of this weapon")]
@@ -31,6 +33,10 @@ public class WeaponBehaviour : MonoBehaviour
     [Header("UI References")]
     [Tooltip("The UI field that displays the amount of bullets")]
     [SerializeField] TextMeshProUGUI bulletsAmountUI;
+
+    [Header("Sound")]
+    [SerializeField] AudioClip shootingSound;
+    [SerializeField] AudioClip reloadingSound;
 
     bool reloading = false;
 
@@ -52,15 +58,25 @@ public class WeaponBehaviour : MonoBehaviour
         {
             bulletsAmountUI = GameObject.Find("AmmoCounter").GetComponentInChildren<TextMeshProUGUI>();
             totalAmmo -= bulletsInΜagazine;
-            bulletsAmountUI.text = bulletsInΜagazine + " / " + totalAmmo;
+            if (!infiniteAmmo)
+            {
+                bulletsAmountUI.text = $"{bulletsInΜagazine} / {totalAmmo}";
+            }
         }
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-
-    //}
+    private void FixedUpdate()
+    {
+        // Purge AudioSources that don't play
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        foreach (var item in audioSources)
+        {
+            if (!item.isPlaying)
+            {
+                Destroy(item);
+            }
+        }
+    }
 
     public void Fire()
     {
@@ -79,7 +95,10 @@ public class WeaponBehaviour : MonoBehaviour
         }
 
         // Update the UI
-        bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
+        if (!infiniteAmmo)
+        {
+            bulletsAmountUI.text = $"{bulletsInΜagazine} / {totalAmmo}";
+        }
     }
 
     void Shoot()
@@ -97,11 +116,18 @@ public class WeaponBehaviour : MonoBehaviour
         //bulletParticleSystem.Emit();
         bulletParticleSystem.Emit(bulletsFired);
         bulletParticleSystem.Play();
+
+        // Play sound
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.PlayOneShot(shootingSound);
     }
 
     public void ReloadWeapon()
     {
         IEnumerator coroutine = Reload();
+        // Play sound
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.PlayOneShot(reloadingSound);
         if (bulletsInΜagazine < magazineSize)
         {
             //totalAmmo -= (magazineSize - bulletsInΜagazine);
@@ -120,19 +146,29 @@ public class WeaponBehaviour : MonoBehaviour
         while (bulletsInΜagazine < magazineSize)
         {
             reloading = true;
+            WeaponManager.Reloading = reloading;
             yield return new WaitForSeconds(reloadSpeed);
             if (bulletsInΜagazine >= magazineSize)
             {
                 reloading = false;
                 break;
             }
-            totalAmmo -= 1;
+            if (!infiniteAmmo)
+            {
+                totalAmmo -= 1;
+                // Update the UI
+                bulletsAmountUI.text = $"{bulletsInΜagazine} / {totalAmmo}";
+            }
             bulletsInΜagazine++;
-            // Update the UI
-            bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
             //Debug.Log("Reloading " + bulletsInΜagazine);
         }
-        reloading = false;
+
+
+        if (bulletsInΜagazine >= magazineSize)
+        {
+            reloading = false;
+            WeaponManager.Reloading = reloading;
+        }
     }
 
     public int GetAmmo()
@@ -148,6 +184,6 @@ public class WeaponBehaviour : MonoBehaviour
 
     void RefreshUI()
     {
-        bulletsAmountUI.text = bulletsInΜagazine.ToString() + " / " + totalAmmo.ToString();
+        bulletsAmountUI.text = $"{bulletsInΜagazine} / {totalAmmo}";
     }
 }

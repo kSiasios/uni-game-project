@@ -12,6 +12,9 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] private GameObject dialogBox;
     [SerializeField] private TextMeshProUGUI dialogText;
     [SerializeField] private Image dialogImage;
+    [SerializeField] private AudioSource audioSource;
+    [Tooltip("Audi clip played when a letter is written")]
+    [SerializeField] private AudioClip audioClip;
 
     private DialogSpeaker currentSpeaker;
 
@@ -22,26 +25,31 @@ public class DialogSystem : MonoBehaviour
         dialogBox = transform.Find("DialogBox").gameObject;
         dialogText = dialogBox.transform.Find("Dialog").GetComponent<TextMeshProUGUI>();
         dialogImage = dialogBox.transform.Find("SpeakerImage").GetComponent<Image>();
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+        index = -1;
     }
     public void NextDialog(string[] dialogLines)
     {
-        if (dialogLines.Length - index > 1)
+        if (customPrintCoroutine != null)
         {
-            index++;
+            //Debug.Log("Custom Coroutine NOT null");
+            StopCoroutine(customPrintCoroutine);
         }
-        else
+
+        if (dialogLines.Length - index <= 1)
         {
             DisableSystem();
             return;
         }
-
-        if (customPrintCoroutine != null)
-        {
-            StopCoroutine(customPrintCoroutine);
-        }
-
+        
+        index++;
         //Debug.Log(dialogLines[index]);
         customPrintCoroutine = StartCoroutine(SlowWrite(dialogLines[index]));
+        //Debug.Log($"Called Next Dialog! Index: {index}");
     }
 
     private IEnumerator SlowWrite(string printMsg)
@@ -60,6 +68,9 @@ public class DialogSystem : MonoBehaviour
 
             // Populate dialog system
             WriteDialog(dialogItem);
+
+            // Play audio clip
+            audioSource.PlayOneShot(audioClip);
 
             //Debug.Log(printMsg.Substring(0, i + 1));
             yield return new WaitForSeconds(printDelay);
@@ -85,11 +96,13 @@ public class DialogSystem : MonoBehaviour
 
     public void initializeDialogSystem(DialogSpeaker speaker)
     {
+        //index = -1;
         currentSpeaker = new DialogSpeaker(speaker);
     }
 
     public void DisableSystem()
     {
+        Debug.Log("Called DisableSystem");
         StopDialog();
         gameObject.SetActive(false);
     }

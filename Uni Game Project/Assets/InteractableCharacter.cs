@@ -35,7 +35,7 @@ public class InteractableCharacter : InteractableEntity
 
             //dialogSystem = FindObjectOfType<DialogSystem>();
 
-            dialogSystem = FindObjectOfType<Canvas>().transform.Find("GameplayUI").transform.Find("DialogSystem").gameObject;
+            dialogSystem = GameObject.Find("GameplayUI").transform.Find("DialogSystem").gameObject;
             dialogBox = dialogSystem.transform.Find("DialogBox").gameObject;
             //dialogText = dialogBox.transform.Find("Dialog").GetComponent<TextMeshProUGUI>();
             //dialogImage = dialogBox.transform.Find("SpeakerImage").GetComponent<Image>();
@@ -78,9 +78,16 @@ public class InteractableCharacter : InteractableEntity
 
         DialogSpeaker thisSpeaker = new DialogSpeaker("");
         dialogSystemFunctions.initializeDialogSystem(thisSpeaker);
+        nextDialogButton.onClick.RemoveAllListeners();
         nextDialogButton.onClick.AddListener(() =>
         {
-            dialogSystemFunctions.NextDialog(dialogLines);
+            //dialogSystemFunctions.NextDialog(dialogLines);
+            //if (dialogSystem != null)
+            //{
+            //    EnableDialogSystem();
+            //    dialogSystemFunctions.NextDialog(dialogLines);
+            //}
+            InteractableCharacterAction();
         });
     }
 

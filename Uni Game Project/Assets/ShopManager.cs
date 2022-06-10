@@ -24,7 +24,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI confirmDialogText;
     [SerializeField] Button cancelButton;
     [SerializeField] Button confirmButton;
-    [Header("Confirm Dialog Object")]
+    [Header("\"Not Enough\" Dialog Object")]
     [Space]
     [SerializeField] GameObject notEnoughDialog;
     [SerializeField] TextMeshProUGUI notEnoughDialogText;
@@ -32,6 +32,8 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] ShopItem currentlyDisplaying;
     [SerializeField] InventoryItem justBoughtItem;
+
+    [SerializeField] AudioClip purchaseSound;
 
     InventoryManager inventoryManager;
 
@@ -170,7 +172,19 @@ public class ShopManager : MonoBehaviour
             BuyButton.interactable = false;
         }
     }
-
+    
+    private void FixedUpdate()
+    {
+        // Purge AudioSources that don't play
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        foreach (var item in audioSources)
+        {
+            if (!item.isPlaying)
+            {
+                Destroy(item);
+            }
+        }
+    }
     void AddAmount()
     {
         int newAmount = CurrentlyDisplaying.Availability >= currentAmount + 1 ? currentAmount + 1 : currentAmount;
@@ -267,8 +281,8 @@ public class ShopManager : MonoBehaviour
 
     void BuyItem()
     {
-        Debug.Log(CurrentlyDisplaying);
-        Debug.Log(currentAmount);
+        //Debug.Log(CurrentlyDisplaying);
+        //Debug.Log(currentAmount);
         //CurrentlyDisplaying.Item.AmountOfItems = currentAmount;
         // Find currency and subtract from it.
         foreach (var item in inventoryManager.inventory)
@@ -276,13 +290,24 @@ public class ShopManager : MonoBehaviour
             // if the inventory contains the currency at which the item is sold
             if (item.ItemName.ToLower() == CurrentlyDisplaying.Currency.ToString().ToLower())
             {
+                Debug.Log($"item.AmountOfItems({item.AmountOfItems - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount)}) = item.AmountOfItems({item.AmountOfItems}) - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount)({Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount)});");
                 item.AmountOfItems = item.AmountOfItems - Mathf.RoundToInt(CurrentlyDisplaying.Price * currentAmount);
                 //Debug.Log($"Item: {item}");
-                inventoryManager.EditItem(item);
+                //inventoryManager.AddItem(item);
+                item.SetAmount(item.AmountOfItems);
+                //inventoryManager.EditItem(item);
+                inventoryManager.UpdateItemCounter(item.AmountOfItems);
                 CurrentlyDisplaying.Availability = CurrentlyDisplaying.Availability - currentAmount;
                 CurrentlyDisplaying.Item.AmountOfItems = currentAmount;
-                Debug.Log($"Currently displaying {CurrentlyDisplaying}");
-                inventoryManager.AddItem(CurrentlyDisplaying.Item);
+                //Debug.Log($"Currently displaying {CurrentlyDisplaying}");
+                //inventoryManager.AddItem(CurrentlyDisplaying.Item);
+                inventoryManager.AddItem(
+                    CurrentlyDisplaying.Item.AmountOfItems,
+                    CurrentlyDisplaying.Item.ItemName,
+                    CurrentlyDisplaying.Item.Serial,
+                    CurrentlyDisplaying.Item.IsKey,
+                    CurrentlyDisplaying.Item.ItemIcon);
+                //inventoryManager.AddItem();
                 CurrentlyDisplaying.UpdateItemInfoUI();
 
                 if (JustBoughtItem == null)
@@ -310,7 +335,9 @@ public class ShopManager : MonoBehaviour
         CurrentlyDisplaying = null;
         //Debug.Log($"Availability: {CurrentlyDisplaying.Availability}");
 
-
+        // Play Sound
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.PlayOneShot(purchaseSound);
     }
 
     public void FlushItemInfoPanel()

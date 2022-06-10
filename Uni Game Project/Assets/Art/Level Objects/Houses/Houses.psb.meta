@@ -1,0 +1,644 @@
+fileFormatVersion: 2
+guid: 8753ab4384405144c8ef5c9a00df14bc
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Door Handle
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1963
+      y: 2224
+      width: 53
+      height: 53
+    spriteID: eb765c76bc0569d4da880bd058feba90
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 1305, y: 2036}
+  - name: Square Window Frame
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 255
+      y: 3807
+      width: 181
+      height: 181
+    spriteID: d5aa07b1f334ec94fb8f4d296ca271da
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -747, y: 3338}
+  - name: Round Window Frame
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 828
+      y: 1297
+      width: 181
+      height: 181
+    spriteID: d4ba40e9f5b26b849bdb1f134a90de7e
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -174, y: 827}
+  - name: Round Window Glass
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1680
+      y: 1427
+      width: 243
+      height: 277
+    spriteID: f60b1c5e9d648b946b41be7be28f23a7
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 708, y: 989}
+  - name: Square Window Glass
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 3807
+      width: 243
+      height: 277
+    spriteID: 49a2dc1c3f82bc14c9fd38b4f7553c6d
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -968, y: 3369}
+  - name: Dual Round Door
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2107
+      width: 439
+      height: 559
+    spriteID: 4405703ba91d02c4093e2fc45be1f5da
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -498, y: 2107}
+  - name: Dual Rect Door
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2674
+      width: 439
+      height: 559
+    spriteID: f584feae174399148b1fa10f073a4fdb
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -498, y: 2674}
+  - name: 'Round Door '
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 3241
+      width: 288
+      height: 558
+    spriteID: a091053c99de98f42a9d0bcceda30e6b
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -572, y: 3241}
+  - name: Rect Door
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1680
+      y: 860
+      width: 302
+      height: 559
+    spriteID: f8dc4d508d30c4e4e972fd9a04438c6a
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 1110, y: 860}
+  - name: Tarrace Large
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 451
+      y: 2107
+      width: 1363
+      height: 109
+    spriteID: c9d524b27f0ae6944ac89b95f6aa7b75
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 412, y: 1341}
+  - name: Roof Large
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 1716
+      width: 1373
+      height: 383
+    spriteID: 21b3bd7d5264adc43ac971b1867cdebf
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -28, y: 1084}
+  - name: Tarrace Medium
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 451
+      y: 2224
+      width: 853
+      height: 114
+    spriteID: 3ad9ac69c1e9dba43884a6b6284e5a9a
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 157, y: 1424}
+  - name: Roof Medium
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 828
+      y: 860
+      width: 844
+      height: 429
+    spriteID: f3d0d67658414e74999f7f469dd6f92f
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 531, y: 228}
+  - name: Tarrace Small
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1312
+      y: 2224
+      width: 643
+      height: 86
+    spriteID: 6d8f09bebb36dd042887cf8d057e7235
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 913, y: 1410}
+  - name: Roof Small
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1385
+      y: 1716
+      width: 634
+      height: 375
+    spriteID: ff6f2bc7b7e1f2f418947149f043cb96
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 982, y: 1084}
+  - name: Foundation Small
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1320
+      y: 4
+      width: 616
+      height: 848
+    spriteID: 593ba561c55e27340926117ea59b0a46
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 908, y: 4}
+  - name: Foundation Large
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 1308
+      height: 848
+    spriteID: 86cc2eb2ec4d3234f962a477b979c645
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -62, y: 4}
+  - name: Foundation Medium
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 860
+      width: 816
+      height: 848
+    spriteID: 4ce878897f921454f8499952710b9947
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -308, y: 860}
+  platformSettings: []
+  mosaicLayers: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  importedTextureWidth: 1024
+  importedTextureHeight: 2048
+  documentSize: {x: 1440, y: 1440}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
+  textureActualWidth: 2048
+  textureActualHeight: 4096
+  spritePackingTag: 
+  resliceFromLayer: 0
+  characterMode: 1
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: Door Handle
+    spriteName: Door Handle
+    isGroup: 0
+    parentIndex: -1
+    spriteID: eb765c76bc0569d4da880bd058feba90
+    layerID: 113
+    mosaicPosition: {x: 1963, y: 2224}
+  - name: Square Window Frame
+    spriteName: Square Window Frame
+    isGroup: 0
+    parentIndex: -1
+    spriteID: d5aa07b1f334ec94fb8f4d296ca271da
+    layerID: 72
+    mosaicPosition: {x: 255, y: 3807}
+  - name: Round Window Frame
+    spriteName: Round Window Frame
+    isGroup: 0
+    parentIndex: -1
+    spriteID: d4ba40e9f5b26b849bdb1f134a90de7e
+    layerID: 65
+    mosaicPosition: {x: 828, y: 1297}
+  - name: Round Window Glass
+    spriteName: Round Window Glass
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f60b1c5e9d648b946b41be7be28f23a7
+    layerID: 163
+    mosaicPosition: {x: 1680, y: 1427}
+  - name: Square Window Glass
+    spriteName: Square Window Glass
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 49a2dc1c3f82bc14c9fd38b4f7553c6d
+    layerID: 110
+    mosaicPosition: {x: 4, y: 3807}
+  - name: Dual Round Door
+    spriteName: Dual Round Door
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 4405703ba91d02c4093e2fc45be1f5da
+    layerID: 37
+    mosaicPosition: {x: 4, y: 2107}
+  - name: Dual Rect Door
+    spriteName: Dual Rect Door
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f584feae174399148b1fa10f073a4fdb
+    layerID: 30
+    mosaicPosition: {x: 4, y: 2674}
+  - name: 'Round Door '
+    spriteName: 'Round Door '
+    isGroup: 0
+    parentIndex: -1
+    spriteID: a091053c99de98f42a9d0bcceda30e6b
+    layerID: 28
+    mosaicPosition: {x: 4, y: 3241}
+  - name: Rect Door
+    spriteName: Rect Door
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f8dc4d508d30c4e4e972fd9a04438c6a
+    layerID: 20
+    mosaicPosition: {x: 1680, y: 860}
+  - name: Tarrace Large
+    spriteName: Tarrace Large
+    isGroup: 0
+    parentIndex: -1
+    spriteID: c9d524b27f0ae6944ac89b95f6aa7b75
+    layerID: 50
+    mosaicPosition: {x: 451, y: 2107}
+  - name: Roof Large
+    spriteName: Roof Large
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 21b3bd7d5264adc43ac971b1867cdebf
+    layerID: 164
+    mosaicPosition: {x: 4, y: 1716}
+  - name: Tarrace Medium
+    spriteName: Tarrace Medium
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 3ad9ac69c1e9dba43884a6b6284e5a9a
+    layerID: 47
+    mosaicPosition: {x: 451, y: 2224}
+  - name: Roof Medium
+    spriteName: Roof Medium
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f3d0d67658414e74999f7f469dd6f92f
+    layerID: 147
+    mosaicPosition: {x: 828, y: 860}
+  - name: Tarrace Small
+    spriteName: Tarrace Small
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6d8f09bebb36dd042887cf8d057e7235
+    layerID: 14
+    mosaicPosition: {x: 1312, y: 2224}
+  - name: Roof Small
+    spriteName: Roof Small
+    isGroup: 0
+    parentIndex: -1
+    spriteID: ff6f2bc7b7e1f2f418947149f043cb96
+    layerID: 165
+    mosaicPosition: {x: 1385, y: 1716}
+  - name: Foundation Small
+    spriteName: Foundation Small
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 593ba561c55e27340926117ea59b0a46
+    layerID: 4
+    mosaicPosition: {x: 1320, y: 4}
+  - name: Foundation Large
+    spriteName: Foundation Large
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 86cc2eb2ec4d3234f962a477b979c645
+    layerID: 3
+    mosaicPosition: {x: 4, y: 4}
+  - name: Foundation Medium
+    spriteName: Foundation Medium
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 4ce878897f921454f8499952710b9947
+    layerID: 2
+    mosaicPosition: {x: 4, y: 860}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+  generateGOHierarchy: 0
+  textureAssetName: Houses Texture
+  prefabAssetName: Houses Prefab
+  spriteLibAssetName: Houses Sprite Lib
+  secondarySpriteTextures: []

@@ -37,7 +37,7 @@ public class BulletParticle : MonoBehaviour
                 EnemyBehaviour enemy;
                 other.transform.TryGetComponent(out enemy);
                 enemy.TakeDamage(bulletDamage);
-                Debug.Log("Enemy Hit!");
+                //Debug.Log("Enemy Hit!");
             }
         }
 

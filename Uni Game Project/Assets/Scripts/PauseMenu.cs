@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +8,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     [Tooltip("Reference to the Gameplay UI Gameobject")]
     public GameObject gameplayUI;
+
+    //AudioSource[] audioSources;y
 
     private void Awake()
     {
@@ -61,6 +62,14 @@ public class PauseMenu : MonoBehaviour
         // Enable all other UI elements
         gameplayUI.SetActive(true);
 
+        //// revert volumes
+        //int index = 0;
+        //foreach (var item in audioSources)
+        //{
+        //    item.volume = volumes.ToArray()[index];
+        //    index++;
+        //}
+
         Time.timeScale = 1f;
         GameManager.gameIsPaused = false;
     }
@@ -74,6 +83,18 @@ public class PauseMenu : MonoBehaviour
         // Freeze time
         Time.timeScale = 0f;
         GameManager.gameIsPaused = true;
+
+        //audioSources = FindObjectsOfType<AudioSource>();
+        //int index = 0;
+        //foreach (var item in audioSources)
+        //{
+        //    // save volume
+        //    volumes.Add(item.volume);
+        //    // reduce volume to 30%
+        //    item.volume *= 0.3f;
+
+        //    index++;
+        //}
     }
 
     public void QuitGame()

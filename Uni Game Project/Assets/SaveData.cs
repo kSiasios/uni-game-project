@@ -37,6 +37,11 @@ public class SaveData
         enemies = en;
         collectables = col;
     }
+
+    //public override string ToString()
+    //{
+    //    return $"Player Position: x = {player.position[0]}, y = {player.position[1]}, z = {player.position[2]}";
+    //}
 }
 
 //public class GenericSaveData
@@ -84,5 +89,10 @@ public class InventoryData
         amount = a;
         isKey = k;
         iconPath = i;
+    }
+
+    public override string ToString()
+    {
+        return $"Name: {name},\t Amount: {amount},\t Sprite: {iconPath}, Serial: {serial}";
     }
 }

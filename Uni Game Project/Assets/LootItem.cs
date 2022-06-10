@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class LootItem : MonoBehaviour
 {
     [SerializeField] GameObject item;
@@ -30,6 +31,7 @@ public class LootItem : MonoBehaviour
     public void Drop(Transform transform)
     {
         GameObject drop = Instantiate(Item, transform);
+        drop.transform.localPosition = 5 * Vector3.up;
         drop.transform.parent = null;
     }
 }

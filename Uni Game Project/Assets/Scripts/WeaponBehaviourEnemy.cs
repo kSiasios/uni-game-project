@@ -117,13 +117,15 @@ public class WeaponBehaviourEnemy : MonoBehaviour
         //    StopCoroutine(coroutine);
         //}
 
+
         if (!bulletParticleSystem.isEmitting && !_reloading)
         {
+        //Debug.Log("Shoot Player");
             controller.ShootPlayer();
             bulletParticleSystem.Emit(bulletsFired);
             bulletParticleSystem.Play();
             //_bulletsFiredSoFar += Mathf.RoundToInt(_mainModule.startLifetime.constant / delayAfterShooting);
-            _bulletsFiredSoFar++;
+            //_bulletsFiredSoFar++;
         }
 
         //if (bulletParticleSystem.isPlaying)

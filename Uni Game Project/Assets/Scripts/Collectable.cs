@@ -16,16 +16,23 @@ public class Collectable : MonoBehaviour
 
     public bool isKey = false;
     [SerializeField] string keySerial;
+
+    //private void Awake()
+    //{
+    //    Physics2D.IgnoreLayerCollision(0, SortingLayer.NameToID("Ground") - 1);
+    //    Physics2D.IgnoreLayerCollision(SortingLayer.NameToID("Ground") + 1, SortingLayer.layers.Length - 1);
+    //}
+
     public string ToString()
     {
         //Debug.Log("ToString() called from Collectable.cs");
 
         if(isKey)
         {
-            return amount + " x " + itemName + ", Serial: " + keySerial;
+            return $"{amount} x {itemName}, Serial: {keySerial}";
         }
 
-        return amount + " x " + itemName;
+        return $"{amount} x {itemName}";
     }
 
     //public GenericSaveData Save()
@@ -43,8 +50,18 @@ public class Collectable : MonoBehaviour
     {
         amount = Mathf.RoundToInt(data.amount);
         state = (CollectableState)data.state;
-        transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        //transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        if (data.parentName != "")
+        {
+            GameObject parentGameObject = GameManager.FindInActiveObjectByName(data.parentName);
+            Debug.Log($"Trying to find: {data.parentName}, Found: {parentGameObject}\n\t\tLoading data for {this}... State: {state}");
+            parentGameObject.SetActive(true);
+            transform.parent = parentGameObject.transform;
+        }
+        transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
         keySerial = data.keySerial;
+
+        //Debug.Log($"Loaded data for {this}... State: {state}");
     }
 
     public Sprite GetIcon()
@@ -56,7 +73,6 @@ public class Collectable : MonoBehaviour
     {
         if ((state == CollectableState.collected || state == CollectableState.disabled) && this.transform.gameObject.activeInHierarchy)
         {
-            // play sound
             transform.gameObject.SetActive(false);
         }
 
@@ -102,22 +118,37 @@ public class Collectable : MonoBehaviour
 public class SerializableCollectable
 {
     public float amount;
-    public float[] position;
+    //public float[] position;
+    public float positionX, positionY, positionZ;
     public int state;
     public string keySerial;
-
+    public string parentName;
     public SerializableCollectable(Collectable collectable)
     {
         amount = collectable.GetAmount();
 
-        position = new float[3];
+        //position = new float[3];
         Vector3 v3Pos = collectable.GetPosition();
-        position[0] = v3Pos.x;
-        position[1] = v3Pos.y;
-        position[2] = v3Pos.z;
+        //position[0] = v3Pos.x;
+        //position[1] = v3Pos.y;
+        //position[2] = v3Pos.z;
+        positionX = v3Pos.x;
+        positionY = v3Pos.y;
+        positionZ = v3Pos.z;
 
         state = (int)collectable.GetState();
 
         keySerial = collectable.GetSerial();
+
+        string tempParentName = "";
+        if (collectable.transform.parent != null)
+        {
+            tempParentName = collectable.transform.parent.name;
+        }
+        parentName = tempParentName;
+        //parentName = collectable.transform.parent.name;
+
+        //Debug.Log($"Serialized {collectable}... State: {state}");
+        //Debug.Log($"*** Serialized {collectable}... Parent Name: {parentName} ***");
     }
 }

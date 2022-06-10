@@ -34,10 +34,10 @@ public class ElevatorButton : InteractableEntity
             //elevator.MoveToPosition(position);
             elevator.MoveElevator();
         }
-        else
-        {
-            Debug.Log("Disabled button");
-        }
+        //else
+        //{
+        //    Debug.Log("Disabled button");
+        //}
     }
 
     public void ResetAnimator()

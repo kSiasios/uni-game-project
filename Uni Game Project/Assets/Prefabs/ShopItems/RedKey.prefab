@@ -105,7 +105,7 @@ MonoBehaviour:
   itemName: Red Key
   serial: 9876
   isKey: 1
-  itemIcon: {fileID: -2477505046440886160, guid: 02a193d338643974696cdddf1c7b6443, type: 3}
+  itemIcon: {fileID: 21300000, guid: 4d795df8d2ae96241a1a19e0d8031da0, type: 3}
 --- !u!114 &-7141787664557675913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   availability: 1
-  price: 1000
+  price: 200
   currency: 1
   shopManager: {fileID: 0}

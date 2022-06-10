@@ -20,16 +20,16 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement Specific Variables")]
     [Tooltip("How fast is the player moving")]
-    [Range(0f, 100f)] [SerializeField] float speed = 10f;
-    [Range(0f, 100f)] [SerializeField] float jumpForce = 10f;
-    [Range(0f, 100f)] [SerializeField] float gravityScale = 1f;
+    [Range(0f, 100f)][SerializeField] float speed = 10f;
+    [Range(0f, 100f)][SerializeField] float jumpForce = 10f;
+    [Range(0f, 100f)][SerializeField] float gravityScale = 1f;
 
     [Header("Other Core Variables")]
     [Tooltip("The amount of health the player has")]
-    [Range(0f, 100f)] [SerializeField] float health = 100;
+    [Range(0f, 100f)][SerializeField] float health = 100;
 
     [Tooltip("The amount of health the player can have (MAX)")]
-    [Range(0f, 100f)] [SerializeField] float maxHealth = 100;
+    [Range(0f, 100f)][SerializeField] float maxHealth = 100;
 
     [Header("UI Variables")]
     [Tooltip("The healthbar of the player")]
@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private WeaponManager weaponManager;
 
+    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour
         }
 
         weaponManager = GetComponent<WeaponManager>();
+        audioManager = GetComponent<AudioManager>();
 
         SetDebug(debug);
     }
@@ -206,6 +208,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("DAMAGED");
         health -= amount;
         Debug.Log($"Current Health: {health}");
+        audioManager.PlayerHit();
     }
 
     public void Land()
@@ -231,8 +234,23 @@ public class PlayerController : MonoBehaviour
         health = data.health;
         maxHealth = data.maxHealth;
         speed = data.speed;
-        transform.GetComponentInChildren<WeaponBehaviour>().SetAmmo(data.ammo);
-        transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        WeaponBehaviour weapon = FindObjectOfType<WeaponBehaviour>();
+        if (weapon != null)
+        {
+            weapon.SetAmmo(data.ammo);
+        }
+        //transform.GetComponentInChildren<WeaponBehaviour>().SetAmmo(data.ammo);
+        //transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+        //transform.position = new Vector3(data.position.x, data.position.y, data.position.z);
+        if (data.parentName != "")
+        {
+            GameObject parentGameObject = GameManager.FindInActiveObjectByName(data.parentName);
+            //Debug.Log($"Trying to find: {data.parentName}, Found: {parentGameObject}");
+            parentGameObject.SetActive(true);
+            transform.parent = parentGameObject.transform;
+        }
+
+        transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
     }
 
     // Getters
@@ -258,7 +276,12 @@ public class PlayerController : MonoBehaviour
 
     public int GetAmmo()
     {
-        return transform.GetComponentInChildren<WeaponBehaviour>().GetAmmo();
+        WeaponBehaviour weaponBehaviour = FindObjectOfType<WeaponBehaviour>();
+        if (weaponBehaviour != null)
+        {
+            return weaponBehaviour.GetAmmo();
+        }
+        return 999;
     }
 
     public bool GetIfJumping()
@@ -303,10 +326,12 @@ public class PlayerController : MonoBehaviour
 
     public void SetStartOfRunAnimation(string value)
     {
-        if (value.ToLower() == "true") {
+        if (value.ToLower() == "true")
+        {
             SetAnimatorBool("canStartRun", true);
         }
-        else {
+        else
+        {
             SetAnimatorBool("canStartRun", false);
         }
     }
@@ -327,24 +352,67 @@ public class SerializablePlayer
     public float speed;
     public float health;
     public float maxHealth;
-    public float[] position;
+    //public float[] position;
+    public float positionX, positionY, positionZ;
+    //public SerializableVector3 position;
     public int ammo;
+    public string parentName;
 
     public SerializablePlayer(PlayerController player)
     {
+        Debug.Log($"Serialize data for player controller: {player}");
         speed = player.GetSpeed();
 
         health = player.GetHealth();
 
         maxHealth = player.GetMaxHealth();
 
-        position = new float[3];
+        //position = new float[3];
         Vector3 v3Pos = player.GetPosition();
-        position[0] = v3Pos.x;
-        position[1] = v3Pos.y;
-        position[2] = v3Pos.z;
+        //position[0] = v3Pos.x;
+        //position[1] = v3Pos.y;
+        //position[2] = v3Pos.z;
+        positionX = v3Pos.x;
+        positionY = v3Pos.y;
+        positionZ = v3Pos.z;
 
         ammo = player.GetAmmo();
 
+        string tempParentName = "";
+
+        if (player.transform.parent != null)
+        {
+            tempParentName = player.transform.parent.name;
+        }
+        parentName = tempParentName;
+
+    }
+
+    public SerializablePlayer(float speed, float health, float maxHealth, Vector3 position, int ammo, string parentName)
+    {
+        //Debug.Log($"Serialize data for player controller: {player}");
+        this.speed = speed;
+
+        this.health = health;
+
+        this.maxHealth = maxHealth;
+
+        //this.position = new float[3];
+        Vector3 v3Pos = position;
+        //position[0] = v3Pos.x;
+        //position[1] = v3Pos.y;
+        //position[2] = v3Pos.z;
+        //position.x = v3Pos.x;
+        //position.y = v3Pos.y;
+        //position.z = v3Pos.z;
+        positionX = v3Pos.x;
+        positionY = v3Pos.y;
+        positionZ = v3Pos.z;
+
+        this.ammo = ammo;
+
+        this.parentName = parentName;
+
+        //Debug.Log($"Player Created: Position -> {position}");
     }
 }

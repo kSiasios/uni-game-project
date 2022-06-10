@@ -15,6 +15,10 @@ public class WeaponManager : MonoBehaviour
     [Tooltip("The UI field that displays the amount of bullets")]
     [SerializeField] TextMeshProUGUI bulletsAmountUI;
 
+    private static bool reloading = false;
+
+    public static bool Reloading { get => reloading; set => reloading = value; }
+
     public enum EquipedWeapon
     {
         none = 0, shotgun, pistol, bat
@@ -43,7 +47,10 @@ public class WeaponManager : MonoBehaviour
 
         if (bulletsAmountUI == null)
         {
-            bulletsAmountUI = FindObjectOfType<Canvas>().transform.Find("GameplayUI").transform.Find("AmmoCounter").transform.Find("Item").transform.Find("ItemAmount").GetComponent<TextMeshProUGUI>();
+            bulletsAmountUI = GameObject.Find("GameplayUI").transform
+                .Find("AmmoCounter").transform
+                .Find("Item").transform
+                .Find("ItemAmount").GetComponent<TextMeshProUGUI>();
         }
 
         DeactivateAllWeapons();
@@ -104,7 +111,7 @@ public class WeaponManager : MonoBehaviour
             bulletsAmountUI.text = "∞";
 
         }
-        Debug.Log("Equipped Weapon: " + equippedWeapon);
+        //Debug.Log($"Equipped Weapon: {equippedWeapon}");
     }
 
     private void DeactivateAllWeapons()

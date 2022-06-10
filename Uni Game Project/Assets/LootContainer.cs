@@ -17,7 +17,7 @@ public class LootContainer : MonoBehaviour
         }
         if (possibility > 100)
         {
-            Debug.LogError("DROP ITEMS POSSIBILITY IS INVALID! CURRENT VALUE: " + possibility + ". ACCEPTABLE VALUES ARE BETWEEN 0 AND 100.");
+            Debug.LogError($"DROP ITEMS POSSIBILITY IS INVALID! CURRENT VALUE: {possibility}. ACCEPTABLE VALUES ARE BETWEEN 0 AND 100.");
             UnityEditor.EditorApplication.isPlaying = false;
         }
     }
@@ -43,7 +43,7 @@ public class LootContainer : MonoBehaviour
                     //itemToDrop.Item = item.Item;
                     //itemToDrop.Quantity = item.Quantity;
                     //itemToDrop.ChanceToDrop = item.ChanceToDrop;
-                    Debug.Log("DROPPING " + item.ToString());
+                    Debug.Log($"DROPPING {item}");
                     item.Drop(transform);
                     break;
                 }

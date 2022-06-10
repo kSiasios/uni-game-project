@@ -15,6 +15,8 @@ public class SlopeManager : MonoBehaviour
     [Tooltip("How deep is the slope on the Z-axis? (middle by default)")]
     [SerializeField] private SlopeDepthDistance slopeDepthDistance = SlopeDepthDistance.middle;
 
+    [SerializeField] private bool canBeActivated = true;
+
     private enum SlopeStartingState {enabled, disabled};
     private enum SlopeDepthDistance { middle, back, front };
 
@@ -54,7 +56,7 @@ public class SlopeManager : MonoBehaviour
             {
                 hasJumped = true;
             }
-            if (hasJumped)
+            if (hasJumped && canBeActivated)
             {
                 // If player jumps ==> activate collider and change sorting layer to 50
                 EnableCollider();

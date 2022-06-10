@@ -10,7 +10,7 @@ public class AudioSourceController : MonoBehaviour
     [SerializeField] protected float timeToFade;
     protected AudioSource audioSource;
 
-    protected bool shouldDestroyExtraAudioSources = true;
+    [SerializeField] protected bool shouldDestroyExtraAudioSources = true;
 
     protected bool canFadeIn = true;
 
@@ -43,6 +43,12 @@ public class AudioSourceController : MonoBehaviour
         {
             audioSource.clip = clip;
         }
+
+        if (audioSource == null)
+        {
+            yield break;
+        }
+
         audioSource.Play();
         float currentTime = 0;
         //float start = audioSource.volume;
@@ -126,6 +132,10 @@ public class AudioSourceController : MonoBehaviour
 
     public bool IsPlaying()
     {
+        if (audioSource == null)
+        {
+            return false;
+        }
         if (audioSource.volume <= 0.01f)
         {
             return false;

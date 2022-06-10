@@ -1,0 +1,361 @@
+fileFormatVersion: 2
+guid: e7b6d966a7512d145ad2e113c086b5fc
+ScriptedImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4331262377071715895
+    second: Hologram_0
+  - first:
+      213: -3896800461430639241
+    second: Hologram_1
+  - first:
+      213: 281629973136146150
+    second: Hologram_2
+  - first:
+      213: -2758314618037425897
+    second: Hologram_3
+  - first:
+      213: -2151812072201481961
+    second: Hologram_4
+  - first:
+      213: -142464390626734557
+    second: Hologram_5
+  - first:
+      213: 2932395829966312656
+    second: Hologram_6
+  - first:
+      213: -2774605814144450169
+    second: Hologram_7
+  - first:
+      213: 7780309371138183858
+    second: Hologram_8
+  - first:
+      213: 4093344491929724362
+    second: Hologram_9
+  - first:
+      213: -1943147920141765330
+    second: Hologram_10
+  - first:
+      213: 3730413997657074397
+    second: Hologram_11
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: Hologram_1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 1440
+      height: 1440
+    spriteID: 301262ea00a0953498de3081d4ca3dfb
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Ring Large
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 986
+      width: 78
+      height: 14
+    spriteID: 9e50bfff71471f14db045e3256fff33b
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -677, y: 944}
+  - name: Ring Medium
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 574
+      y: 467
+      width: 231
+      height: 42
+    spriteID: baeacfd91c6497a49a40735c327ea75f
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -30, y: 388}
+  - name: Ring Small
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 162
+      y: 467
+      width: 404
+      height: 74
+    spriteID: efd4d7d841035ab458a543fdd2c4966f
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -356, y: 330}
+  - name: Exclamation
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 467
+      width: 150
+      height: 511
+    spriteID: 9e4f7dd90bc26e343b5871080be85360
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -641, y: -267}
+  - name: Plate Inside
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 354
+      width: 1002
+      height: 105
+    spriteID: da5d6e9d62e938c42aeec2a9227ca078
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -215, y: -159}
+  - name: Plate Outside
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 1004
+      height: 342
+    spriteID: 8394fbf3b260eac4087c09d666fd34a2
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -214, y: -218}
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  mosaicLayers: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  importedTextureWidth: 1024
+  importedTextureHeight: 1024
+  documentSize: {x: 1440, y: 1440}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
+  textureActualWidth: 1024
+  textureActualHeight: 1024
+  spritePackingTag: 
+  resliceFromLayer: 1
+  characterMode: 1
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: Rings
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 00000000000000000000000000000000
+    layerID: 16
+    mosaicPosition: {x: 0, y: 0}
+  - name: Ring Large
+    spriteName: Ring Large
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 9e50bfff71471f14db045e3256fff33b
+    layerID: 14
+    mosaicPosition: {x: 4, y: 986}
+  - name: Ring Medium
+    spriteName: Ring Medium
+    isGroup: 0
+    parentIndex: 0
+    spriteID: baeacfd91c6497a49a40735c327ea75f
+    layerID: 15
+    mosaicPosition: {x: 574, y: 467}
+  - name: Ring Small
+    spriteName: Ring Small
+    isGroup: 0
+    parentIndex: 0
+    spriteID: efd4d7d841035ab458a543fdd2c4966f
+    layerID: 13
+    mosaicPosition: {x: 162, y: 467}
+  - name: Exclamation
+    spriteName: Exclamation
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9e4f7dd90bc26e343b5871080be85360
+    layerID: 12
+    mosaicPosition: {x: 4, y: 467}
+  - name: Plate Inside
+    spriteName: Plate Inside
+    isGroup: 0
+    parentIndex: -1
+    spriteID: da5d6e9d62e938c42aeec2a9227ca078
+    layerID: 5
+    mosaicPosition: {x: 4, y: 354}
+  - name: Plate Outside
+    spriteName: Plate Outside
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8394fbf3b260eac4087c09d666fd34a2
+    layerID: 2
+    mosaicPosition: {x: 4, y: 4}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+  generateGOHierarchy: 0
+  textureAssetName: Hologram Texture
+  prefabAssetName: Hologram Prefab
+  spriteLibAssetName: Hologram Sprite Lib
+  secondarySpriteTextures: []
