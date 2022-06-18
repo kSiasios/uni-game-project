@@ -11,6 +11,8 @@ public class Unlockable : InteractableEntity
 
     [SerializeField] protected CustomAudioClip clipOnUnlock;
 
+    [SerializeField] protected bool unlocked = false;
+
     protected void Awake()
     {
         if (unlockableAnimator == null)
@@ -68,6 +70,15 @@ public class Unlockable : InteractableEntity
 
     protected void DisableGameObject()
     {
+        unlocked = true;
         transform.gameObject.SetActive(false);
+    }
+
+    protected void FixedUpdate()
+    {
+        if (unlocked && transform.gameObject.activeInHierarchy)
+        {
+            DisableGameObject();
+        }
     }
 }
