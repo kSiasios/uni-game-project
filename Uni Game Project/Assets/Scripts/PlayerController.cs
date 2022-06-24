@@ -250,6 +250,7 @@ public class PlayerController : MonoBehaviour
             transform.parent = parentGameObject.transform;
         }
 
+        //transform.position = new Vector3(data.positionX, data.positionY + 5f, data.positionZ);
         transform.position = new Vector3(data.positionX, data.positionY, data.positionZ);
     }
 

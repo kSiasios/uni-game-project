@@ -244,6 +244,19 @@ public class GameManager : MonoBehaviour
         // Save Scene
         int level = SceneManager.GetActiveScene().buildIndex;
 
+        // Save Level chunk
+        LevelManager[] levelChuncks = FindObjectsOfType<LevelManager>();
+        string lvlChnck = "";
+        foreach (var item in levelChuncks)
+        {
+            if (item.enabledChildren)
+            {
+                lvlChnck = item.gameObject.name;
+            }
+        }
+                Debug.Log($"Saving chunck {lvlChnck}");
+
+        //SaveData data = new SaveData(level, $"{lvlChnck}", playerData, inventoryData, enemyData, collectablesData);
         SaveData data = new SaveData(level, playerData, inventoryData, enemyData, collectablesData);
 
         // Save data using SaveSystem
@@ -264,6 +277,10 @@ public class GameManager : MonoBehaviour
                 }
             }
             InitReferences(false);
+
+            //Debug.Log(data.levelChunck);
+            //LevelManager lvlChnck = GameManager.FindInActiveObjectByName(data.levelChunck).GetComponent<LevelManager>();
+            //lvlChnck.LoadLoop();
 
             PlayerController player = FindObjectOfType<PlayerController>();
 

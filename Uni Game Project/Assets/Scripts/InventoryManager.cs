@@ -161,7 +161,7 @@ public class InventoryManager : MonoBehaviour
     {
         //Debug.Log($"New Item: {newItem}");
         // Function that handles adding items to the inventory
-        Debug.Log($"Adding Item ==> Name: '{newName}', Amount: '{newAmount}', Sprite: '{newSprite}'");
+        //Debug.Log($"Adding Item ==> Name: '{newName}', Amount: '{newAmount}', Sprite: '{newSprite}'");
         bool alreadyExists = false;
         // Iterate through the inventory to see if there already is an item of the same type
         foreach (var item in inventory)
@@ -398,7 +398,7 @@ public class InventoryManager : MonoBehaviour
             ////InventoryItem newItem = newItemGO.AddComponent<InventoryItem>();
             //Debug.Log($"Loading from path ({item.iconPath})");
             //Sprite itemSprite = (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite));
-            Debug.Log($"Loading Item: {item}");
+            //Debug.Log($"Loading Item: {item}");
             //Debug.Log($"Item Reference = ({item.name})");
             newItem.Setter(item.amount, item.name, item.serial, item.isKey, (Sprite)AssetDatabase.LoadAssetAtPath(item.iconPath, typeof(Sprite)));
             //Debug.Log($"Sprite Path AFTER = ({newItem.ItemIcon})");

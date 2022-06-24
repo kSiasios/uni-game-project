@@ -7,6 +7,7 @@ public class SaveData
 {
     // Level Specific Variables
     public int levelID;
+    public string levelChunck;
 
     // Player Specific Variables
     public SerializablePlayer player;
@@ -25,6 +26,7 @@ public class SaveData
     public SaveData(int lvlID, SerializablePlayer pl, InventoryData[] inv)
     {
         levelID = lvlID;
+        //levelChunck = lvlChnk;
         player = pl;
         inventory = inv;
     }
@@ -32,6 +34,7 @@ public class SaveData
     public SaveData(int lvlID, SerializablePlayer pl, InventoryData[] inv, SerializableEnemy[] en, SerializableCollectable[] col)
     {
         levelID = lvlID;
+        //levelChunck = lvlChnk;
         player = pl;
         inventory = inv;
         enemies = en;
