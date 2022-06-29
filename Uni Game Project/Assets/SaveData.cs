@@ -6,8 +6,10 @@ using UnityEngine;
 public class SaveData
 {
     // Level Specific Variables
-    public int levelID;
-    public string levelChunck;
+    //public int levelID;
+    //public int gameState;
+
+    public SerializableGlobalData globalData;
 
     // Player Specific Variables
     public SerializablePlayer player;
@@ -23,18 +25,36 @@ public class SaveData
 
     public SaveData() { }
 
-    public SaveData(int lvlID, SerializablePlayer pl, InventoryData[] inv)
+    //public SaveData(int lvlID, SerializablePlayer pl, InventoryData[] inv)
+    //{
+    //    levelID = lvlID;
+    //    //levelChunck = lvlChnk;
+    //    player = pl;
+    //    inventory = inv;
+    //}
+    public SaveData(SerializableGlobalData gd, SerializablePlayer pl, InventoryData[] inv)
     {
-        levelID = lvlID;
-        //levelChunck = lvlChnk;
+        //levelID = gd.levelID;
+        //gameState = gd.gameState;
+        globalData = gd;
         player = pl;
         inventory = inv;
     }
 
-    public SaveData(int lvlID, SerializablePlayer pl, InventoryData[] inv, SerializableEnemy[] en, SerializableCollectable[] col)
+    //public SaveData(int lvlID, SerializablePlayer pl, InventoryData[] inv, SerializableEnemy[] en, SerializableCollectable[] col)
+    //{
+    //    levelID = lvlID;
+    //    //levelChunck = lvlChnk;
+    //    player = pl;
+    //    inventory = inv;
+    //    enemies = en;
+    //    collectables = col;
+    //}
+    public SaveData(SerializableGlobalData gd, SerializablePlayer pl, InventoryData[] inv, SerializableEnemy[] en, SerializableCollectable[] col)
     {
-        levelID = lvlID;
-        //levelChunck = lvlChnk;
+        //levelID = gd.levelID;
+        //gameState = gd.gameState;
+        globalData = gd;
         player = pl;
         inventory = inv;
         enemies = en;
@@ -97,5 +117,19 @@ public class InventoryData
     public override string ToString()
     {
         return $"Name: {name},\t Amount: {amount},\t Sprite: {iconPath}, Serial: {serial}";
+    }
+}
+
+
+[System.Serializable]
+public class SerializableGlobalData
+{
+    public int levelID;
+    public int gameState;
+
+    public SerializableGlobalData(int lvlID, int gs)
+    {
+        levelID = lvlID;
+        gameState = gs;
     }
 }

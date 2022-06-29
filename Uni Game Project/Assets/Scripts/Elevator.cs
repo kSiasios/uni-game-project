@@ -242,6 +242,12 @@ public class Elevator : InteractableEntity
 
     private void SetupElevatorButtons()
     {
+
+        if (!this.isActiveAndEnabled)
+        {
+            this.gameObject.SetActive(true);
+        }
+
         // Start
         GameObject startButton = Instantiate(elevatorButtonPrefab, transform.position, Quaternion.identity);
         startButton.transform.parent = transform.parent;

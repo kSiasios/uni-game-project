@@ -52,6 +52,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] Slider _loadingSlider;
     float _target;
 
+    [Header("UI needed for the death screen")]
+    [Tooltip("Loading screen canvas")]
+    [SerializeField] GameObject _deathScreenCanvas;
+    //float _target;
+
     [Header("Audio needed for the loading screen")]
     [Tooltip("Loading screen audio clip")]
     [SerializeField] AudioClip _loadingScreenAudioClip;
@@ -62,6 +67,9 @@ public class GameManager : MonoBehaviour
     SaveData loadData;
 
     private static GameManager s_Instance = null;
+
+    //[SerializeField] 
+    public static int gameState = 0;
 
     private void Awake()
     {
@@ -109,57 +117,10 @@ public class GameManager : MonoBehaviour
     private void InitReferences(bool check)
     {
         audioSourceController = GetComponent<AudioSourceController>();
-        //if (check)
-        //{
-        //    if (player == null)
-        //    {
-        //        player = FindObjectOfType<PlayerController>();
-        //    }
 
-        //    if (player == null)
-        //    {
-        //        return;
-        //    }
+        player = FindObjectOfType<PlayerController>(true);
 
-        //    if (inventory == null)
-        //    {
-        //        inventory = player.GetComponentInChildren<InventoryManager>();
-        //    }
-
-        //    if (currentScene == null)
-        //    {
-        //        currentScene = SceneManager.GetActiveScene();
-        //    }
-
-        //    if (collectables.Count == 0)
-        //    {
-        //        Collectable[] array = FindObjectsOfType<Collectable>();
-        //        collectables.AddRange(array);
-        //    }
-
-        //    if (enemies.Count == 0)
-        //    {
-        //        EnemyBehaviour[] array = FindObjectsOfType<EnemyBehaviour>();
-        //        enemies.AddRange(array);
-        //    }
-
-        //    if (saveBtn == null)
-        //    {
-        //        saveBtn = GameObject.Find("PauseMenu").transform.Find("SaveButton").GetComponent<Button>();
-        //        saveBtn.onClick.AddListener(SaveGame);
-        //    }
-
-        //    if (loadBtn == null)
-        //    {
-        //        loadBtn = GameObject.Find("PauseMenu").transform.Find("LoadButton").GetComponent<Button>();
-        //        loadBtn.onClick.AddListener(LoadGame);
-        //    }
-        //}
-        //else
-        //{
-        player = FindObjectOfType<PlayerController>();
-
-        inventory = FindObjectOfType<InventoryManager>();
+        inventory = FindObjectOfType<InventoryManager>(true);
 
         currentScene = SceneManager.GetActiveScene();
 
@@ -188,8 +149,8 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         Debug.Log("Saving...");
-        //InitReferences(true);
-        PlayerController player = FindObjectOfType<PlayerController>();
+        InitReferences(true);
+        PlayerController player = FindObjectOfType<PlayerController>(true);
         //Debug.Log($"Player Object: {player}");
         //Debug.Log($"Player Position: {player.GetPosition()}");
 
@@ -214,7 +175,15 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Created player data!!!");
         // Save the inventory
         //List<InventoryData> inventoryData = inventory.Save();
+        inventory = FindObjectOfType<InventoryManager>(true);
         InventoryData[] inventoryData = inventory.Save();
+        //InventoryData[] inventoryData = FindObjectOfType<InventoryManager>(true).Save();
+
+        Debug.Log("Saving Inventory");
+        Debug.Log("======== INVENTORY LIST ========");
+        inventory.PrintInventory();
+        Debug.Log("==== END OF INVENTORY LIST =====");
+
 
         // Save all the collectables in the scene
         //List<GenericSaveData> collectablesData = new List<GenericSaveData>();
@@ -244,20 +213,10 @@ public class GameManager : MonoBehaviour
         // Save Scene
         int level = SceneManager.GetActiveScene().buildIndex;
 
-        // Save Level chunk
-        LevelManager[] levelChuncks = FindObjectsOfType<LevelManager>();
-        string lvlChnck = "";
-        foreach (var item in levelChuncks)
-        {
-            if (item.enabledChildren)
-            {
-                lvlChnck = item.gameObject.name;
-            }
-        }
-                Debug.Log($"Saving chunck {lvlChnck}");
+        SerializableGlobalData globalData = new SerializableGlobalData(level, gameState);
 
         //SaveData data = new SaveData(level, $"{lvlChnck}", playerData, inventoryData, enemyData, collectablesData);
-        SaveData data = new SaveData(level, playerData, inventoryData, enemyData, collectablesData);
+        SaveData data = new SaveData(globalData, playerData, inventoryData, enemyData, collectablesData);
 
         // Save data using SaveSystem
         SaveSystem.SaveGame(data);
@@ -268,150 +227,175 @@ public class GameManager : MonoBehaviour
         if (!justLoaded)
         {
             SaveData data = SaveSystem.LoadGame();
-            if (data.levelID != SceneManager.GetActiveScene().buildIndex)
+            if (data != null)
             {
-                bool loadedScene = SaveSystem.LoadScene(data, !justLoaded);
-                if (loadedScene)
+                if (data.globalData.levelID != SceneManager.GetActiveScene().buildIndex)
                 {
-                    SceneManager.sceneLoaded += OnLevelLoaded;
+                    LoadScene(data.globalData.levelID);
+                    await Task.Delay(1000);
                 }
-            }
-            InitReferences(false);
+                InitReferences(false);
 
-            //Debug.Log(data.levelChunck);
-            //LevelManager lvlChnck = GameManager.FindInActiveObjectByName(data.levelChunck).GetComponent<LevelManager>();
-            //lvlChnck.LoadLoop();
-
-            PlayerController player = FindObjectOfType<PlayerController>();
-
-            //Debug.Log($"LOADING --> Player: {player}, Player Data: ({data.player.positionX}, {data.player.positionY}, {data.player.positionZ})");
-
-            player.Load(data.player);
-
-            inventory.Load(data.inventory);
-
-            // delete all enemies from the level
-            EnemyBehaviour[] enemiesArray = FindObjectsOfType(typeof(EnemyBehaviour), true) as EnemyBehaviour[];
-            foreach (var item in enemiesArray)
-            {
-                Destroy(item.gameObject);
-            }
-
-            // delete all patrolPoints from the level
-            PatrolPoint[] patrolPointsArray = FindObjectsOfType(typeof(PatrolPoint), true) as PatrolPoint[];
-            foreach (var item in patrolPointsArray)
-            {
-                Destroy(item.gameObject);
-            }
-            Debug.Log("Spawning Enemies");
-            enemies.Clear();
-            foreach (var enemyData in data.enemies)
-            {
-                Debug.Log($"EnemyType = {enemyData.type}");
-                if (enemyData.type == 0)
-                {
-
-                    // walker
-                    EnemyBehaviour prefabValues = enemyWalkerGO.GetComponent<EnemyBehaviour>();
-                    if (prefabValues == null)
-                    {
-                        continue;
-                    }
-                    // spawn object
-                    GameObject spawnedWalker = Instantiate(
-                        enemyWalkerGO,
-                        new Vector3(enemyData.positionX, enemyData.positionY, enemyData.positionZ),
-                        Quaternion.identity,
-                        GameManager.FindInActiveObjectByName(enemyData.parentName).transform);
-                    EnemyBehaviour spawnedEnemyValues = spawnedWalker.GetComponent<EnemyBehaviour>();
-                    spawnedEnemyValues.SetState((EnemyBehaviour.EnemyState)enemyData.state);
-                    Debug.Log($"Spawning Walker ({spawnedWalker})");
-
-                    // spawn patrol points
-                    GameObject point1 = Instantiate(patrolPointGO, new Vector3(enemyData.ppPos1X, enemyData.ppPos1Y, enemyData.ppPos1Z), Quaternion.identity, spawnedWalker.transform.parent);
-                    GameObject point2 = Instantiate(patrolPointGO, new Vector3(enemyData.ppPos2X, enemyData.ppPos2Y, enemyData.ppPos2Z), Quaternion.identity, spawnedWalker.transform.parent);
-                    // set them up with the walker
-                    GameObject[] patrolPoints = new GameObject[2];
-                    patrolPoints[0] = point1;
-                    patrolPoints[1] = point2;
-                    spawnedEnemyValues.SetCustomPatrolPoints(patrolPoints);
-                }
-
-                if (enemyData.type == 1)
-                {
-                    // flyer
-                    EnemyBehaviour prefabValues = enemyFlyerGO.GetComponent<EnemyBehaviour>();
-                    if (prefabValues == null)
-                    {
-                        continue;
-                    }
-                    // spawn object
-                    GameObject spawnedFlyer = Instantiate(
-                        enemyFlyerGO,
-                        new Vector3(enemyData.positionX, enemyData.positionY, enemyData.positionZ),
-                        Quaternion.identity,
-                        GameManager.FindInActiveObjectByName(enemyData.parentName).transform);
-                    EnemyBehaviour spawnedEnemyValues = spawnedFlyer.GetComponent<EnemyBehaviour>();
-                    spawnedEnemyValues.SetState((EnemyBehaviour.EnemyState)enemyData.state);
-                    Debug.Log($"Spawning Flyer ({spawnedFlyer})");
-                }
-            }
-
-            //i = 0;
-            //foreach (var collectable in collectables)
-            //{
-            //    collectable.Load(data.collectables[i]);
-            //    //collectable.gameObject.SetActive(true);
-            //    i++;
-            //}
-            //justLoaded = true;
-
-            // delete all collectables from the level
-            //Collectable[] collectablesArray = FindObjectsOfType<Collectable>();
-            //Collectable[] collectablesArray = FindObjectsOfType(typeof(Collectable)) as Collectable[];
-            Collectable[] collectablesArray = FindObjectsOfType(typeof(Collectable), true) as Collectable[];
-            foreach (var item in collectablesArray)
-            {
-                //Debug.Log($"++++++ Destroying {item}");
-                Destroy(item.gameObject);
-            }
-
-            Debug.Log("Spawning Collectable");
-            collectables.Clear();
-            foreach (var collectableData in data.collectables)
-            {
-                // spawn the collectable prefab that has the same amount as the saved collectable
-                foreach (var collectablePrefab in collectablesGO)
-                {
-                    Collectable prefabValues = collectablePrefab.GetComponent<Collectable>();
-                    if (prefabValues == null)
-                    {
-                        continue;
-                    }
-                    if (collectableData.amount == prefabValues.GetAmount())
-                    {
-                        // spawn object
-                        GameObject spawnedCollectable = Instantiate(
-                            collectablePrefab,
-                            new Vector3(collectableData.positionX, collectableData.positionY, collectableData.positionZ),
-                            Quaternion.identity,
-                            GameManager.FindInActiveObjectByName(collectableData.parentName).transform);
-                        Collectable spawnedCollectableValues = spawnedCollectable.GetComponent<Collectable>();
-                        spawnedCollectableValues.SetState((Collectable.CollectableState)collectableData.state);
-                    }
-                }
+                DataLoad(data);
             }
         }
     }
 
-    public async void NewGame()
+    private void DataLoad(SaveData data)
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+
+        //Debug.Log($"LOADING --> Player: {player}, Player Data: ({data.player.positionX}, {data.player.positionY}, {data.player.positionZ})");
+
+        player.Load(data.player);
+
+        inventory.Load(data.inventory);
+        Debug.Log("Loading Inventory");
+        Debug.Log("======== INVENTORY LIST ========");
+        inventory.PrintInventory();
+        Debug.Log("==== END OF INVENTORY LIST =====");
+
+        gameState = data.globalData.gameState;
+        //Debug.Log($"Loaded GameState:: {gameState}");
+        //Debug.Log($"Level  Loaded:: {data.globalData.levelID}");
+        if (data.globalData.levelID == 2)
+        {
+            GameStateManager();
+        }
+
+        // disable death screen
+        _deathScreenCanvas.SetActive(false);
+
+        // delete all enemies from the level
+        EnemyBehaviour[] enemiesArray = FindObjectsOfType(typeof(EnemyBehaviour), true) as EnemyBehaviour[];
+        foreach (var item in enemiesArray)
+        {
+            Destroy(item.gameObject);
+        }
+
+        // delete all patrolPoints from the level
+        PatrolPoint[] patrolPointsArray = FindObjectsOfType(typeof(PatrolPoint), true) as PatrolPoint[];
+        foreach (var item in patrolPointsArray)
+        {
+            Destroy(item.gameObject);
+        }
+        //Debug.Log("Spawning Enemies");
+        enemies.Clear();
+        foreach (var enemyData in data.enemies)
+        {
+            //Debug.Log($"EnemyType = {enemyData.type}");
+            if (enemyData.type == 0)
+            {
+
+                // walker
+                EnemyBehaviour prefabValues = enemyWalkerGO.GetComponent<EnemyBehaviour>();
+                if (prefabValues == null)
+                {
+                    continue;
+                }
+                // spawn object
+                //Debug.Log($"Spawning Walker with parent: {enemyData.parentName}");
+                GameObject spawnedWalker = Instantiate(
+                    enemyWalkerGO,
+                    new Vector3(enemyData.positionX, enemyData.positionY, enemyData.positionZ),
+                    Quaternion.identity,
+                    enemyData.parentName == "" ? null :
+                    GameManager.FindInActiveObjectByName(enemyData.parentName).transform);
+                EnemyBehaviour spawnedEnemyValues = spawnedWalker.GetComponent<EnemyBehaviour>();
+                spawnedEnemyValues.SetState((EnemyBehaviour.EnemyState)enemyData.state);
+                //Debug.Log($"Spawning Walker ({spawnedWalker}) with parent: {enemyData.parentName}");
+
+                // spawn patrol points
+                GameObject point1 = Instantiate(patrolPointGO, new Vector3(enemyData.ppPos1X, enemyData.ppPos1Y, enemyData.ppPos1Z), Quaternion.identity, spawnedWalker.transform.parent);
+                GameObject point2 = Instantiate(patrolPointGO, new Vector3(enemyData.ppPos2X, enemyData.ppPos2Y, enemyData.ppPos2Z), Quaternion.identity, spawnedWalker.transform.parent);
+                // set them up with the walker
+                GameObject[] patrolPoints = new GameObject[2];
+                patrolPoints[0] = point1;
+                patrolPoints[1] = point2;
+                spawnedEnemyValues.SetCustomPatrolPoints(patrolPoints);
+            }
+
+            if (enemyData.type == 1)
+            {
+                // flyer
+                EnemyBehaviour prefabValues = enemyFlyerGO.GetComponent<EnemyBehaviour>();
+                if (prefabValues == null)
+                {
+                    continue;
+                }
+                // spawn object
+                GameObject spawnedFlyer = Instantiate(
+                    enemyFlyerGO,
+                    new Vector3(enemyData.positionX, enemyData.positionY, enemyData.positionZ),
+                    Quaternion.identity, enemyData.parentName == "" ? null :
+                    GameManager.FindInActiveObjectByName(enemyData.parentName).transform);
+                EnemyBehaviour spawnedEnemyValues = spawnedFlyer.GetComponent<EnemyBehaviour>();
+                spawnedEnemyValues.SetState((EnemyBehaviour.EnemyState)enemyData.state);
+                //Debug.Log($"Spawning Flyer ({spawnedFlyer})");
+            }
+        }
+
+        //i = 0;
+        //foreach (var collectable in collectables)
+        //{
+        //    collectable.Load(data.collectables[i]);
+        //    //collectable.gameObject.SetActive(true);
+        //    i++;
+        //}
+        //justLoaded = true;
+
+        // delete all collectables from the level
+        //Collectable[] collectablesArray = FindObjectsOfType<Collectable>();
+        //Collectable[] collectablesArray = FindObjectsOfType(typeof(Collectable)) as Collectable[];
+        Collectable[] collectablesArray = FindObjectsOfType(typeof(Collectable), true) as Collectable[];
+        foreach (var item in collectablesArray)
+        {
+            //Debug.Log($"++++++ Destroying {item}");
+            Destroy(item.gameObject);
+        }
+
+        //Debug.Log("Spawning Collectable");
+        collectables.Clear();
+        foreach (var collectableData in data.collectables)
+        {
+            // spawn the collectable prefab that has the same amount as the saved collectable
+            foreach (var collectablePrefab in collectablesGO)
+            {
+                Collectable prefabValues = collectablePrefab.GetComponent<Collectable>();
+                if (prefabValues == null)
+                {
+                    continue;
+                }
+                if (collectableData.amount == prefabValues.GetAmount())
+                {
+                    Debug.Log($"Trying to spawn {prefabValues.name} at position ({collectableData.positionX}, {collectableData.positionY}, {collectableData.positionZ}) under parent => {collectableData.parentName}");
+                    // spawn object
+                    GameObject spawnedCollectable = Instantiate(
+                        collectablePrefab,
+                        new Vector3(collectableData.positionX, collectableData.positionY, collectableData.positionZ),
+                        Quaternion.identity,
+                        collectableData.parentName == "" ? null :
+                        GameManager.FindInActiveObjectByName(collectableData.parentName).transform);
+                    Collectable spawnedCollectableValues = spawnedCollectable.GetComponent<Collectable>();
+                    spawnedCollectableValues.SetState((Collectable.CollectableState)collectableData.state);
+                }
+            }
+        }
+
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+        }
+    }
+
+    public async void LoadScene(int sceneIndex)
     {
         LoadingAudioIn();
         _target = 0f;
         _loadingSlider.value = 0f;
 
 
-        var scene = SceneManager.LoadSceneAsync(1);
+        var scene = SceneManager.LoadSceneAsync(sceneIndex);
         scene.allowSceneActivation = false;
 
         _loadingScreenCanvas.SetActive(true);
@@ -430,52 +414,89 @@ public class GameManager : MonoBehaviour
         LoadingAudioOut();
         _loadingScreenCanvas.SetActive(false);
         //InitReferences(false);
+        SaveGame();
 
     }
 
-    //private void LoadData(SaveData loadData)
-    //{
-    //    GenericSaveData playerData = new GenericSaveData(
-    //                loadData.playerHealth,
-    //                loadData.playerAmmo,
-    //                new Vector3(loadData.playerPosition[0], loadData.playerPosition[1], loadData.playerPosition[2]));
+    public void NewGame()
+    {
+        LoadScene(1);
+    }
 
-    //    player.Load(playerData);
+    private void GameStateManager()
+    {
+        Debug.Log($"Game State :: {gameState}");
+        GameObject greenDoor = FindInActiveObjectByName("Door Green");
+        GameObject redDoor = FindInActiveObjectByName("Door Red");
+        GameObject blueDoor = FindInActiveObjectByName("Door Blue");
+        GameObject generator = FindObjectOfType<Genarator>(true).gameObject;
+        GameObject endGameTrigger = FindObjectOfType<EndGameTrigger>(true).gameObject;
 
-    //    List<InventoryData> inventoryData = new List<InventoryData>();
-    //    for (int j = 0; j < loadData.inventoryItemAmount.Length; j++)
-    //    {
-    //        InventoryData item = new InventoryData(
-    //            loadData.inventoryItemName[j],
-    //            loadData.inventoryItemSerial[j],
-    //            loadData.inventoryItemAmount[j]);
-    //        inventoryData.Add(item);
-    //    }
-    //    inventory.Load(inventoryData);
+        //Debug.Log("OBJECT FOUND");
+        //Debug.Log(greenDoor);
+        //Debug.Log(redDoor);
+        //Debug.Log(blueDoor);
+        //Debug.Log(generator);
+        //Debug.Log(endGameTrigger);
+        switch (gameState)
+        {
+            case 1:
+                Debug.Log("CASE 1");
+                //green door
+                greenDoor.SetActive(true);
+                greenDoor.GetComponent<Unlockable>().SetUnlocked(true);
 
-    //    int i = 0;
-    //    foreach (var collectable in collectables)
-    //    {
-    //        GenericSaveData collectableData = new GenericSaveData(
-    //            loadData.collectablesAmount[i],
-    //            loadData.collectablesState[i],
-    //            new Vector3(loadData.collectablesPosition[i][0], loadData.collectablesPosition[i][1], loadData.collectablesPosition[i][2]));
-    //        collectable.Load(collectableData);
-    //        i++;
-    //    }
+                redDoor.SetActive(true);
+                redDoor.GetComponent<Unlockable>().SetUnlocked(false);
+                blueDoor.SetActive(true);
+                blueDoor.GetComponent<Unlockable>().SetUnlocked(false);
+                generator.GetComponent<Genarator>().SetState(Genarator.GeneratorState.broken);
+                endGameTrigger.SetActive(false);
+                break;
+            case 2:
+                Debug.Log("CASE 2");
+                //red door
+                greenDoor.SetActive(true);
+                greenDoor.GetComponent<Unlockable>().SetUnlocked(true);
+                redDoor.SetActive(true);
+                redDoor.GetComponent<Unlockable>().SetUnlocked(true);
 
-    //    i = 0;
-    //    foreach (var enemy in enemies)
-    //    {
-    //        GenericSaveData enemyData = new GenericSaveData(
-    //            loadData.enemiesHealth[i],
-    //            loadData.enemiesState[i],
-    //            new Vector3(loadData.enemiesPosition[i][0], loadData.enemiesPosition[i][1], loadData.enemiesPosition[i][2]));
+                blueDoor.SetActive(true);
+                blueDoor.GetComponent<Unlockable>().SetUnlocked(false);
+                generator.GetComponent<Genarator>().SetState(Genarator.GeneratorState.broken);
+                endGameTrigger.SetActive(false);
+                break;
+            case 3:
+                Debug.Log("CASE 3");
+                //blue door
+                greenDoor.SetActive(true);
+                greenDoor.GetComponent<Unlockable>().SetUnlocked(true);
+                redDoor.SetActive(true);
+                redDoor.GetComponent<Unlockable>().SetUnlocked(true);
+                blueDoor.SetActive(true);
+                blueDoor.GetComponent<Unlockable>().SetUnlocked(true);
 
-    //        enemy.Load(enemyData);
-    //        i++;
-    //    }
-    //}
+                generator.GetComponent<Genarator>().SetState(Genarator.GeneratorState.broken);
+                endGameTrigger.SetActive(false);
+                break;
+            case 4:
+                Debug.Log("CASE 4");
+                //end game
+                greenDoor.SetActive(true);
+                greenDoor.GetComponent<Unlockable>().SetUnlocked(true);
+                redDoor.SetActive(true);
+                redDoor.GetComponent<Unlockable>().SetUnlocked(true);
+                blueDoor.SetActive(true);
+                blueDoor.GetComponent<Unlockable>().SetUnlocked(true);
+                generator.GetComponent<Genarator>().SetState(Genarator.GeneratorState.enabled);
+                endGameTrigger.SetActive(true);
+                break;
+            default:
+                //new game
+                Debug.Log("DEFAULT CASE");
+                break;
+        }
+    }
 
     private void LoadingAudioIn()
     {
@@ -523,5 +544,29 @@ public class GameManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void DeathSequence()
+    {
+        _deathScreenCanvas.SetActive(true);
+    }
+
+    public async void LoadGameNoCheck()
+    {
+        if (!justLoaded)
+        {
+            SaveData data = SaveSystem.LoadGame();
+            LoadScene(data.globalData.levelID);
+            await Task.Delay(1000);
+
+            InitReferences(false);
+
+            DataLoad(data);
+        }
+    }
+
+    public static void QuitGame()
+    {
+        Application.Quit();
     }
 }

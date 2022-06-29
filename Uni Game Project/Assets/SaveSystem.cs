@@ -18,33 +18,33 @@ public class SaveSystem
         Debug.Log(path);
 
         // First, save the global data that will be used all over the game (player's health, ammo, inventory, last level)
-        using(FileStream stream = new FileStream($"{path}global.fork", FileMode.Create))
+        using (FileStream stream = new FileStream($"{path}global.fork", FileMode.Create))
         {
-            formatter.Serialize(stream, data.levelID);
+            formatter.Serialize(stream, data.globalData);
         }
 
-        Directory.CreateDirectory($"{path}Level{data.levelID}/");
-        using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Collectables.fork", FileMode.Create))
+        Directory.CreateDirectory($"{path}Level{data.globalData.levelID}/");
+        using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Collectables.fork", FileMode.Create))
         {
             formatter.Serialize(stream, data.collectables);
         }
 
-        using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Enemies.fork", FileMode.Create))
+        using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Enemies.fork", FileMode.Create))
         {
             formatter.Serialize(stream, data.enemies);
         }
-        
-        //using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Unlockables.fork", FileMode.Create))
+
+        //using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Unlockables.fork", FileMode.Create))
         //{
         //    formatter.Serialize(stream, data);
         //}
 
-        using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Inventory.fork", FileMode.Create))
+        using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Inventory.fork", FileMode.Create))
         {
             formatter.Serialize(stream, data.inventory);
         }
 
-        using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Player.fork", FileMode.Create))
+        using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Player.fork", FileMode.Create))
         {
             formatter.Serialize(stream, data.player);
         }
@@ -54,7 +54,7 @@ public class SaveSystem
     {
         if (check)
         {
-            SceneManager.LoadSceneAsync(data.levelID);
+            SceneManager.LoadSceneAsync(data.globalData.levelID);
             //SceneManager.sceneLoaded += GameManager.OnLevelLoaded;
             return true;
         }
@@ -71,25 +71,25 @@ public class SaveSystem
 
             using (FileStream stream = new FileStream($"{path}global.fork", FileMode.Open))
             {
-                data.levelID = (int)formatter.Deserialize(stream);
+                data.globalData = formatter.Deserialize(stream) as SerializableGlobalData;
             }
 
-            using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Inventory.fork", FileMode.Open))
+            using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Inventory.fork", FileMode.Open))
             {
                 data.inventory = formatter.Deserialize(stream) as InventoryData[];
             }
 
-            using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Player.fork", FileMode.Open))
+            using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Player.fork", FileMode.Open))
             {
                 data.player = formatter.Deserialize(stream) as SerializablePlayer;
             }
 
-            using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Enemies.fork", FileMode.Open))
+            using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Enemies.fork", FileMode.Open))
             {
                 data.enemies = formatter.Deserialize(stream) as SerializableEnemy[];
             }
 
-            using (FileStream stream = new FileStream($"{path}Level{data.levelID}/Collectables.fork", FileMode.Open))
+            using (FileStream stream = new FileStream($"{path}Level{data.globalData.levelID}/Collectables.fork", FileMode.Open))
             {
                 data.collectables = formatter.Deserialize(stream) as SerializableCollectable[];
             }
@@ -99,7 +99,8 @@ public class SaveSystem
             //stream.Close();
 
             return data;
-        } else
+        }
+        else
         {
             Debug.LogError($"Save file not found in {path}");
             return null;

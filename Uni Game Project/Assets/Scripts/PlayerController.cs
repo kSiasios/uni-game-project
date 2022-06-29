@@ -209,6 +209,15 @@ public class PlayerController : MonoBehaviour
         health -= amount;
         Debug.Log($"Current Health: {health}");
         audioManager.PlayerHit();
+
+        if (health <= 0)
+        {
+            // DEATH
+            // freeze time
+            Time.timeScale = 0f;
+            // begin death sequence
+            FindObjectOfType<GameManager>(true).DeathSequence();
+        }
     }
 
     public void Land()

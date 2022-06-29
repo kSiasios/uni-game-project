@@ -66,9 +66,11 @@
     <Compile Include="Assets\Scripts\NotificationItem.cs" />
     <Compile Include="Assets\Genarator.cs" />
     <Compile Include="Assets\Scripts\WeaponBehaviour.cs" />
+    <Compile Include="Assets\Server.cs" />
     <Compile Include="Assets\BlinkingLight.cs" />
     <Compile Include="Assets\SaveData.cs" />
     <Compile Include="Assets\Scripts\GroundCheck.cs" />
+    <Compile Include="Assets\EndGameTrigger.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\SaveSystem.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\NotificationManager.cs" />
     <Compile Include="Assets\ElevatorButton.cs" />
+    <Compile Include="Assets\SlowWrite.cs" />
     <Compile Include="Assets\Scripts\Collectable.cs" />
     <Compile Include="Assets\ParticleAudioManager.cs" />
     <Compile Include="Assets\FlickeringLight.cs" />
@@ -101,7 +104,6 @@
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\BulletParticle.cs" />
     <Compile Include="Assets\AudioTrigger.cs" />
-    <Compile Include="Assets\Server.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

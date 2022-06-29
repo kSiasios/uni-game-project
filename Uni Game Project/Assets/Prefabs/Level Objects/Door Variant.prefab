@@ -201,6 +201,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6984494227588344005, guid: ad6303b7273638a41aa886ee4af24219, type: 3}
+      propertyPath: shouldProgressStory
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6984494227588344005, guid: ad6303b7273638a41aa886ee4af24219, type: 3}
       propertyPath: clipOnUnlock.audioClip
       value: 
       objectReference: {fileID: 8300000, guid: ce4d271ce064c9645aa2631d8cc75315, type: 3}

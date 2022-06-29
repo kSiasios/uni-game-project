@@ -61,6 +61,10 @@ public class InteractableCharacter : InteractableEntity
         // Disable the dialog system
         if (dialogSystem != null)
         {
+            if (dialogSystemFunctions == null)
+            {
+                dialogSystemFunctions = dialogSystem.GetComponent<DialogSystem>();
+            }
             dialogSystemFunctions.StopDialog();
             DisableDialogSystem();
         }
@@ -99,7 +103,7 @@ public class InteractableCharacter : InteractableEntity
 
     private void InteractableCharacterAction()
     {
-        Debug.Log("Henlo from InteractableCharacter!");
+        //Debug.Log("Henlo from InteractableCharacter!");
         GameManager.interacting = true;
         if (dialogSystem != null)
         {

@@ -13,6 +13,8 @@ public class Unlockable : InteractableEntity
 
     [SerializeField] protected bool unlocked = false;
 
+    [SerializeField] protected bool shouldProgressStory = false;
+
     protected void Awake()
     {
         if (unlockableAnimator == null)
@@ -47,6 +49,11 @@ public class Unlockable : InteractableEntity
 
                 //transform.gameObject.SetActive(false);
                 TriggerUnlockAnimation();
+
+                if (shouldProgressStory)
+                {
+                    GameManager.gameState++;
+                }
                 break;
             }
         }
@@ -80,5 +87,9 @@ public class Unlockable : InteractableEntity
         {
             DisableGameObject();
         }
+    }
+    public void SetUnlocked(bool value)
+    {
+        unlocked = value;
     }
 }

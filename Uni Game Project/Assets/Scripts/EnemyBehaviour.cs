@@ -350,10 +350,14 @@ public class EnemyBehaviour : MonoBehaviour
     // Function that creates the patrol points of the Entity
     void SetPatrolPoints()
     {
-        if (givenPatrolPoints.Length != 0)
+        if (givenPatrolPoints != null)
         {
-            SetPatrolPoints(givenPatrolPoints);
-            return;
+
+            if (givenPatrolPoints.Length != 0)
+            {
+                SetPatrolPoints(givenPatrolPoints);
+                return;
+            }
         }
 
         if (enemyType == EnemyType.Walker)
@@ -404,7 +408,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         foreach (Transform point in points)
         {
-            patrolPoints.Enqueue(point.gameObject);
+            if (point != null)
+                patrolPoints.Enqueue(point.gameObject);
         }
     }
 
@@ -472,7 +477,7 @@ public class EnemyBehaviour : MonoBehaviour
         ParticleSystem deathPS = Instantiate(enemyDeathParticleSystem);
         deathPS.transform.position = transform.position;
         deathPS.Play(true);
-        
+
         state = EnemyState.Dead;
     }
 
@@ -610,7 +615,8 @@ public class SerializableEnemy
             ppPos2X = patrolPoints[1].position.x;
             ppPos2Y = patrolPoints[1].position.y;
             ppPos2Z = patrolPoints[1].position.z;
-        } else
+        }
+        else
         {
             ppPos1X = 0;
             ppPos1Y = 0;

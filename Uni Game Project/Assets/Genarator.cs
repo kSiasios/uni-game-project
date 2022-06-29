@@ -9,7 +9,7 @@ public class Genarator : Unlockable
     //[SerializeField] InventoryItem generatorKey;
     [SerializeField] Collectable generatorKey;
 
-    enum GeneratorState
+    public enum GeneratorState
     {
         disabled,
         broken,
@@ -47,7 +47,10 @@ public class Genarator : Unlockable
                 foundKey = true;
                 Debug.Log("Opening Unlockable...");
                 // Use item from inventory
-                iManager.UseItem(item);
+                //iManager.UseItem(item);
+                item.AmountOfItems -= generatorKey.GetAmount();
+                //iManager.EditItem(item);
+                iManager.UpdateItem(item);
 
                 if (playerGameObject != null)
                 {
@@ -57,6 +60,13 @@ public class Genarator : Unlockable
                 //transform.gameObject.SetActive(false);
                 TriggerUnlockAnimation();
                 generatorState = GeneratorState.enabled;
+
+                ActivateEndGame();
+                if(shouldProgressStory)
+                {
+                    GameManager.gameState++;
+                }
+                FindObjectOfType<GameManager>(true).SaveGame();
                 break;
             }
         }
@@ -90,6 +100,17 @@ public class Genarator : Unlockable
             default:
                 break;
         }
+    }
+
+    private void ActivateEndGame()
+    {
+        // Find and activate object that triggers endgame
+        FindObjectOfType<EndGameTrigger>(true).gameObject.SetActive(true);
+    }
+
+    public void SetState(GeneratorState state)
+    {
+        generatorState = state;
     }
 
     //private void TriggerUnlockAnimation()

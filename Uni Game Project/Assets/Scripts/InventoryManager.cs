@@ -192,7 +192,9 @@ public class InventoryManager : MonoBehaviour
         if (!alreadyExists)
         {
             // If there is not an item of this type in the inventory, create one
-            InventoryItem newItem = Instantiate(inventoryItemPrefab).GetComponent<InventoryItem>();
+            GameObject obj = Instantiate(inventoryItemPrefab);
+            obj.gameObject.name = newName;
+            InventoryItem newItem = obj.GetComponent<InventoryItem>();
             newItem.Setter(newAmount, newName, newSerial, newIsKey, newSprite);
             inventory.Add(newItem);
             //foreach (var inventoryItem in inventory)
@@ -211,6 +213,38 @@ public class InventoryManager : MonoBehaviour
         InitializeInventoryPanel();
 
         //PrintList(inventory);
+    }
+
+    public void UpdateItem(InventoryItem newValues)
+    {
+        UpdateItem(newValues.AmountOfItems, newValues.ItemName, newValues.Serial, newValues.IsKey, newValues.ItemIcon);
+    }
+    public void UpdateItem(int newAmount, string newName, string newSerial, bool newIsKey, Sprite newSprite)
+    {
+        // Function that handles updating items to the inventory
+        //bool alreadyExists = false;
+        // Iterate through the inventory to see if there already is an item of the same type
+        foreach (var item in inventory)
+        {
+            if (item.ItemName == newName)
+            {
+                Debug.Log($"***** Editing {item.ItemName}, New Amount = newAmount({newAmount})");
+                item.AmountOfItems = newAmount;
+
+                item.IsKey = newIsKey;
+                item.ItemIcon = newSprite;
+                item.Serial = newSerial;
+                //item.= newItem.AmountOfItems;
+
+                // Update the UI
+                if (item.ItemName.ToLower() == defaultCurrency.ToString().ToLower())
+                {
+                    UpdateItemCounter(item.AmountOfItems);
+                }
+                InitializeInventoryPanel();
+                return;
+            }
+        }
     }
 
     // Remove the whole stack of this item
@@ -274,16 +308,16 @@ public class InventoryManager : MonoBehaviour
                 //alreadyExists = true;
                 //Debug.Log("Item exists: " + (item.AmountOfItems + newItem.AmountOfItems));
 
-                if (amountPlaceholder > newAmount)
-                {
-                    Debug.Log($"***** Editing {item.ItemName}, New Amount = item.AmountOfItems({item.AmountOfItems}) + amountPlaceholder({amountPlaceholder}) == {item.AmountOfItems + amountPlaceholder}");
-                    item.AmountOfItems += amountPlaceholder;
-                }
-                else
-                {
+                //if (amountPlaceholder > newAmount)
+                //{
+                //    Debug.Log($"***** Editing {item.ItemName}, New Amount = item.AmountOfItems({item.AmountOfItems}) + amountPlaceholder({amountPlaceholder}) == {item.AmountOfItems + amountPlaceholder}");
+                //    item.AmountOfItems += amountPlaceholder;
+                //}
+                //else
+                //{
                     Debug.Log($"***** Editing {item.ItemName}, New Amount = item.AmountOfItems({item.AmountOfItems}) + newAmount({newAmount}) == {item.AmountOfItems + newAmount}");
                     item.AmountOfItems += newAmount;
-                }
+                //}
 
                 item.IsKey = newIsKey;
                 item.ItemIcon = newSprite;
